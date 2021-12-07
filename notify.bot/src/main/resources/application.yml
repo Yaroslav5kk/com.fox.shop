@@ -1,0 +1,22 @@
+spring:
+  data:
+    mongodb:
+      host: 127.0.0.1
+      port: 27017
+
+##---------------------------------------- bot telegram ----------------------------------------##
+telegram:
+  api:
+    url: https://api.telegram.org/bot1893100873:AAHhpqgZtsZBT2BcdOz3CcnRspASzO84CbU/
+    endpoints:
+      get-file: getFile
+      set-my-commands: setMyCommands
+      send-message: sendMessage
+      send-photo: sendPhoto
+      send-media-group: sendMediaGroup
+      delete-message: deleteMessage
+  bot:
+    name: dev_fox_notify_bot
+    token: 1893100873:AAHhpqgZtsZBT2BcdOz3CcnRspASzO84CbU
+  storage:
+    chat-id: 403165071

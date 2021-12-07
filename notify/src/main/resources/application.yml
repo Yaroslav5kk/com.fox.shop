@@ -1,0 +1,10 @@
+server:
+  port: 8086
+
+
+##-------------------------------------------- notify bot telegram --------------------------------------------##
+notify-telegram-bot:
+  api:
+    url: https://localhost:8087/
+    endpoints:
+      notify-order: notify/order
