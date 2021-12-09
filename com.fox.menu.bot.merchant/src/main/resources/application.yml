@@ -1,0 +1,70 @@
+##------------------------------------------ bot telegram ------------------------------------------##
+telegram:
+  api:
+    url: https://api.telegram.org/bot1957687967:AAFwsClYI3VXcNplCgLObnK1YlyD4yvgrsw/
+  bot:
+    name: dev_fox_menu_waiter_bot
+    token: 1957687967:AAFwsClYI3VXcNplCgLObnK1YlyD4yvgrsw
+  storage:
+    chat-id: 403165071
+  endpoint:
+    get-file: getFile
+    set-my-commands: setMyCommands
+    send-message: sendMessage
+    send-photo: sendPhoto
+    send-media-group: sendMediaGroup
+    delete-message: deleteMessage
+
+##------------------------------------------ base service ------------------------------------------##
+base:
+  api:
+    url: http://localhost:8080/
+  endpoint:
+    places-by-ids: api/place/by-ids
+    merchant-places-by-waiter-id: api/image/download/byte/merchant-places/by/waiter-id
+    place-by-id-on-map: api/place/by/id-on-map
+
+
+##------------------------------------------ shopping-cart ------------------------------------------##
+shopping-cart:
+  api:
+    url: http://localhost:8082/
+    endpoint:
+      get-cart-session-by-id: api/session
+      get-cart-session: api/session
+      make-order: api/order
+      add-to-cart: api/session/add-to-cart
+      create-cart-item: api/cart-item
+      clear-cart-session: api/session/clear
+      update-cart-item-quantity: api/session/item-quantity
+      has-active-session: api/session/has-active-session
+
+##------------------------------------------ billing ------------------------------------------##
+billing:
+  api:
+    url: http://localhost:8083/
+    endpoint:
+      confirm-place: api/order/confirm-place
+
+
+##------------------------------------------ customer-bot ------------------------------------------##
+customer-bot:
+  api:
+    url: http://localhost:8081/
+    endpoint:
+      confirm-place: api/order/confirm-place
+
+
+##------------------------------------------ server ------------------------------------------##
+server:
+  port: 8084
+
+
+##------------------------------------------ mongo db ------------------------------------------##
+spring:
+  data:
+    mongodb:
+      host: localhost
+      port: 27017
+      database: com_fox_menu_merchant_bot
+

@@ -1,0 +1,31 @@
+                    ## db and jpa ##
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/com.fox.shop.shopping-cart
+    username: postgres
+    password: postgres
+  jpa:
+    show-sql: true
+    generate-ddl: true
+    hibernate:
+      ddl-auto: update
+
+      ## kafka ##
+kafka:
+  server: localhost:9092
+  group-id: add-to-cart
+  topic:
+    add-to-cart: add-to-cart
+
+                    ## base api ##
+base:
+  api:
+    url: http://localhost:8080/
+    endpoint:
+      product-price-by-id: api/product/price
+      product-by-id: api/product
+      merchant-by-product-id: api/merchant/by-product
+
+                  ## server ##
+server:
+  port: 8082

@@ -1,0 +1,58 @@
+##--------------------------server-------------------------##
+server:
+  port: 8085
+
+##--------------------------mongo db-------------------------##
+spring:
+  data:
+    mongodb:
+      host: localhost
+      port: 27017
+      database: com_fox_shop_ordering
+
+##--------------------------base service---------------------##
+base:
+  api:
+    url: http://localhost:8080/
+  endpoint:
+    get-user-by-id: api/user
+
+##--------------------------price---------------------##
+price:
+  api:
+    url: http://localhost:8084/
+  endpoint:
+    all-product-price-by-ids: api/v1/price/by-product-ids
+
+##--------------------------shopping cart---------------------##
+shopping-cart:
+  api:
+    url: http://localhost:8082/
+  endpoint:
+    get-cart-session-by-id: api/session
+    get-cart-session-by-user: api/session
+
+##--------------------------notify services---------------------##
+notify:
+  telegram:
+    api:
+      url: http://localhost:8086/
+      endpoint:
+        notify-order: api/v1/order
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
