@@ -15,6 +15,8 @@ public class BaseRequestFactoryImpl implements FatherRequestFactory, BaseRequest
     private String url;
     @Value("${base.endpoint.get-user-by-id}")
     private String getUserById;
+    @Value("${base.endpoint.get-merchant-by-product}")
+    private String getMerchantByProduct;
 
 
     private final ObjectMapper objectMapper;
@@ -35,6 +37,17 @@ public class BaseRequestFactoryImpl implements FatherRequestFactory, BaseRequest
         return new HttpGet(fullUri);
     }
 
+
+    /*----------------------------------------------merchant-------------------------------------------------*/
+    @Override
+    public HttpUriRequest getMerchantIdByProductId(final long productId) {
+        final String fullUri = buildFullUri(
+            url,
+            getMerchantByProduct + "/" + productId,
+            null
+        );
+        return new HttpGet(fullUri);
+    }
 }
 
 

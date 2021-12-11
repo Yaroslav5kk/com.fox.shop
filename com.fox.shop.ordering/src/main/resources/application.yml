@@ -16,6 +16,7 @@ base:
     url: http://localhost:8080/
   endpoint:
     get-user-by-id: api/user
+    get-merchant-by-product: api/v1/merchant/id/by/product-id
 
 ##--------------------------price---------------------##
 price:

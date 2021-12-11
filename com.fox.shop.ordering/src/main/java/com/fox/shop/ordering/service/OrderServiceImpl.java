@@ -29,72 +29,73 @@ import java.util.stream.Collectors;
 @Service
 public class OrderServiceImpl implements OrderService {
 
-    private final OrderRepository orderRepository;
-    private final OrderConverter orderConverter;
-    private final CalculateService calculateService;
-    private final ShoppingCartApiClient shoppingCartApiClient;
-    private final OrderItemConverter orderItemConverter;
-    private final BaseApiClient baseApiClient;
-    private final PriceApiClient priceApiClient;
-    private final NotifyApiClient notifyApiClient;
+  private final OrderRepository orderRepository;
+  private final OrderConverter orderConverter;
+  private final CalculateService calculateService;
+  private final ShoppingCartApiClient shoppingCartApiClient;
+  private final OrderItemConverter orderItemConverter;
+  private final BaseApiClient baseApiClient;
+  private final PriceApiClient priceApiClient;
+  private final NotifyApiClient notifyApiClient;
 
-    public OrderServiceImpl(
-            final OrderRepository orderRepository,
-            final OrderConverter orderConverter,
-            final CalculateService calculateService,
-            final ShoppingCartApiClient shoppingCartApiClient,
-            final OrderItemConverter orderItemConverter,
-            final BaseApiClient baseApiClient,
-            final PriceApiClient priceApiClient,
-            final NotifyApiClient notifyApiClient
-    ) {
-        this.orderRepository = orderRepository;
-        this.orderConverter = orderConverter;
-        this.calculateService = calculateService;
-        this.shoppingCartApiClient = shoppingCartApiClient;
-        this.orderItemConverter = orderItemConverter;
-        this.baseApiClient = baseApiClient;
-        this.priceApiClient = priceApiClient;
-        this.notifyApiClient = notifyApiClient;
-    }
+  public OrderServiceImpl(
+      final OrderRepository orderRepository,
+      final OrderConverter orderConverter,
+      final CalculateService calculateService,
+      final ShoppingCartApiClient shoppingCartApiClient,
+      final OrderItemConverter orderItemConverter,
+      final BaseApiClient baseApiClient,
+      final PriceApiClient priceApiClient,
+      final NotifyApiClient notifyApiClient
+  ) {
+    this.orderRepository = orderRepository;
+    this.orderConverter = orderConverter;
+    this.calculateService = calculateService;
+    this.shoppingCartApiClient = shoppingCartApiClient;
+    this.orderItemConverter = orderItemConverter;
+    this.baseApiClient = baseApiClient;
+    this.priceApiClient = priceApiClient;
+    this.notifyApiClient = notifyApiClient;
+  }
 
-    @Override
-    public OrderModel initOrder(final OrderOnCreateRequest request) {
-        final OrderEntity toSave = orderConverter.fromOnCreateRequestToEntity(request);
-        final FullCartSessionModel cartSession = shoppingCartApiClient.getCartSessionById(request.getShoppingCartSessionId());
-        final UserModel user = baseApiClient.getUserById(cartSession.getUserId());
-        final Map<Long, FullCartItemModel> productIdCartItem = cartSession.getItems()
-                .stream()
-                .collect(Collectors.toMap(FullCartItemModel::getProductId, Function.identity()));
-        final List<OrderItemEntity> items = priceApiClient.allProductPriceByIds(new ArrayList<>(productIdCartItem.keySet()))
-                .stream()
-                .map(productPriceModel -> orderItemConverter.
-                        fromFullCartItemToEntity(productIdCartItem.get(productPriceModel.getProductId()), productPriceModel.getPrice()))
-                .collect(Collectors.toList());
-        toSave.setPhone(user.getPhone());
-        toSave.setFirstname(user.getFirstName());
-        toSave.setTotalPrice(calculateService.totalPriceByOrderItems(items));
-        toSave.setStatus(OrderStatus.INIT);
-        final OrderEntity savedOrder = orderRepository.save(toSave);
-        notifyApiClient.notifyOrder(orderConverter.fromEntityToOrderNotifyRequest(savedOrder, productIdCartItem));
-        return orderConverter.fromEntityToModel(savedOrder);
-    }
+  @Override
+  public OrderModel initOrder(final OrderOnCreateRequest request) {
+    final FullCartSessionModel cartSession = shoppingCartApiClient.getCartSessionById(request.getShoppingCartSessionId());
+    final Map<Long, FullCartItemModel> productIdCartItem = cartSession.getItems()
+        .stream()
+        .collect(Collectors.toMap(FullCartItemModel::getProductId, Function.identity()));
+    final List<OrderItemEntity> items = priceApiClient.allProductPriceByIds(new ArrayList<>(productIdCartItem.keySet()))
+        .stream()
+        .map(productPriceModel -> orderItemConverter.
+            fromFullCartItemToEntity(productIdCartItem.get(productPriceModel.getProductId()), productPriceModel.getPrice()))
+        .collect(Collectors.toList());
+    final UserModel user = baseApiClient.getUserById(cartSession.getUserId());
+    final OrderEntity toSave = orderConverter.fromOnCreateRequestToEntity(request);
+    toSave.setPhone(user.getPhone());
+    toSave.setFirstname(user.getFirstName());
+    toSave.setTotalPrice(calculateService.totalPriceByOrderItems(items));
+    toSave.setStatus(OrderStatus.INIT);
+    toSave.setMerchantId(baseApiClient.getMerchantIdByProductId(productIdCartItem.get(0).getProductId()).getData());
+    final OrderEntity savedOrder = orderRepository.save(toSave);
+    notifyApiClient.notifyOrder(orderConverter.fromEntityToOrderNotifyRequest(savedOrder, productIdCartItem));
+    return orderConverter.fromEntityToModel(savedOrder);
+  }
 
-    @Override
-    public OrderModel save(final OrderOnCreateRequest request) {
-        final OrderEntity toSave = orderConverter.fromOnCreateRequestToEntity(request);
-        toSave.setTotalPrice(calculateService.totalPriceByOrderItems(toSave.getItems()));
-        toSave.setStatus(OrderStatus.INIT);
-        return orderConverter.fromEntityToModel(orderRepository.save(toSave));
-    }
+  @Override
+  public OrderModel save(final OrderOnCreateRequest request) {
+    final OrderEntity toSave = orderConverter.fromOnCreateRequestToEntity(request);
+    toSave.setTotalPrice(calculateService.totalPriceByOrderItems(toSave.getItems()));
+    toSave.setStatus(OrderStatus.INIT);
+    return orderConverter.fromEntityToModel(orderRepository.save(toSave));
+  }
 
-    @Override
-    public OrderModel get(final String id) {
-        final Optional<OrderEntity> orderEntity = orderRepository.findById(id);
-        return orderEntity.isPresent()
-                ? orderConverter.fromEntityToModel(orderEntity.get())
-                : new OrderModel();
-    }
+  @Override
+  public OrderModel get(final String id) {
+    final Optional<OrderEntity> orderEntity = orderRepository.findById(id);
+    return orderEntity.isPresent()
+        ? orderConverter.fromEntityToModel(orderEntity.get())
+        : new OrderModel();
+  }
 
 }
 
