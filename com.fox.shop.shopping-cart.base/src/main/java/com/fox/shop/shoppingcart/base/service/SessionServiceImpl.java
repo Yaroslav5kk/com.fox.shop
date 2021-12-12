@@ -1,5 +1,6 @@
 package com.fox.shop.shoppingcart.base.service;
 
+import com.fox.shop.protocol.ProductModel;
 import com.fox.shop.shoppingcart.base.api.BaseApiClient;
 import com.fox.shop.shoppingcart.base.entity.CartItemEntity;
 import com.fox.shop.shoppingcart.base.entity.SessionEntity;
@@ -93,7 +94,9 @@ public class SessionServiceImpl implements SessionService {
             result.getItemAsProductIdCartItem().get(cartItemOnCreateRequest.getProductId()).plusQuantity(cartItemOnCreateRequest.getQuantity());
         } else {
             final CartItemEntity newItemToSave = cartItemRepository.save(cartItemMapper.fromRequestToEntity(request.getCartItem()));
-            newItemToSave.setProductName(baseApiClient.productById(cartItemOnCreateRequest.getProductId()).getName());
+            final ProductModel product = baseApiClient.productById(cartItemOnCreateRequest.getProductId());
+            newItemToSave.setProductName(product.getName());
+            newItemToSave.setProductMainImageId(product.getMainImage().getId());
             result.getItems().add(newItemToSave);
         }
 

@@ -1,7 +1,11 @@
 package com.fox.shop.base.service;
 
-import com.fox.shop.protocol.response.GeneralResponse;
+import com.fox.shop.protocol.MerchantModel;
 
 public interface MerchantService {
-  GeneralResponse getMerchantIdByProductId(long productId);
+    MerchantModel save(
+            MerchantModel merchant
+    );
+
+    MerchantModel getMerchantByProductId(long productId);
 }

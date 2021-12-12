@@ -7,6 +7,7 @@ import com.fox.shop.ordering.api.factory.i.FatherRequestFactory;
 import com.fox.shop.ordering.api.factory.i.NotifyRequestFactory;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpUriRequest;
+import org.apache.http.entity.ContentType;
 import org.apache.http.entity.StringEntity;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -40,6 +41,7 @@ public class NotifyRequestFactoryImpl implements FatherRequestFactory, NotifyReq
         );
         final HttpPost result = new HttpPost(fullUri);
         try {
+            result.setHeader("Content-Type", ContentType.APPLICATION_JSON.getMimeType());
             result.setEntity(new StringEntity(objectMapper.writeValueAsString(request)));
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();

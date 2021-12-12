@@ -1,5 +1,6 @@
 package com.fox.shop.shoppingcart.protocol.model.full;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fox.shop.shoppingcart.protocol.types.SessionOriginType;
 import com.fox.shop.shoppingcart.protocol.types.SessionStatusType;
 
@@ -15,6 +16,13 @@ public class FullCartSessionModel {
     private Date updatedAt;
     private SessionOriginType originType;
     private List<FullCartItemModel> items = new ArrayList<>();
+
+    @JsonIgnore
+    public long getAnyProductId() {
+        if (items.size() == 0)
+            return 0l;
+        return items.get(0).getProductId();
+    }
 
     public long getUserId() {
         return userId;

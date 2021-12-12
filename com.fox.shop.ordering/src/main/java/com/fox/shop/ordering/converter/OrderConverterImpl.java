@@ -28,7 +28,7 @@ public class OrderConverterImpl implements OrderConverter {
     @Override
     public OrderEntity fromOnCreateRequestToEntity(final OrderOnCreateRequest request) {
         final OrderEntity result = new OrderEntity();
-        result.setTelegramUsername(result.getTelegramUsername());
+        result.setTelegramUsername("@" + request.getTelegramUsername());
         result.setFirstname(request.getFirstname());
         result.setLastname(request.getLastname());
         result.setPhone(request.getPhone());

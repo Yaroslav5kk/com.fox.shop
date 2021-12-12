@@ -5,6 +5,6 @@ server:
 ##-------------------------------------------- notify bot telegram --------------------------------------------##
 notify-telegram-bot:
   api:
-    url: https://localhost:8087/
+    url: http://localhost:8087/
     endpoints:
-      notify-order: notify/order
+      notify-order: api/v1/notify/order

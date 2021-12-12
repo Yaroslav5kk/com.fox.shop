@@ -5,6 +5,7 @@ import java.util.Date;
 public class FullCartItemModel {
     private long id;
     private long productId;
+    @Deprecated
     private long productMainImageId;
     private int quantity;
     private String productName;

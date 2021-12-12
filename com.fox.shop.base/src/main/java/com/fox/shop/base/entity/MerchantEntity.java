@@ -8,7 +8,7 @@ import java.util.List;
 @Table(name = "merchant")
 public class MerchantEntity {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private long id;
     private String name;
     @OneToMany(mappedBy = "merchant", cascade = CascadeType.ALL, orphanRemoval = true)

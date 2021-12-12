@@ -23,6 +23,7 @@ public class CartItemMapperImpl implements CartItemMapper {
         result.setId(entity.getId());
         result.setProductId(entity.getProductId());
         result.setQuantity(entity.getQuantity());
+        result.setProductMainImageId(entity.getProductMainImageId());
         result.setProductName(entity.getProductName());
         return result;
     }

@@ -16,6 +16,8 @@ public class CartItemEntity {
     private long id;
     @Column(name = "product_id")
     private long productId;
+    @Column(name = "product_main_image_id")
+    private long productMainImageId;
     @Column(name = "product_name")
     private String productName;
     private int quantity;
@@ -87,5 +89,13 @@ public class CartItemEntity {
     @Override
     public int hashCode() {
         return Objects.hash(id, productId);
+    }
+
+    public long getProductMainImageId() {
+        return productMainImageId;
+    }
+
+    public void setProductMainImageId(long productMainImageId) {
+        this.productMainImageId = productMainImageId;
     }
 }

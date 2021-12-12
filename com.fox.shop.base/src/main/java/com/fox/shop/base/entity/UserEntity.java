@@ -10,7 +10,7 @@ import java.util.Objects;
 @Table(name = "users")
 public class UserEntity {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "user_id")
     private Long id;
     private String firstName;

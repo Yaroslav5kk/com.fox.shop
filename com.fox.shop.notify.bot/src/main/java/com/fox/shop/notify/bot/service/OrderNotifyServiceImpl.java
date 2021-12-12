@@ -12,25 +12,25 @@ import reactor.core.publisher.Mono;
 @Service
 public class OrderNotifyServiceImpl implements OrderNotifyService {
 
-  private final TgOrderSender tgOrderSender;
-  private final UserInfoRepository userInfoRepository;
+    private final TgOrderSender tgOrderSender;
+    private final UserInfoRepository userInfoRepository;
 
-  public OrderNotifyServiceImpl(
-      final TgOrderSender tgOrderSender,
-      final UserInfoRepository userInfoRepository
-  ) {
-    this.tgOrderSender = tgOrderSender;
-    this.userInfoRepository = userInfoRepository;
-  }
+    public OrderNotifyServiceImpl(
+            final TgOrderSender tgOrderSender,
+            final UserInfoRepository userInfoRepository
+    ) {
+        this.tgOrderSender = tgOrderSender;
+        this.userInfoRepository = userInfoRepository;
+    }
 
 
-  @Override
-  public Mono<NotifyResponse> notifyOrder(
-      final OrderNotifyRequest request
-  ) {
-    return userInfoRepository.findById(request.getMerchantId())
-        .map(UserInfoEntity::getChatId)
-        .doOnNext(chatId -> tgOrderSender.notifyOrder(request, chatId))
-        .then(Mono.just(NotifyResponse.ok()));
-  }
+    @Override
+    public Mono<NotifyResponse> notifyOrder(
+            final OrderNotifyRequest request
+    ) {
+        return userInfoRepository.findById(request.getMerchantId())
+                .map(UserInfoEntity::getChatId)
+                .map(chatId -> tgOrderSender.notifyOrder(request, chatId))
+                .thenReturn(NotifyResponse.ok());
+    }
 }

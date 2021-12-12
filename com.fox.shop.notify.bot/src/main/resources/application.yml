@@ -1,10 +1,11 @@
 server:
-  port: 443
+  port: 8087
   ssl:
     key-store: src/main/resources/keystore-telegram.p12
     key-store-password: changeit
     keyStoreType: PKCS12
     keyAlias: telegram
+    enabled: false
 
 spring:
   data:
@@ -29,3 +30,13 @@ telegram:
     token: 5083514865:AAEm5VFegVNbDyqc5VZFjKj5ndLOTnoxY88
   storage:
     chat-id: 403165071
+    error:
+      file-id-on-telegram: AgACAgIAAxkDAAICfmGiktPq6rbquQ9N513UUPgcZtL6AAIzuTEbaY4ZSbzdORUyFlhRAQADAgADcwADIgQ
+
+
+base:
+  api:
+    url: http://localhost:8080/
+  endpoint:
+    download-image-byte-by-id: api/image/download/byte
+

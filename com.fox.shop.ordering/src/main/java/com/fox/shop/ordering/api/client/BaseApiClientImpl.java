@@ -6,6 +6,7 @@ import com.fox.protocol.user.UserModel;
 import com.fox.shop.ordering.api.client.i.BaseApiClient;
 import com.fox.shop.ordering.api.client.i.FatherApiClient;
 import com.fox.shop.ordering.api.factory.i.BaseRequestFactory;
+import com.fox.shop.protocol.MerchantModel;
 import com.fox.shop.protocol.response.GeneralResponse;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
@@ -43,14 +44,14 @@ public class BaseApiClientImpl implements FatherApiClient, BaseApiClient {
 
   /*--------------------------------------------- users ----------------------------------------------------*/
   @Override
-  public GeneralResponse<Long> getMerchantIdByProductId(final long productId) {
-    final Optional<GeneralResponse> response = executeRequestAndExtractResponse(
-        baseRequestFactory.getUserById(productId),
-        SimpleType.constructUnsafe(GeneralResponse.class)
+  public MerchantModel getMerchantByProductId(final long productId) {
+    final Optional<MerchantModel> response = executeRequestAndExtractResponse(
+        baseRequestFactory.getMerchantIdByProductId(productId),
+        SimpleType.constructUnsafe(MerchantModel.class)
     );
     return response.isPresent()
         ? response.get()
-        : new GeneralResponse();
+        : new MerchantModel();
   }
 
 

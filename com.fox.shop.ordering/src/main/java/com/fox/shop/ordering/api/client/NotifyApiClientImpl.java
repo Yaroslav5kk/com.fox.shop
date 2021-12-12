@@ -3,6 +3,7 @@ package com.fox.shop.ordering.api.client;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.SimpleType;
 import com.fox.shop.notify.protocol.request.OrderNotifyRequest;
+import com.fox.shop.notify.protocol.response.NotifyResponse;
 import com.fox.shop.ordering.api.client.i.FatherApiClient;
 import com.fox.shop.ordering.api.client.i.NotifyApiClient;
 import com.fox.shop.ordering.api.factory.i.NotifyRequestFactory;
@@ -30,14 +31,14 @@ public class NotifyApiClientImpl implements FatherApiClient, NotifyApiClient {
 
     /*--------------------------------------------- order ----------------------------------------------------*/
     @Override
-    public String notifyOrder(final OrderNotifyRequest request) {
-        final Optional<String> response = executeRequestAndExtractResponse(
+    public NotifyResponse notifyOrder(final OrderNotifyRequest request) {
+        final Optional<NotifyResponse> response = executeRequestAndExtractResponse(
                 notifyRequestFactory.notifyOrder(request),
-                SimpleType.constructUnsafe(String.class)
+                SimpleType.constructUnsafe(NotifyResponse.class)
         );
         return response.isPresent()
                 ? response.get()
-                : "FAIL";
+                : new NotifyResponse();
     }
 
 

@@ -1,7 +1,7 @@
 package com.fox.shop.ordering.api.client.i;
 
 import com.fox.protocol.user.UserModel;
-import com.fox.shop.protocol.response.GeneralResponse;
+import com.fox.shop.protocol.MerchantModel;
 
 public interface BaseApiClient {
 
@@ -9,5 +9,5 @@ public interface BaseApiClient {
     UserModel getUserById(long id);
 
   /*--------------------------------------------- users ----------------------------------------------------*/
-  GeneralResponse<Long> getMerchantIdByProductId(long productId);
+  MerchantModel getMerchantByProductId(long productId);
 }
