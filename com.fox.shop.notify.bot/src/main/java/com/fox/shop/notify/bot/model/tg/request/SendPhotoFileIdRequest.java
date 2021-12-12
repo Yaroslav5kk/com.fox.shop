@@ -1,16 +1,19 @@
 package com.fox.shop.notify.bot.model.tg.request;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboard;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class SendPhotoFileIdRequest {
+    @JsonProperty("chat_id")
     private String chatId;
     private String photo;
     private String caption;
     private boolean disableNotification;
     private int replyToMessageId;
     private ReplyKeyboard replyMarkup;
+    @JsonProperty("parse_mode")
     private String parseMode;
 
     public SendPhotoFileIdRequest() {
