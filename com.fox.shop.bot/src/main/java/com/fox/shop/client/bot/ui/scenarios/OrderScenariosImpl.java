@@ -78,6 +78,7 @@ public class OrderScenariosImpl implements OrderScenarios {
         orderingApiClient.initOrder(request);
         telegramApiClient.sendPhoto(orderMessageGenerator.makeOrderTitle(chatId));
         shoppingCartApiClient.clearCartSessionByUser(user.getId());
+        userModelDataContext.clearAll(user.getId());
     }
 
     @Override

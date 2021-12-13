@@ -64,6 +64,7 @@ public class StartScenariosMenuImpl implements StartScenariosMenu {
           .forEach(sendPhotoFileIdRequest -> telegramApiClient.sendPhoto(sendPhotoFileIdRequest));
     }
     telegramApiClient.sendMessage(startMessageGeneratorMenu.base(chatId, userModelDataContext.getCartSessionId(userId)));
+    userModelDataContext.clearAll(userId);
     postHandle(chatId, userId, CommandData.START.getValue());
   }
 

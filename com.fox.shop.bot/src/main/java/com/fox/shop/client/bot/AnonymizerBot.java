@@ -66,7 +66,7 @@ public final class AnonymizerBot extends TelegramLongPollingCommandBot {
     private void handleNotCommand() {
         registerDefaultAction(((absSender, message) -> {
             SendMessage text = new SendMessage();
-            text.setChatId(message.getChatId());
+            text.setChatId(String.valueOf(message.getChatId()));
             text.setText(message.getText() + " command not found!");
 
         }));

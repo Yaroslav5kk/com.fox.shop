@@ -1,5 +1,7 @@
 package com.fox.shop.client.bot.service.i;
 
+import com.fox.shop.client.bot.model.types.UserDomainState;
+
 public interface UserHistoryService {
 
     void snapshot(int userId, String command);
@@ -9,5 +11,5 @@ public interface UserHistoryService {
             String command
     );
 
-    void removeOldMessages(long chatId);
+    void removeOldMessages(long chatId, UserDomainState domainState);
 }

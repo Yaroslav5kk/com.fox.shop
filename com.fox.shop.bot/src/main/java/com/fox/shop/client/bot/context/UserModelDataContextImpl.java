@@ -63,12 +63,6 @@ public class UserModelDataContextImpl implements UserModelDataContext {
   }
 
   @Override
-  public void cleanAll(final Integer userId) {
-    userIdOrderOnCreateRequest.remove(userId);
-    userIdCartItem.remove(userId);
-  }
-
-  @Override
   public void categoryId(
       final Integer userId,
       final Long categoryId
@@ -159,6 +153,18 @@ public class UserModelDataContextImpl implements UserModelDataContext {
 
   @Override
   public Optional<Long> getCartSessionId(final int userId) {
-    return Optional.of(userIdCartSessionId.get(userId));
+    return Optional.ofNullable(userIdCartSessionId.get(userId));
+  }
+
+  @Override
+  public void clearAll(final int userId){
+    userIdOrderOnCreateRequest.remove(userId);
+    userIdCartItem.remove(userId);
+    userIdCartSessionId.remove(userId);
+    userIdRegisterUserModel.remove(userId);
+    userIdCategoryIdFromRequest.remove(userId);
+    userIdCartItemIdFromRequest.remove(userId);
+    userIdProductGroupIdFromRequest.remove(userId);
+    userIdProductIdFromRequest.remove(userId);
   }
 }

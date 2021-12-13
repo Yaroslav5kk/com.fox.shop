@@ -77,7 +77,7 @@ public class AnswerCallBackQuerySelectorImpl implements AnswerCallBackQuerySelec
     UserDomainState domainState = command.startsWith("/") && UserDomainState.isMain(CommandData.fromValue(command))
         ? UserDomainState.fromCommand(CommandData.fromValue(command))
         : userDomainStateContext.current(userId);
-    userHistoryService.removeOldMessages(chatId);
+    userHistoryService.removeOldMessages(chatId,domainState);
     userDomainStateContext.put(userId, domainState);
     switch (domainState) {
       case START:
@@ -120,7 +120,7 @@ public class AnswerCallBackQuerySelectorImpl implements AnswerCallBackQuerySelec
         productScenarios.allProductByGroup(chatId, userId, Long.valueOf(callbackQueryData));
         break;
       case VIEW_PRODUCT_DESCRIPTION:
-        productScenarios.viewProductDescription(chatId, UpdateExtractor.messageId(update), Long.valueOf(callbackQueryData));
+        productScenarios.viewProductDescription(chatId, UpdateExtractor.callBackQueryMessageId(update), Long.valueOf(callbackQueryData));
         break;
       case SEARCH_TITLE:
         searchScenarios.searchTitle(chatId, userId);

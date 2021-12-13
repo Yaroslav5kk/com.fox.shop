@@ -45,12 +45,12 @@ public class ResetScenariosImpl implements ResetScenarios {
             final long chatId,
             final int userId
     ) {
-        preHandle(chatId,userId, CommandData.RESET.getValue());
-        userModelDataContext.cleanAll(userId);
+        preHandle(chatId, userId, CommandData.RESET.getValue());
+        userModelDataContext.clearAll(userId);
         userDomainStateContext.start(userId);
         userProcessStateContext.free(userId);
         apiClient.sendPhoto(resetMessageGenerator.reset(chatId));
-        postHandle(chatId,userId, CommandData.RESET.getValue());
+        postHandle(chatId, userId, CommandData.RESET.getValue());
     }
 
     @Override

@@ -98,7 +98,7 @@ public class ShoppingCartMessageGeneratorImpl implements ShoppingCartMessageGene
                 .collect(Collectors.toMap(ProductModel::getId, productModel -> productModel.getMainImage().getId()));
         for (var itItem : items) {
             final SendPhotoFileIdRequest photo = new SendPhotoFileIdRequest();
-            photo.setPhoto(uploadImageToTelegramService.getTelegramIdByMainId(productIdMainImageId.get(itItem.getProductId())));
+            photo.setPhoto(baseApiClient.downloadImageByteById(itItem.getProductMainImageId()));
             photo.setChatId(chatId);
             photo.setReplyMarkup(shoppingSessionIKeyboardGenerator.editSessionItem(itItem.getId()));
             photo.setParseMode("HTML");

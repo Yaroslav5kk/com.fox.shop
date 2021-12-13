@@ -45,6 +45,10 @@ public class UpdateExtractor {
         return update.getMessage().getMessageId();
     }
 
+    public static long callBackQueryMessageId(final Update update) {
+        return update.getCallbackQuery().getMessage().getMessageId();
+    }
+
 
     public static String enteredText(final Update update) {
         return update.hasCallbackQuery()

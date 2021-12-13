@@ -29,7 +29,7 @@ telegram:
     name: dev_fox_notify_bot
     token: 5083514865:AAEm5VFegVNbDyqc5VZFjKj5ndLOTnoxY88
   storage:
-    chat-id: 403165071
+    chat-id: 308041200
     error:
       file-id-on-telegram: AgACAgIAAxkDAAICfmGiktPq6rbquQ9N513UUPgcZtL6AAIzuTEbaY4ZSbzdORUyFlhRAQADAgADcwADIgQ
 

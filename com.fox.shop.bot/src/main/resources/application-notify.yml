@@ -1,0 +1,88 @@
+                            ## server ##
+server:
+  port: 8081
+                            ## bot telegram ##
+telegram:
+  api:
+    url: https://api.telegram.org/bot5083514865:AAEm5VFegVNbDyqc5VZFjKj5ndLOTnoxY88/
+  bot:
+    name: dev_fox_notify_bot
+    token: 5083514865:AAEm5VFegVNbDyqc5VZFjKj5ndLOTnoxY88
+  storage:
+    chat-id: 308041200
+    make-order:
+      file-id-on-telegram: AgACAgIAAxkDAAIHemGuZGsyfVhIqhVjFQpuPrAaHKi_AAJ1uzEbY-5wSYncxXLgrgraAQADAgADcwADIgQ
+    error:
+      product:
+        file-id-on-telegram: AgACAgIAAxkDAAICfmGiktPq6rbquQ9N513UUPgcZtL6AAIzuTEbaY4ZSbzdORUyFlhRAQADAgADcwADIgQ
+  endpoint:
+    get-file: getFile
+    set-my-commands: setMyCommands
+    send-message: sendMessage
+    send-photo: sendPhoto
+    send-media-group: sendMediaGroup
+    delete-message: deleteMessage
+    edit-message-caption: editMessageCaption
+    edit-message-text: editMessageText
+
+                          ## base service ##
+base:
+  api:
+    url: http://localhost:8080/
+  endpoint:
+    category-by-menu: api/category/by/menu
+    product-by-category: api/product/by/category
+    product-by-ids: api/product/by/ids
+    products-by-group: api/product/by/group
+    search-products-by-name: api/product/search
+    all-product-group: api/groups/product-group
+    save-user: api/user
+    all-delivery: api/delivery/all
+    image:
+      byte-by-id: api/image/download/byte
+      main-byte-by-category: api/image/main/download/byte/by/category
+      main-byte-by-product: api/image/main/download/byte/by/product
+
+                          ## shopping-cart ##
+shopping-cart:
+  api:
+    url: http://localhost:8082/
+    endpoint:
+      get-cart-session-by-id: api/session
+      get-cart-session: api/session
+      add-to-cart: api/session/add-to-cart
+      create-cart-item: api/cart-item
+      clear-cart-session: api/session/clear
+      update-cart-item-quantity: api/session/item-quantity
+      has-active-session: api/session/has-active-session
+
+      ## ordering ##
+ordering:
+  api:
+    url: http://localhost:8085/
+    endpoint:
+      init-order: api/order/init
+
+      ## price ##
+price:
+  api:
+    url: http://localhost:8084/
+    endpoint:
+      price-by-product-id: api/v1/price/by-product-id
+
+                            ## kafka ##
+kafka:
+  server:
+  producer:
+    id:
+  topic:
+    add-to-cart: add-to-cart
+    make-order: make-order
+
+                            ## mongo db ##
+spring:
+  data:
+    mongodb:
+      host: localhost
+      port: 27017
+      database: com_fox_shop_notify_bot

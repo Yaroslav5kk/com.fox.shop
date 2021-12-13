@@ -11,6 +11,8 @@ public class UploadImageToTelegramEntity {
     private long imageIdOnBase;
     @Field(name = "file_id_on_telegram")
     private String fileIdOnTelegram;
+    @Field(name = "unique_file_id_on_telegram")
+    private String uniqueFileIdOnTelegram;
     @Field(name = "file_name")
     private String fileName;
     private String description;
@@ -55,5 +57,13 @@ public class UploadImageToTelegramEntity {
 
     public void setImageIdOnBase(long imageIdOnBase) {
         this.imageIdOnBase = imageIdOnBase;
+    }
+
+    public String getUniqueFileIdOnTelegram() {
+        return uniqueFileIdOnTelegram;
+    }
+
+    public void setUniqueFileIdOnTelegram(String uniqueFileIdOnTelegram) {
+        this.uniqueFileIdOnTelegram = uniqueFileIdOnTelegram;
     }
 }

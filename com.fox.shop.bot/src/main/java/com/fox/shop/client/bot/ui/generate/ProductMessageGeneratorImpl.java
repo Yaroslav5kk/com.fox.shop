@@ -92,7 +92,7 @@ public class ProductMessageGeneratorImpl implements ProductMessageGenerator {
     result.setChatId(String.valueOf(chatId));
     result.setParseMode("HTML");
     result.setMessageId((int) messageId);
-    result.setCaption(ProductViewer.view(product, priceApiClient.getByProductId(product.getId(), 1).getPriceToView()));
+    result.setCaption(ProductViewer.viewWithDescription(product, priceApiClient.getByProductId(product.getId(), 1).getPriceToView()));
     result.setReplyMarkup(productIKeyboardGenerator.onlyAddToCart(product.getId()));
     return result;
   }

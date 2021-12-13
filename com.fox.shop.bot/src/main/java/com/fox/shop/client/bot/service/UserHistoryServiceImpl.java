@@ -42,9 +42,13 @@ public class UserHistoryServiceImpl implements UserHistoryService {
     }
 
     @Override
-    public void removeOldMessages(final long chatId) {
-        userHistoryContext.getAndRemoveMessagesByChatId(chatId).
-                forEach(messageId -> telegramApiClient.deleteMessage(chatId, messageId));
+    public void removeOldMessages(
+            final long chatId,
+            final UserDomainState domainState
+    ) {
+        if (!domainState.equals(UserDomainState.VIEW_PRODUCT_DESCRIPTION))
+            userHistoryContext.getAndRemoveMessagesByChatId(chatId).
+                    forEach(messageId -> telegramApiClient.deleteMessage(chatId, messageId));
     }
 
 }

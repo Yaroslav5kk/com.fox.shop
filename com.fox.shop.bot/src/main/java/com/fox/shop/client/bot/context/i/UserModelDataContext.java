@@ -22,7 +22,6 @@ public interface UserModelDataContext {
 
     CartItemOnCreateRequest getCartItem(Integer userId);
 
-    void cleanAll(Integer userId);
 
     void categoryId(
             Integer userId,
@@ -75,4 +74,6 @@ public interface UserModelDataContext {
   );
 
     Optional<Long> getCartSessionId(int userId);
+
+    void clearAll(int userId);
 }
