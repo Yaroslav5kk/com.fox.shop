@@ -9,6 +9,7 @@ import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMa
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Component
 public class StartIKeyboardGeneratorImpl implements StartIKeyboardGenerator {
@@ -22,12 +23,17 @@ public class StartIKeyboardGeneratorImpl implements StartIKeyboardGenerator {
     }
 
     @Override
-    public InlineKeyboardMarkup base() {
+    public InlineKeyboardMarkup base(final Optional<Long> cartSessionId) {
         final List<Pair<?, ?>> textDataToKeyboard = new ArrayList<>();
         textDataToKeyboard.add(Pair.of(
                 CommandData.GET_CART_SESSION.getDescription(),
                 CommandData.GET_CART_SESSION.getValue()
         ));
+        cartSessionId.ifPresent(aLong ->
+            textDataToKeyboard.add(Pair.of(
+                CommandData.MAKE_ORDER_TITLE.getDescription(),
+                CommandData.MAKE_ORDER_TITLE.getValue() + " " + aLong
+            )));
         textDataToKeyboard.add(Pair.of(
                 CommandData.SEARCH_TITLE.getDescription(),
                 CommandData.SEARCH_TITLE.getValue()

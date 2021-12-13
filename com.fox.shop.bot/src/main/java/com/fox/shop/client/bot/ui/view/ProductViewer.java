@@ -14,12 +14,24 @@ public class ProductViewer {
         return bold("Name: ")
                 .append(italic(productModel.getName()))
                 .append("\n")
-                .append(bold("Description: "))
-                .append(italic(productModel.getDescription()))
-                .append("\n")
                 .append(bold("Price: "))
                 .append(italic(priceToView+" "+"&#8372"))
                 .toString();
+    }
+
+    public static String viewWithDescription(
+        final ProductModel productModel,
+        final String priceToView
+    ) {
+        return bold("Name: ")
+            .append(italic(productModel.getName()))
+            .append("\n")
+            .append(bold("Description: "))
+            .append(italic(productModel.getDescription()))
+            .append("\n")
+            .append(bold("Price: "))
+            .append(italic(priceToView+" "+"&#8372"))
+            .toString();
     }
 
     public static String viewWithQuantity(

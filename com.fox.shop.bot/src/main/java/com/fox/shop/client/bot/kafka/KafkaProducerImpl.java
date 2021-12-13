@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fox.shop.client.bot.api.client.i.OrderingApiClient;
 import com.fox.shop.client.bot.api.client.i.ShoppingCartApiClient;
 import com.fox.shop.ordering.protocol.request.OrderOnCreateRequest;
+import com.fox.shop.shoppingcart.protocol.model.full.FullCartSessionModel;
 import com.fox.shop.shoppingcart.protocol.model.request.AddToCartRequest;
 import com.fox.shop.shoppingcart.protocol.model.request.GeneralRequest;
 import org.springframework.beans.factory.annotation.Value;
@@ -36,8 +37,8 @@ public class KafkaProducerImpl implements KafkaProducer {
     }
 
     @Override
-    public void addToCart(final AddToCartRequest dto) {
-        shoppingCartApiClient.addToCart(dto);
+    public FullCartSessionModel addToCart(final AddToCartRequest dto) {
+        return shoppingCartApiClient.addToCart(dto);
         //kafkaTemplate.send(addToCartTopic, dto);
     }
 

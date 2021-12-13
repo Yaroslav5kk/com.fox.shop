@@ -4,6 +4,8 @@ import com.fox.shop.ordering.protocol.request.OrderOnCreateRequest;
 import com.fox.shop.shoppingcart.protocol.model.request.CartItemOnCreateRequest;
 import com.fox.protocol.user.UserModel;
 
+import java.util.Optional;
+
 public interface UserModelDataContext {
 
     void orderOnCreateRequest(
@@ -66,4 +68,11 @@ public interface UserModelDataContext {
     UserModel getRegisterUserModel(
             Integer userId
     );
+
+  void cartSessionId(
+      int userId,
+      long cartSessionId
+  );
+
+    Optional<Long> getCartSessionId(int userId);
 }

@@ -6,7 +6,6 @@ import com.fox.shop.client.bot.context.i.UserDomainStateContext;
 import com.fox.shop.client.bot.context.i.UserHistoryContext;
 import com.fox.shop.client.bot.context.i.UserModelDataContext;
 import com.fox.shop.client.bot.context.i.UserProcessStateContext;
-import com.fox.shop.client.bot.model.request.SendPhotoFileIdRequest;
 import com.fox.shop.client.bot.model.types.CommandData;
 import com.fox.shop.client.bot.service.i.CommandConfigurationService;
 import com.fox.shop.client.bot.ui.generate.i.PaginationMessageGenerator;
@@ -16,7 +15,8 @@ import com.fox.shop.client.bot.ui.scenarios.i.ProductScenarios;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.objects.User;
 
-import java.util.List;
+import java.util.Arrays;
+import java.util.stream.Collectors;
 
 @Component
 public class ProductScenariosImpl implements ProductScenarios {
@@ -66,11 +66,11 @@ public class ProductScenariosImpl implements ProductScenarios {
     userProcessStateContext.free(user.getId());
     userDomainStateContext.start(user.getId());
     userModelDataContext.categoryId(user.getId(), categoryId);
-    final List<SendPhotoFileIdRequest> productsBycategory = productMessageGenerator.productByCategory(chatId, categoryId);
-    productsBycategory.forEach(telegramApiClient::sendPhoto);
-    if (paginationMessageGenerator.isNeedPagination(productsBycategory.size()))
-      telegramApiClient.sendMessage(paginationMessageGenerator.pagination(chatId));
-    telegramApiClient.sendMessage(productMessageGenerator.afterProductBycategory(chatId, user.getId()));
+    baseApiClient.productByCategory(categoryId).stream()
+        .map(product -> productMessageGenerator.product(chatId, product, baseApiClient.mainImageByteByProduct(product.getId())))
+        .peek(telegramApiClient::sendPhoto)
+        .collect(Collectors.toList());
+    telegramApiClient.sendMessage(productMessageGenerator.afterProductByCategory(chatId, user.getId(), userModelDataContext.getCartSessionId(user.getId())));
     postHandle(chatId, user.getId(), CommandData.PRODUCT_BY_CATEGORY.getValue());
   }
 
@@ -92,7 +92,15 @@ public class ProductScenariosImpl implements ProductScenarios {
     postHandle(chatId, userId, CommandData.PRODUCTS_BY_GROUP.getValue());
   }
 
-  private void sendProductToTelegramAndSaveToHistoryContext(){
+  @Override
+  public void viewProductDescription(
+      final long chatId,
+      final long messageId,
+      final long productId
+  ) {
+    telegramApiClient.editMessageCaption(productMessageGenerator
+        .viewProductDescription(chatId, messageId, baseApiClient.productByIds(Arrays.asList(productId)).get(0))
+    );
 
   }
 

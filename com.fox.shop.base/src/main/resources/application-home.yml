@@ -1,0 +1,41 @@
+server:
+  port: 8080
+  ssl:
+    key-store: C:\other\java_projects\com.fox.menu.base\src\main\resources\server.p12
+    key-store-type: PKCS12
+    key-store-password: password
+    enabled: false
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/dev-com.fox.shop.base
+    username: postgres
+    password: postgres
+  jpa:
+    show-sql: true
+    generate-ddl: true
+    hibernate:
+      ddl-auto: update
+  kafka:
+    consumer:
+      bootstrap-servers: localhost:9092
+      group-id: group_id
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+    producer:
+      bootstrap-servers: localhost:9092
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+    topics:
+      create-user: create-user
+      new-trip: new-sp
+
+
+
+
+
+store:
+  path:
+    image:
+      merchant: C:\other\java_projects\store\merchant\
+      base: C:\other\java_projects\store\

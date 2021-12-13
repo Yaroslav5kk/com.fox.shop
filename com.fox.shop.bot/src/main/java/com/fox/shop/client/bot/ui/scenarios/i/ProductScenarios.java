@@ -14,4 +14,10 @@ public interface ProductScenarios extends Scenarios{
             int userId,
             long groupId
     );
+
+  void viewProductDescription(
+      long chatId,
+      long messageId,
+      long productId
+  );
 }

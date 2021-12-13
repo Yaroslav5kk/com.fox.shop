@@ -7,6 +7,8 @@ import com.fox.shop.client.bot.ui.view.StartViewer;
 import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 
+import java.util.Optional;
+
 
 @Service
 public class StartMessageGeneratorMenuImpl implements StartMessageGeneratorMenu {
@@ -24,13 +26,14 @@ public class StartMessageGeneratorMenuImpl implements StartMessageGeneratorMenu 
 
     @Override
     public SendMessage base(
-            final Long chatId
+            final Long chatId,
+            final Optional<Long> cartSessionId
     ) {
         final SendMessage result = new SendMessage();
         result.setChatId(chatId);
         result.setParseMode("HTML");
         result.setText(StartViewer.base());
-        result.setReplyMarkup(startIKeyboardGenerator.base());
+        result.setReplyMarkup(startIKeyboardGenerator.base(cartSessionId));
         return result;
     }
 

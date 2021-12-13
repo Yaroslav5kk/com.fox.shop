@@ -9,6 +9,7 @@ import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMa
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Component
 public class ProductIKeyboardGeneratorImpl implements ProductIKeyboardGenerator {
@@ -36,12 +37,20 @@ public class ProductIKeyboardGeneratorImpl implements ProductIKeyboardGenerator 
   }
 
   @Override
-  public InlineKeyboardMarkup afterAllProduct(final long userId) {
+  public InlineKeyboardMarkup afterAllProduct(
+      final long userId,
+      final Optional<Long> cartSessionId
+  ) {
     final List<Pair<?, ?>> textDataToKeyboard = new ArrayList<>();
     textDataToKeyboard.add(Pair.of(
         CommandData.GET_CART_SESSION.getDescription(),
         CommandData.GET_CART_SESSION.getValue() + " " + userId
     ));
+    cartSessionId.ifPresent(aLong ->
+        textDataToKeyboard.add(Pair.of(
+            CommandData.MAKE_ORDER_TITLE.getDescription(),
+            CommandData.MAKE_ORDER_TITLE.getValue() + " " + aLong
+        )));
     textDataToKeyboard.add(Pair.of(
         CommandData.BACK.getDescription(),
         CommandData.BACK.getValue()
@@ -66,4 +75,15 @@ public class ProductIKeyboardGeneratorImpl implements ProductIKeyboardGenerator 
     ));
     return inlineKeyboardGenerator.generate(textDataToKeyboard, 1);
   }
+
+  @Override
+  public InlineKeyboardMarkup onlyAddToCart(final long productId) {
+    final List<Pair<?, ?>> textDataToKeyboard = new ArrayList<>();
+    textDataToKeyboard.add(Pair.of(
+        CommandData.ADD_TO_CART.getDescription(),
+        CommandData.ADD_TO_CART.getValue() + " " + productId
+    ));
+    return inlineKeyboardGenerator.generate(textDataToKeyboard, 1);
+  }
+
 }
