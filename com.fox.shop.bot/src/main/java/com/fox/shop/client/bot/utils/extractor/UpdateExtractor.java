@@ -2,14 +2,16 @@ package com.fox.shop.client.bot.utils.extractor;
 
 import org.telegram.telegrambots.meta.api.objects.*;
 
+import java.util.Optional;
+
 public class UpdateExtractor {
 
     public static Location location(final Update update) {
         return message(update).getLocation();
     }
 
-    public static String phone(final Update update) {
-        return message(update).getContact().getPhoneNumber();
+    public static Optional<String> phone(final Update update) {
+        return Optional.of(message(update).getContact().getPhoneNumber());
     }
 
     public static long chatId(final Update update) {

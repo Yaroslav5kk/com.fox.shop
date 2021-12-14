@@ -54,7 +54,7 @@ public class AnswerHandlerImpl implements AnswerHandler {
                 startScenariosMenu.getNameHandle(chatId, enteredText, userId);
                 break;
             case SET_PHONE:
-                startScenariosMenu.getPhoneHandle(chatId, user, UpdateExtractor.phone(update));
+                startScenariosMenu.getPhoneHandle(chatId, user, UpdateExtractor.phone(update).orElse(enteredText));
                 break;
             case SEARCH_PRODUCT:
                 searchScenarios.searchProductHandle(chatId, userId, enteredText);
