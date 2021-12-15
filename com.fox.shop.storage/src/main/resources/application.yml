@@ -1,16 +1,3 @@
-telegram:
-  api:
-    endpoints:
-      get-file: getFile
-      set-my-commands: setMyCommands
-      send-message: sendMessage
-      send-photo: sendPhoto
-      send-media-group: sendMediaGroup
-      delete-message: deleteMessage
-  bot:
-    notify:
-      chat-id: 308041200
-      base-url: https://api.telegram.org/bot5083514865:AAEm5VFegVNbDyqc5VZFjKj5ndLOTnoxY88/
-    shop:
-      chat-id: 308041200
-      base-url: https://api.telegram.org/bot5083514865:AAEm5VFegVNbDyqc5VZFjKj5ndLOTnoxY88/
+spring:
+  profiles:
+    active: work

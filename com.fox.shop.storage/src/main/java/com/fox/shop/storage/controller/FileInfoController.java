@@ -1,5 +1,6 @@
 package com.fox.shop.storage.controller;
 
+import com.fox.shop.storage.response.GeneralResponse;
 import com.fox.shop.storage.service.i.FileInfoService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,7 +22,7 @@ public class FileInfoController {
   }
 
   @GetMapping("telegram-id-by-main-id/{baseId}")
-  public Mono<ResponseEntity<String>> getTelegramIdByBaseId(
+  public Mono<ResponseEntity<GeneralResponse<String>>> getTelegramIdByBaseId(
       @PathVariable final String baseId
   ) {
     return fileInfoService.getTelegramIdByBaseId(baseId).map(ResponseEntity::ok);

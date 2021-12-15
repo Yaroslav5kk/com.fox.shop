@@ -1,9 +1,10 @@
 package com.fox.shop.storage.service.i;
 
+import com.fox.shop.storage.response.GeneralResponse;
 import reactor.core.publisher.Mono;
 
 public interface FileInfoService {
-  Mono<String> getTelegramIdByBaseId(
+  Mono<GeneralResponse<String>> getTelegramIdByBaseId(
       String baseId
   );
 }

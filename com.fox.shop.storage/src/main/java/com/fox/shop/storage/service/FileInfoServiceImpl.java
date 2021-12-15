@@ -1,7 +1,8 @@
 package com.fox.shop.storage.service;
 
-import com.fox.shop.storage.entity.FileEntity;
-import com.fox.shop.storage.repository.FileRepository;
+import com.fox.shop.storage.entity.FileInfoEntity;
+import com.fox.shop.storage.repository.FileInfoRepository;
+import com.fox.shop.storage.response.GeneralResponse;
 import com.fox.shop.storage.service.i.FileInfoService;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
@@ -9,19 +10,19 @@ import reactor.core.publisher.Mono;
 @Service
 public class FileInfoServiceImpl implements FileInfoService {
 
-  private final FileRepository fileRepository;
+  private final FileInfoRepository fileInfoRepository;
 
   public FileInfoServiceImpl(
-      final FileRepository fileRepository
+      final FileInfoRepository fileInfoRepository
   ) {
-    this.fileRepository = fileRepository;
+    this.fileInfoRepository = fileInfoRepository;
   }
 
   @Override
-  public Mono<String> getTelegramIdByBaseId(
+  public Mono<GeneralResponse<String>> getTelegramIdByBaseId(
       final String baseId
   ) {
-    return fileRepository.findById(baseId).map(FileEntity::getTelegramFileId);
+    return fileInfoRepository.findById(baseId).map(FileInfoEntity::getTelegramFileId).map(GeneralResponse::new);
   }
 
 }

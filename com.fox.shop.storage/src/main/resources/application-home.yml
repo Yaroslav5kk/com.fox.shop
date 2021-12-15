@@ -1,0 +1,32 @@
+server:
+  port: 8088
+
+storage:
+  dir-path: C:\Users\User\Desktop\java_projects\shop\storage
+
+##---------------------------------------------------- mongo db ----------------------------------------------------##
+spring:
+  data:
+    mongodb:
+      host: localhost
+      port: 27017
+      database: com_fox_shop_bot
+
+telegram:
+  api:
+    endpoints:
+      get-file: getFile
+      set-my-commands: setMyCommands
+      send-message: sendMessage
+      send-photo: sendPhoto
+      send-media-group: sendMediaGroup
+      delete-message: deleteMessage
+  bot:
+    notify:
+      chat-id: 308041200
+      base-url: https://api.telegram.org/bot5083514865:AAEm5VFegVNbDyqc5VZFjKj5ndLOTnoxY88/
+    shop:
+      chat-id: 308041200
+      base-url: https://api.telegram.org/bot5083514865:AAEm5VFegVNbDyqc5VZFjKj5ndLOTnoxY88/
+
+

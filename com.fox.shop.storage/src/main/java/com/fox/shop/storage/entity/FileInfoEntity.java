@@ -1,18 +1,39 @@
 package com.fox.shop.storage.entity;
 
+import com.fox.shop.storage.response.FileInfoResponse;
 import com.fox.shop.storage.types.StorageProviderType;
 import com.fox.shop.storage.types.TelegramHolderType;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.UUID;
 
-@Document(collection = "image")
-public class FileEntity implements FatherResource{
+@Document(collection = "file_info")
+public class FileInfoEntity implements FatherResource{
   private String id = UUID.randomUUID().toString();
   private String filePath;
   private String telegramFileId;
   private TelegramHolderType telegramHolderType;
   private StorageProviderType storageProviderType;
+
+  public FileInfoEntity filePath(final String filePath){
+    this.filePath = filePath;
+    return this;
+  }
+
+  public FileInfoEntity telegramFileId(final String telegramFileId){
+    this.telegramFileId = telegramFileId;
+    return this;
+  }
+
+  public FileInfoEntity telegramHolderType(final TelegramHolderType telegramHolderType){
+    this.telegramHolderType = telegramHolderType;
+    return this;
+  }
+
+  public FileInfoEntity storageProviderType(final StorageProviderType storageProviderType){
+    this.storageProviderType = storageProviderType;
+    return this;
+  }
 
   public String getId() {
     return id;
