@@ -7,6 +7,10 @@ public class GeneralResponse<T> {
     return new GeneralResponse<>("ok");
   }
 
+  public static GeneralResponse<String> fail() {
+    return new GeneralResponse<>("fail");
+  }
+
   public GeneralResponse() {
   }
 

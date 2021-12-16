@@ -1,8 +1,9 @@
 server:
   port: 8088
 
+
 storage:
-  dir-path: C:\Users\User\Desktop\java_projects\shop\storage
+  dir-path: C:\Users\User\Desktop\java_projects\shop\storage\
 
 ##---------------------------------------------------- mongo db ----------------------------------------------------##
 spring:

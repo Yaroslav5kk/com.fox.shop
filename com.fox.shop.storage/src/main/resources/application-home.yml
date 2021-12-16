@@ -2,7 +2,7 @@ server:
   port: 8088
 
 storage:
-  dir-path: C:\Users\User\Desktop\java_projects\shop\storage
+  dir-path: C:/Users/User/Desktop/java_projects/shop/storage/
 
 ##---------------------------------------------------- mongo db ----------------------------------------------------##
 spring:
@@ -26,7 +26,8 @@ telegram:
       chat-id: 308041200
       base-url: https://api.telegram.org/bot5083514865:AAEm5VFegVNbDyqc5VZFjKj5ndLOTnoxY88/
     shop:
-      chat-id: 308041200
+      #chat-id: 398656915  # Victor
+      chat-id: 308041200  # mine
       base-url: https://api.telegram.org/bot5083514865:AAEm5VFegVNbDyqc5VZFjKj5ndLOTnoxY88/
 
 

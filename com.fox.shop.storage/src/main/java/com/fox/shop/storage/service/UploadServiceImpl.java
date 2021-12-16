@@ -16,6 +16,7 @@ import org.telegram.telegrambots.meta.api.objects.Message;
 import reactor.core.publisher.Mono;
 
 import java.io.File;
+import java.io.IOException;
 
 @Service
 public class UploadServiceImpl implements UploadService {
@@ -45,10 +46,10 @@ public class UploadServiceImpl implements UploadService {
   public Mono<GeneralResponse<String>> uploadToTelegram(
       final TelegramHolderType holderType,
       final FilePart file
-  ) {
-    final File toSave = new File(storageDirPath);
-    file.transferTo(toSave)
-        .map(sendByHolderType(toSave.getPath(), holderType))
+  ) throws IOException {
+    final File toSave = new File(storageDirPath + file.filename());
+    file.transferTo(toSave).subscribe();
+    Mono<FileInfoEntity> fromTelegram = sendByHolderType(toSave.getPath(), holderType)
         .map(message -> message.getPhoto().get(0).getFileId())
         .map(telegramFileId -> new FileInfoEntity()
             .filePath(toSave.getPath())
@@ -63,7 +64,7 @@ public class UploadServiceImpl implements UploadService {
   private Mono<Message> sendByHolderType(
       final String filepath,
       final TelegramHolderType type
-  ) {
+  ) throws IOException {
     if (TelegramHolderType.SHOP.equals(type))
       return telegramApiClient.sendPhoto(filepath, shopTelegramConfig);
     else if (TelegramHolderType.NOTIFY.equals(type))

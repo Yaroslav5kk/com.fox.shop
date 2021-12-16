@@ -1,16 +1,16 @@
-package com.fox.shop.storage.api.request;
+package com.fox.shop.storage.api.request.factory;
 
-import com.fox.shop.storage.api.request.i.FatherRequestFactory;
-import com.fox.shop.storage.api.request.i.TelegramRequestFactory;
+import com.fox.shop.storage.api.request.factory.i.FatherRequestFactory;
+import com.fox.shop.storage.api.request.factory.i.TelegramRequestFactory;
+import com.fox.shop.storage.api.request.model.TgSendPhotoBinaryRequest;
 import com.fox.shop.storage.config.TelegramConfig;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.util.Pair;
+import org.springframework.core.io.PathResource;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
-import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.client.WebClient;
 
-import java.util.Arrays;
+import java.io.IOException;
 import java.util.Collections;
 
 @Component
@@ -29,7 +29,10 @@ public class TelegramRequestFactoryImpl implements FatherRequestFactory, Telegra
   public WebClient.RequestHeadersSpec<?> sendPhoto(
       final TelegramConfig telegramConfig,
       final String filePath
-  ) {
+  ) throws IOException {
+    final TgSendPhotoBinaryRequest requestBody = new TgSendPhotoBinaryRequest();
+    requestBody.setPhoto(new PathResource(filePath).getInputStream().readAllBytes());
+    requestBody.setChatId(telegramConfig.getChatId());
     return webClient
         .post()
         .uri(buildFullUri(
@@ -37,17 +40,9 @@ public class TelegramRequestFactoryImpl implements FatherRequestFactory, Telegra
             sendPhotoPath,
             Collections.emptyList()
         ))
-        .contentType(MediaType.MULTIPART_FORM_DATA)
         .contentType(MediaType.APPLICATION_JSON)
-        .bodyValue(BodyInserters.fromMultipartData(buildMultipartData(
-            Arrays.asList(
-                Pair.of("chat_id", telegramConfig.getChatId())
-            ),
-            Arrays.asList(
-                Pair.of("photo", filePath)
-            ))
-            .build())
-        );
+        .accept(MediaType.APPLICATION_JSON)
+        .bodyValue(requestBody);
   }
 
 }
