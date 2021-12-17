@@ -6,6 +6,7 @@ import com.fox.shop.storage.entity.FileInfoEntity;
 import com.fox.shop.storage.repository.FileInfoRepository;
 import com.fox.shop.storage.response.GeneralResponse;
 import com.fox.shop.storage.service.i.UploadService;
+import com.fox.shop.storage.types.FileType;
 import com.fox.shop.storage.types.StorageProviderType;
 import com.fox.shop.storage.types.TelegramHolderType;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -23,6 +24,8 @@ public class UploadServiceImpl implements UploadService {
 
   @Value("${storage.dir-path}")
   private String storageDirPath;
+  @Value("${storage.url}")
+  private String storageUrl;
 
   private final FileInfoRepository fileInfoRepository;
   private final TelegramConfig notifyTelegramConfig;
@@ -45,30 +48,48 @@ public class UploadServiceImpl implements UploadService {
   @Override
   public Mono<GeneralResponse<String>> uploadToTelegram(
       final TelegramHolderType holderType,
+      final FileType fileType,
       final FilePart file
   ) throws IOException {
     final File toSave = new File(storageDirPath + file.filename());
     file.transferTo(toSave).subscribe();
-    Mono<FileInfoEntity> fromTelegram = sendByHolderType(toSave.getPath(), holderType)
-        .map(message -> message.getPhoto().get(0).getFileId())
-        .map(telegramFileId -> new FileInfoEntity()
-            .filePath(toSave.getPath())
-            .telegramFileId(telegramFileId)
-            .telegramHolderType(holderType)
-            .storageProviderType(StorageProviderType.LOCAL));
-    fromTelegram.subscribe();
-    fromTelegram.doOnSuccess(fileInfoRepository::save).subscribe();
+    final FileInfoEntity fileInfoBeforeTelegram = new FileInfoEntity()
+        .filePath(toSave.getPath())
+        .telegramHolderType(holderType)
+        .storageProviderType(StorageProviderType.LOCAL);
+
+    fileInfoRepository.save(fileInfoBeforeTelegram)
+        .flatMap(afterSave -> sendByFileType(
+            storageUrl + afterSave.getId(),
+            holderType,
+            fileType
+        )).zipWith(fileInfoRepository.findById(fileInfoBeforeTelegram.getId()))
+        .doOnSuccess(tgMessageFileInfo -> fileInfoRepository.save(tgMessageFileInfo.getT2().telegramFileId(tgMessageFileInfo.getT1().getPhoto().get(0).getFileId()))).subscribe();
+
     return Mono.just(GeneralResponse.ok());
   }
 
-  private Mono<Message> sendByHolderType(
-      final String filepath,
-      final TelegramHolderType type
-  ) throws IOException {
-    if (TelegramHolderType.SHOP.equals(type))
-      return telegramApiClient.sendPhoto(filepath, shopTelegramConfig);
-    else if (TelegramHolderType.NOTIFY.equals(type))
-      return telegramApiClient.sendPhoto(filepath, notifyTelegramConfig);
+  private Mono<Message> sendByFileType(
+      final String fileUrl,
+      final TelegramHolderType holderType,
+      final FileType fileType
+  ) {
+    if (FileType.PHOTO.equals(fileType))
+      return telegramApiClient.sendPhoto(fileUrl, extractTelegramConfig(holderType));
+    else if (FileType.ANIMATION.equals(fileType))
+      return telegramApiClient.sendAnimation(fileUrl, extractTelegramConfig(holderType));
+    else if (FileType.VIDEO.equals(fileType))
+      return telegramApiClient.sendVideo(fileUrl, extractTelegramConfig(holderType));
     return Mono.empty();
+  }
+
+  private TelegramConfig extractTelegramConfig(
+      final TelegramHolderType type
+  ) {
+    if (TelegramHolderType.SHOP.equals(type))
+      return shopTelegramConfig;
+    else if (TelegramHolderType.NOTIFY.equals(type))
+      return notifyTelegramConfig;
+    return null;
   }
 }

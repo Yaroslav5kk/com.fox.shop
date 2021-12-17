@@ -1,8 +1,13 @@
 server:
   port: 8088
+  ssl:
+    key-store: src/main/resources/keystore-telegram.p12
+    key-store-password: password
+    key-store-type: pkcs12
 
 storage:
   dir-path: C:/Users/User/Desktop/java_projects/shop/storage/
+  url: https://192.168.1.1:8088/api/v1/download/
 
 ##---------------------------------------------------- mongo db ----------------------------------------------------##
 spring:
@@ -19,6 +24,8 @@ telegram:
       set-my-commands: setMyCommands
       send-message: sendMessage
       send-photo: sendPhoto
+      send-animation: sendAnimation
+      send-video: sendVideo
       send-media-group: sendMediaGroup
       delete-message: deleteMessage
   bot:

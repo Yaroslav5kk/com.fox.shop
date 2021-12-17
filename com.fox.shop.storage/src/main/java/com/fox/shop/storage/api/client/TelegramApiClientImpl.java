@@ -7,8 +7,6 @@ import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import reactor.core.publisher.Mono;
 
-import java.io.IOException;
-
 @Component
 public class TelegramApiClientImpl implements TelegramApiClient {
   private final TelegramRequestFactory telegramRequestFactory;
@@ -21,9 +19,25 @@ public class TelegramApiClientImpl implements TelegramApiClient {
 
   @Override
   public Mono<Message> sendPhoto(
-      final String filePath,
+      final String fileUrl,
       final TelegramConfig telegramConfig
-  ) throws IOException {
-    return telegramRequestFactory.sendPhoto(telegramConfig, filePath).retrieve().bodyToMono(Message.class);
+  ){
+    return telegramRequestFactory.sendPhoto(telegramConfig, fileUrl).retrieve().bodyToMono(Message.class);
+  }
+
+  @Override
+  public Mono<Message> sendAnimation(
+      final String fileUrl,
+      final TelegramConfig telegramConfig
+  ){
+    return telegramRequestFactory.sendAnimation(telegramConfig, fileUrl).retrieve().bodyToMono(Message.class);
+  }
+
+  @Override
+  public Mono<Message> sendVideo(
+      final String fileUrl,
+      final TelegramConfig telegramConfig
+  ){
+    return telegramRequestFactory.sendVideo(telegramConfig, fileUrl).retrieve().bodyToMono(Message.class);
   }
 }

@@ -1,6 +1,6 @@
 package com.fox.shop.storage.entity;
 
-import com.fox.shop.storage.response.FileInfoResponse;
+import com.fox.shop.storage.types.FileType;
 import com.fox.shop.storage.types.StorageProviderType;
 import com.fox.shop.storage.types.TelegramHolderType;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -12,6 +12,7 @@ public class FileInfoEntity implements FatherResource{
   private String id = UUID.randomUUID().toString();
   private String filePath;
   private String telegramFileId;
+  private FileType fileType;
   private TelegramHolderType telegramHolderType;
   private StorageProviderType storageProviderType;
 
@@ -74,5 +75,13 @@ public class FileInfoEntity implements FatherResource{
 
   public void setStorageProviderType(StorageProviderType storageProviderType) {
     this.storageProviderType = storageProviderType;
+  }
+
+  public FileType getFileType() {
+    return fileType;
+  }
+
+  public void setFileType(FileType fileType) {
+    this.fileType = fileType;
   }
 }

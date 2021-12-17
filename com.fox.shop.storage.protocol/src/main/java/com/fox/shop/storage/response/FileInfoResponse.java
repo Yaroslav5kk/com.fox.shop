@@ -1,5 +1,6 @@
 package com.fox.shop.storage.response;
 
+import com.fox.shop.storage.types.FileType;
 import com.fox.shop.storage.types.StorageProviderType;
 import com.fox.shop.storage.types.TelegramHolderType;
 
@@ -7,6 +8,7 @@ public class FileInfoResponse {
   private String id;
   private String filePath;
   private String telegramFileId;
+  private FileType fileType;
   private TelegramHolderType telegramHolderType;
   private StorageProviderType storageProviderType;
 
@@ -73,5 +75,13 @@ public class FileInfoResponse {
 
   public void setStorageProviderType(StorageProviderType storageProviderType) {
     this.storageProviderType = storageProviderType;
+  }
+
+  public FileType getFileType() {
+    return fileType;
+  }
+
+  public void setFileType(FileType fileType) {
+    this.fileType = fileType;
   }
 }

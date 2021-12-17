@@ -10,6 +10,7 @@ public class FileInfoConverter {
     result.setId(entity.getId());
     result.setFilePath(entity.getFilePath());
     result.setTelegramFileId(entity.getTelegramFileId());
+    result.setFileType(entity.getFileType());
     result.setStorageProviderType(entity.getStorageProviderType());
     result.setTelegramHolderType(entity.getTelegramHolderType());
     return result;
