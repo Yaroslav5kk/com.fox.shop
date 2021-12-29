@@ -5,6 +5,6 @@ import reactor.core.publisher.Mono;
 
 public interface FileInfoService {
   Mono<GeneralResponse<String>> getTelegramIdByBaseId(
-      String baseId
+      int baseId
   );
 }

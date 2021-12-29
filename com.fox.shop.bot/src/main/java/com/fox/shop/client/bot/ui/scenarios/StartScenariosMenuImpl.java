@@ -102,7 +102,7 @@ public class StartScenariosMenuImpl implements StartScenariosMenu {
       final User user,
       final String phone
   ) {
-    userModelDataContext.getRegisterUserModel(user.getId()).setPhone(phone);
+   userModelDataContext.getRegisterUserModel(user.getId()).setPhone(phone);
     userService.createCustomer(user);
     groupsMessageGenerator.allMainProductGroups(chatId, user.getId())
         .forEach(sendPhotoFileIdRequest -> telegramApiClient.sendPhoto(sendPhotoFileIdRequest));

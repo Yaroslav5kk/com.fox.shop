@@ -3,6 +3,7 @@ package com.fox.shop.notify.bot.api.client;
 import com.fox.shop.notify.bot.api.client.i.TgApiClient;
 import com.fox.shop.notify.bot.api.factory.i.TgRequestFactory;
 import com.fox.shop.notify.bot.model.tg.request.SendPhotoFileIdRequest;
+import com.fox.shop.notify.bot.model.tg.response.GeneralTelegramResponse;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
@@ -33,7 +34,7 @@ public class TgApiClientImpl implements TgApiClient {
     public Mono<Message> sendPhoto(
             final SendPhotoFileIdRequest request
     ) {
-        return Mono.just(tgRequestFactory.sendPhoto(webClient, request).retrieve().bodyToMono(Message.class).block());
+        return tgRequestFactory.sendPhoto(webClient, request).retrieve().bodyToMono(GeneralTelegramResponse.class).map(GeneralTelegramResponse::getResult);
     }
 
     /*@Override

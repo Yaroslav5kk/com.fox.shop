@@ -38,7 +38,7 @@ public enum CommandData {
   ORDER_ON_TIME_TITLE("/order_on_time_title", "order on time title"),
   ORDER_ON_NAME("/order_on_name", "order on name"),
   ORDER_ON_NAME_TITLE("/order_on_name_title", "order on name title"),
-  EDIT_CART_SESSION("/edit_cart_session", " edit cart"),
+  EDIT_CART_SESSION("/edit_cart_session", "items"),
   GET_CART_SESSION("/get_cart_session", "get cart session"),
   VIEW_CART_SESSION_PRODUCT("/view_cart_session_product", "view items"),
   CLEAR_CART_SESSION("/clean_cart_session", "clean cart session"),

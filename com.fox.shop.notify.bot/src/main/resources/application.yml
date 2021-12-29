@@ -17,7 +17,7 @@ spring:
 ##---------------------------------------- bot telegram ----------------------------------------##
 telegram:
   api:
-    url: https://api.telegram.org/bot5083514865:AAEm5VFegVNbDyqc5VZFjKj5ndLOTnoxY88/
+    url: https://api.telegram.org/bot5083514865:AAHkYcbckXeWTH-7km2XGugflY-YiB2ONSU/
     endpoints:
       get-file: getFile
       set-my-commands: setMyCommands
@@ -27,16 +27,23 @@ telegram:
       delete-message: deleteMessage
   bot:
     name: dev_fox_notify_bot
-    token: 5083514865:AAEm5VFegVNbDyqc5VZFjKj5ndLOTnoxY88
+    token: 5083514865:AAHkYcbckXeWTH-7km2XGugflY-YiB2ONSU
   storage:
     chat-id: 308041200
     error:
       file-id-on-telegram: AgACAgIAAxkDAAICfmGiktPq6rbquQ9N513UUPgcZtL6AAIzuTEbaY4ZSbzdORUyFlhRAQADAgADcwADIgQ
 
-
+##---------------------------------------- base ----------------------------------------##
 base:
   api:
     url: http://localhost:8080/
   endpoint:
     download-image-byte-by-id: api/image/download/byte
 
+
+##---------------------------------------- storage ----------------------------------------##
+storage:
+  api:
+    url: http://localhost:8088/
+  endpoint:
+    get-telegram-id-by-base-id: api/v1/file-info/telegram-id-by-main-id

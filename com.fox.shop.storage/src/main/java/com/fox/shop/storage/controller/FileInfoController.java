@@ -23,7 +23,7 @@ public class FileInfoController {
 
   @GetMapping("telegram-id-by-main-id/{baseId}")
   public Mono<ResponseEntity<GeneralResponse<String>>> getTelegramIdByBaseId(
-      @PathVariable final String baseId
+      @PathVariable final int baseId
   ) {
     return fileInfoService.getTelegramIdByBaseId(baseId).map(ResponseEntity::ok);
   }

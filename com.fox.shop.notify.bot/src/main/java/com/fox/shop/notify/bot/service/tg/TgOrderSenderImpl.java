@@ -1,5 +1,6 @@
 package com.fox.shop.notify.bot.service.tg;
 
+import com.fox.shop.notify.bot.api.client.i.StorageApiClient;
 import com.fox.shop.notify.bot.api.client.i.TgApiClient;
 import com.fox.shop.notify.bot.model.tg.request.SendPhotoFileIdRequest;
 import com.fox.shop.notify.bot.service.tg.i.TgOrderSender;
@@ -17,60 +18,88 @@ import java.util.List;
 @Component
 public class TgOrderSenderImpl implements TgOrderSender {
 
-    private final TgApiClient tgApiClient;
-    private final UploadImageToTelegramService uploadImageToTelegramService;
+  private final TgApiClient tgApiClient;
+  private final UploadImageToTelegramService uploadImageToTelegramService;
+  private final StorageApiClient storageApiClient;
 
-    public TgOrderSenderImpl(
-            final TgApiClient tgApiClient,
-            final UploadImageToTelegramService uploadImageToTelegramService
-    ) {
-        this.tgApiClient = tgApiClient;
-        this.uploadImageToTelegramService = uploadImageToTelegramService;
+  public TgOrderSenderImpl(
+          final TgApiClient tgApiClient,
+          final UploadImageToTelegramService uploadImageToTelegramService,
+          final StorageApiClient storageApiClient
+  ) {
+    this.tgApiClient = tgApiClient;
+    this.uploadImageToTelegramService = uploadImageToTelegramService;
+    this.storageApiClient = storageApiClient;
+  }
+
+  @Override
+  public Mono<Message> notifyOrder(
+          final OrderNotifyRequest notifyRequest,
+          final String chatId
+  ) {
+    sendSplitMessage(chatId);
+    final SendMessage tgRequest = new SendMessage();
+    tgRequest.setChatId(chatId);
+    tgRequest.setParseMode("HTML");
+    tgRequest.setText(OrderViewer.viewOrderNotify(notifyRequest));
+    tgApiClient.sendMessage(tgRequest).subscribe();
+    notifyOrderItems(notifyRequest.getItems(), chatId);
+    return Mono.empty();
+  }
+
+  private void sendSplitMessage(
+          final String chatId
+  ) {
+    final SendMessage tgRequest = new SendMessage();
+    tgRequest.setChatId(chatId);
+    tgRequest.setParseMode("HTML");
+    tgRequest.setText(OrderViewer.split());
+    tgApiClient.sendMessage(tgRequest).block();
+  }
+
+
+  private void notifyOrderItems(
+          final List<OrderItemNotifyModel> items,
+          final String chatId
+  ) {
+    for (OrderItemNotifyModel item : items) {
+      storageApiClient.getTelegramIdByBaseId(item.getProductMainImageId())
+              .map(id -> {
+                final SendPhotoFileIdRequest tgRequest = new SendPhotoFileIdRequest();
+                tgRequest.setChatId(chatId);
+                tgRequest.setParseMode("HTML");
+                tgRequest.setPhoto(id);
+                tgRequest.setCaption(OrderViewer.viewOrderItemNotify(item));
+                return tgApiClient.sendPhoto(tgRequest);
+              }).subscribe();
     }
-
-    @Override
-    public Mono<Message> notifyOrder(
-            final OrderNotifyRequest notifyRequest,
-            final String chatId
-    ) {
-        sendSplitMessage(chatId);
-        final SendMessage tgRequest = new SendMessage();
-        tgRequest.setChatId(chatId);
-        tgRequest.setParseMode("HTML");
-        tgRequest.setText(OrderViewer.viewOrderNotify(notifyRequest));
-        tgApiClient.sendMessage(tgRequest).map(message ->
-                notifyOrderItems(notifyRequest.getItems(), chatId)).subscribe();
-        return Mono.empty();
-    }
-
-    private void sendSplitMessage(
-            final String chatId
-    ) {
-        final SendMessage tgRequest = new SendMessage();
-        tgRequest.setChatId(chatId);
-        tgRequest.setParseMode("HTML");
-        tgRequest.setText(OrderViewer.split());
-        tgApiClient.sendMessage(tgRequest).block();
-    }
-
-
-    private Mono<Message> notifyOrderItems(
-            final List<OrderItemNotifyModel> items,
-            final String chatId
-    ) {
-        for (OrderItemNotifyModel item : items) {
-            uploadImageToTelegramService.getTelegramIdByMainId(item.getProductMainImageId())
-                    .map(id -> {
-                        final SendPhotoFileIdRequest tgRequest = new SendPhotoFileIdRequest();
-                        tgRequest.setChatId(chatId);
-                        tgRequest.setParseMode("HTML");
-                        tgRequest.setPhoto(id);
-                        tgRequest.setCaption(OrderViewer.viewOrderItemNotify(item));
-                        return tgApiClient.sendPhoto(tgRequest);
-                    }).subscribe();
-        }
-        return Mono.empty();
-    }
+  }
 
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

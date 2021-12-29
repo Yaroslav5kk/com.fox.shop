@@ -1,13 +1,14 @@
 server:
   port: 8088
   ssl:
-    key-store: src/main/resources/keystore-telegram.p12
-    key-store-password: password
+    key-store: src/main/resources/telegram-keystore.p12
+    key-store-password: changeit
     key-store-type: pkcs12
+    enabled: false
 
 storage:
-  dir-path: C:/Users/User/Desktop/java_projects/shop/storage/
-  url: https://192.168.1.1:8088/api/v1/download/
+  dir-path: C:\Users\Dell\Desktop\shop\storage/
+  url: https://foxshop.zapto.org/api/v1/download/
 
 ##---------------------------------------------------- mongo db ----------------------------------------------------##
 spring:
@@ -15,7 +16,7 @@ spring:
     mongodb:
       host: localhost
       port: 27017
-      database: com_fox_shop_bot
+      database: com_fox_shop_storage
 
 telegram:
   api:
@@ -31,10 +32,10 @@ telegram:
   bot:
     notify:
       chat-id: 308041200
-      base-url: https://api.telegram.org/bot5083514865:AAEm5VFegVNbDyqc5VZFjKj5ndLOTnoxY88/
+      base-url: https://api.telegram.org/bot5083514865:AAHkYcbckXeWTH-7km2XGugflY-YiB2ONSU/
     shop:
       #chat-id: 398656915  # Victor
       chat-id: 308041200  # mine
-      base-url: https://api.telegram.org/bot5083514865:AAEm5VFegVNbDyqc5VZFjKj5ndLOTnoxY88/
+      base-url: https://api.telegram.org/bot2139497010:AAHpAiEGec8vECZhUmJjSoxVY2fki0bnwBE/
 
 

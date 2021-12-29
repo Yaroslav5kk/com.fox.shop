@@ -20,9 +20,9 @@ public class FileInfoServiceImpl implements FileInfoService {
 
   @Override
   public Mono<GeneralResponse<String>> getTelegramIdByBaseId(
-      final String baseId
+      final int baseId
   ) {
-    return fileInfoRepository.findById(baseId).map(FileInfoEntity::getTelegramFileId).map(GeneralResponse::new);
+    return fileInfoRepository.getByBaseId(baseId).map(FileInfoEntity::getTelegramFileId).map(GeneralResponse::new);
   }
 
 }

@@ -4,10 +4,10 @@ server:
                             ## bot telegram ##
 telegram:
   api:
-    url: https://api.telegram.org/bot2139497010:AAGCJopyZ-PYMB4wlF2QspX7OBt5_DDbG44/
+    url: https://api.telegram.org/bot2139497010:AAHpAiEGec8vECZhUmJjSoxVY2fki0bnwBE/
   bot:
     name: dev_fox_shop_bot
-    token: 2139497010:AAGCJopyZ-PYMB4wlF2QspX7OBt5_DDbG44
+    token: 2139497010:AAHpAiEGec8vECZhUmJjSoxVY2fki0bnwBE
   storage:
     chat-id: 398656915
     make-order:

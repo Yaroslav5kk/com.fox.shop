@@ -1,5 +1,6 @@
 package com.fox.shop.storage.controller;
 
+import com.fox.shop.storage.response.FileInfoResponse;
 import com.fox.shop.storage.response.GeneralResponse;
 import com.fox.shop.storage.service.i.UploadService;
 import com.fox.shop.storage.types.FileType;
@@ -25,7 +26,7 @@ public class UploadController {
   }
 
   @PostMapping(value = "image-to-telegram", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-  public Mono<ResponseEntity<GeneralResponse<String>>> imageUploadToTelegram(
+  public Mono<ResponseEntity<GeneralResponse<FileInfoResponse>>> imageUploadToTelegram(
       @RequestParam final TelegramHolderType holderType,
       @RequestPart final FilePart file
   ) throws IOException {
@@ -33,7 +34,7 @@ public class UploadController {
   }
 
   @PostMapping(value = "animation-to-telegram", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-  public Mono<ResponseEntity<GeneralResponse<String>>> animationUploadToTelegram(
+  public Mono<ResponseEntity<GeneralResponse<FileInfoResponse>>> animationUploadToTelegram(
       @RequestParam final TelegramHolderType holderType,
       @RequestPart final FilePart file
   ) throws IOException {
@@ -41,7 +42,7 @@ public class UploadController {
   }
 
   @PostMapping(value = "video-to-telegram", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-  public Mono<ResponseEntity<GeneralResponse<String>>> videoUploadToTelegram(
+  public Mono<ResponseEntity<GeneralResponse<FileInfoResponse>>> videoUploadToTelegram(
       @RequestParam final TelegramHolderType holderType,
       @RequestPart final FilePart file
   ) throws IOException {

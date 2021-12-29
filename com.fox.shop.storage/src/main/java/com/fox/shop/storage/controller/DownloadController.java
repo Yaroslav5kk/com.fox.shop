@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Mono;
 
 import static org.springframework.http.MediaType.APPLICATION_OCTET_STREAM_VALUE;
+import static org.springframework.http.MediaType.IMAGE_JPEG_VALUE;
 
 @RestController
 @RequestMapping("api/v1/download")
@@ -23,7 +24,7 @@ public class DownloadController {
     this.downloadService = downloadService;
   }
 
-  @GetMapping(value = "{fileId}", produces = APPLICATION_OCTET_STREAM_VALUE)
+  @GetMapping(value = "{fileId}", produces = IMAGE_JPEG_VALUE)
   public Mono<ResponseEntity<Resource>> download(
       @PathVariable final String fileId
   ) {
