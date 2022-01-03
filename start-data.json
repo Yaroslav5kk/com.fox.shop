@@ -1,0 +1,473 @@
+
+															category
+															
+{
+    "name": "",
+    "description": "apples",
+    "imageId":3
+}
+
+
+															product
+															
+
+{
+    "name": "🍉Кавун-лимон",
+    "description": "Кавун-лимон",
+    "categoryId": 24
+}
+				чорницы
+{
+    "name": "🫐 Elf Bar 800 Чорниці ",
+    "description": "Elf Bar 800 Чорниці",
+    "categoryId": 23
+}
+{
+    "name": "🫐 Elf Bar 1500 Чорниці ",
+    "description": "Elf Bar 1500 Чорниці",
+    "categoryId": 25
+}
+{
+    "name": "🫐 Elf Bar 1800 Чорниці ",
+    "description": "Elf Bar 1800 Чорниці",
+    "categoryId": 26
+}
+{
+    "name": "🫐 Elf Bar 2000 Чорниці ",
+    "description": "Elf Bar 2000 Чорниці",
+    "categoryId": 27
+}
+{
+    "name": "🫐 Elf Bar 2500 Чорниці ",
+    "description": "Elf Bar 2500 Чорниці",
+    "categoryId": 28
+}
+	
+				Ананас персик манго
+
+{
+    "name": "🍍🍑🥭 Elf Bar 800 Ананас персик манго ",
+    "description": "Elf Bar 800 Ананас персик манго",
+    "categoryId": 23
+}
+{
+    "name": "🍍🍑🥭 Elf Bar 1500 Ананас персик манго",
+    "description": "Elf Bar 1500 Ананас персик манго",
+    "categoryId": 25
+}
+{
+    "name": "🍍🍑🥭 Elf Bar 1800 Ананас персик манго",
+    "description": "Elf Bar 1800 Ананас персик манго",
+    "categoryId": 26
+}
+{
+    "name": "🍍🍑🥭 Elf Bar 2000 Ананас персик манго ",
+    "description": "Elf Bar 2000 Ананас персик манго",
+    "categoryId": 27
+}
+{
+    "name": "🍍🍑🥭 Elf Bar 2500 Ананас персик манго",
+    "description": "Elf Bar 2500 Ананас персик манго",
+    "categoryId": 28
+}
+
+
+				Полуничний банан
+
+{
+    "name": "🍓🍌 Elf Bar 800 Полуничний банан",
+    "description": "Elf Bar 800 Полуничний банан",
+    "categoryId": 23
+}
+{
+    "name": "🍓🍌 Elf Bar 1500 Полуничний банан",
+    "description": "Elf Bar 1500 Полуничний банан",
+    "categoryId": 25
+}
+{
+    "name": "🍓🍌 Elf Bar 1800 Полуничний банан",
+    "description": "Elf Bar 1800 Полуничний банан",
+    "categoryId": 26
+}
+{
+    "name": "🍓🍌 Elf Bar 2000 Полуничний банан",
+    "description": "Elf Bar 2000 Полуничний банан",
+    "categoryId": 27
+}
+{
+    "name": "🍓🍌 Elf Bar 2500 Полуничний банан",
+    "description": "Elf Bar 2500 Полуничний банан",
+    "categoryId": 28
+}
+
+
+
+				Манго
+
+{
+    "name": "🥭 Elf Bar 800 Манго",
+    "description": "Elf Bar 800 Манго",
+    "categoryId": 23
+}
+{
+    "name": "🥭 Elf Bar 1500 Манго",
+    "description": "Elf Bar 1500 Манго",
+    "categoryId": 25
+}
+{
+    "name": "🥭 Elf Bar 1800 Манго",
+    "description": "Elf Bar 1800 Манго",
+    "categoryId": 26
+}
+{
+    "name": "🥭 Elf Bar 2000 Манго",
+    "description": "Elf Bar 2000 Манго",
+    "categoryId": 27
+}
+{
+    "name": "🥭 Elf Bar 2500 Манго",
+    "description": "Elf Bar 2500 Манго",
+    "categoryId": 28
+}
+
+
+				Кава табак
+
+{
+    "name": "☕️🍂 Elf Bar 800 Кава табак",
+    "description": "Elf Bar 800 Кава табак",
+    "categoryId": 23
+}
+{
+    "name": "☕️🍂 Elf Bar 1500 Кава табак",
+    "description": "Elf Bar 1500 Кава табак",
+    "categoryId": 25
+}
+{
+    "name": "☕️🍂 Elf Bar 1800 Кава табак",
+    "description": "Elf Bar 1800 Кава табак",
+    "categoryId": 26
+}
+{
+    "name": "☕️🍂 Elf Bar 2000 Кава табак",
+    "description": "Elf Bar 2000 Кава табак",
+    "categoryId": 27
+}
+{
+    "name": "☕️🍂 Elf Bar 2500 Кава табак",
+    "description": "Elf Bar 2500 Кава табак",
+    "categoryId": 28
+}
+
+
+
+				Мята
+
+{
+    "name": "🍃 Elf Bar 800 Мята",
+    "description": "Elf Bar 800 Мята",
+    "categoryId": 23
+}
+{
+    "name": "🍃 Elf Bar 1500 Мята",
+    "description": "Elf Bar 1500 Мята",
+    "categoryId": 25
+}
+{
+    "name": "🍃 Elf Bar 1800 Мята",
+    "description": "Elf Bar 1800 Мята",
+    "categoryId": 26
+}
+{
+    "name": "🍃 Elf Bar 2000 Мята",
+    "description": "Elf Bar 2000 Мята",
+    "categoryId": 27
+}
+{
+    "name": "🍃 Elf Bar 2500 Мята",
+    "description": "Elf Bar 2500 Мята",
+    "categoryId": 28
+}
+
+
+
+				Лимонад
+{
+    "name": "🍹 Elf Bar 800 Лимонад",
+    "description": "Elf Bar 800 Лимонад",
+    "categoryId": 23
+}
+{
+    "name": "🍹 Elf Bar 1500 Лимонад",
+    "description": "Elf Bar 1500 Лимонад",
+    "categoryId": 25
+}
+{
+    "name": "🍹 Elf Bar 1800 Лимонад",
+    "description": "Elf Bar 1800 Лимонад",
+    "categoryId": 26
+}
+{
+    "name": "🍹 Elf Bar 2000 Лимонад",
+    "description": "Elf Bar 2000 Лимонад",
+    "categoryId": 27
+}
+{
+    "name": "🍹 Elf Bar 2500 Лимонад",
+    "description": "Elf Bar 2500 Лимонад",
+    "categoryId": 28
+}
+
+
+
+
+				Кавун
+{
+    "name": "🍉 Elf Bar 800 Кавун",
+    "description": "Elf Bar 800 Кавун",
+    "categoryId": 23
+}
+{
+    "name": "🍉 Elf Bar 1500 Кавун",
+    "description": "Elf Bar 1500 Кавун",
+    "categoryId": 25
+}
+{
+    "name": "🍉 Elf Bar 1800 Кавун",
+    "description": "Elf Bar 1800 Кавун",
+    "categoryId": 26
+}
+{
+    "name": "🍉 Elf Bar 2000 Кавун",
+    "description": "Elf Bar 2000 Кавун",
+    "categoryId": 27
+}
+{
+    "name": "🍉 Elf Bar 2500 Кавун",
+    "description": "Elf Bar 2500 Кавун",
+    "categoryId": 28
+}
+
+
+
+
+				Лимонад Blue Razz
+{
+    "name": "🍸 Elf Bar 800 Лимонад Blue Razz",
+    "description": "Elf Bar 800 Лимонад Blue Razz",
+    "categoryId": 23
+}
+{
+    "name": "🍸 Elf Bar 1500 Лимонад Blue Razz",
+    "description": "Elf Bar 1500 Лимонад Blue Razz",
+    "categoryId": 25
+}
+{
+    "name": "🍸 Elf Bar 1800 Лимонад Blue Razz",
+    "description": "Elf Bar 1800 Лимонад Blue Razz",
+    "categoryId": 26
+}
+{
+    "name": "🍸 Elf Bar 2000 Лимонад Blue Razz",
+    "description": "Elf Bar 2000 Лимонад Blue Razz",
+    "categoryId": 27
+}
+{
+    "name": "🍸 Elf Bar 2500 Лимонад Blue Razz",
+    "description": "Elf Bar 2500 Лимонад Blue Razz",
+    "categoryId": 28
+}
+
+
+
+
+				Виноград
+{
+    "name": "🍇 Elf Bar 800 Виноград",
+    "description": "Elf Bar 800 Виноград",
+    "categoryId": 23
+}
+{
+    "name": "🍇 Elf Bar 1500 Виноград",
+    "description": "Elf Bar 1500 Виноград",
+    "categoryId": 25
+}
+{
+    "name": "🍇 Elf Bar 1800 Виноград",
+    "description": "Elf Bar 1800 Виноград",
+    "categoryId": 26
+}
+{
+    "name": "🍇 Elf Bar 2000 Виноград",
+    "description": "Elf Bar 2000 Виноград",
+    "categoryId": 27
+}
+{
+    "name": "🍇 Elf Bar 2500 Виноград",
+    "description": "Elf Bar 2500 Виноград",
+    "categoryId": 28
+}
+
+
+
+
+
+				Ківі Маракуйя Гуава
+{
+    "name": "🥝 Elf Bar 800 Ківі Маракуйя Гуава",
+    "description": "Elf Bar 800 Ківі Маракуйя Гуава",
+    "categoryId": 23
+}
+{
+    "name": "🥝 Elf Bar 1500 Ківі Маракуйя Гуава",
+    "description": "Elf Bar 1500 Ківі Маракуйя Гуава",
+    "categoryId": 25
+}
+{
+    "name": "🥝 Elf Bar 1800 Ківі Маракуйя Гуава",
+    "description": "Elf Bar 1800 Ківі Маракуйя Гуава",
+    "categoryId": 26
+}
+{
+    "name": "🥝 Elf Bar 2000 Ківі Маракуйя Гуава",
+    "description": "Elf Bar 2000 Ківі Маракуйя Гуава",
+    "categoryId": 27
+}
+{
+    "name": "🥝 Elf Bar 2500 Ківі Маракуйя Гуава",
+    "description": "Elf Bar 2500 Ківі Маракуйя Гуава",
+    "categoryId": 28
+}
+
+
+
+
+				Кокосова диня
+{
+    "name": "🥥 Elf Bar 800 Кокосова диня",
+    "description": "Elf Bar 800 Кокосова диня",
+    "categoryId": 23
+}
+{
+    "name": "🥥 Elf Bar 1500 Кокосова диня",
+    "description": "Elf Bar 1500 Кокосова диня",
+    "categoryId": 25
+}
+{
+    "name": "🥥 Elf Bar 1800 Кокосова диня",
+    "description": "Elf Bar 1800 Кокосова диня",
+    "categoryId": 26
+}
+{
+    "name": "🥥 Elf Bar 2000 Кокосова диня",
+    "description": "Elf Bar 2000 Кокосова диня",
+    "categoryId": 27
+}
+{
+    "name": "🥥 Elf Bar 2500 Кокосова диня",
+    "description": "Elf Bar 2500 Кокосова диня",
+    "categoryId": 28
+}
+
+
+
+				Неоновий дощ
+{
+    "name": "☔️ Elf Bar 800 Неоновий дощ",
+    "description": "Elf Bar 800 Неоновий дощ",
+    "categoryId": 23
+}
+{
+    "name": "☔️ Elf Bar 1500 Неоновий дощ",
+    "description": "Elf Bar 1500 Неоновий дощ",
+    "categoryId": 25
+}
+{
+    "name": "☔️ Elf Bar 1800 Неоновий дощ",
+    "description": "Elf Bar 1800 Неоновий дощ",
+    "categoryId": 26
+}
+{
+    "name": "☔️ Elf Bar 2000 Неоновий дощ",
+    "description": "Elf Bar 2000 Неоновий дощ",
+    "categoryId": 27
+}
+{
+    "name": "☔️ Elf Bar 2500 Неоновий дощ",
+    "description": "Elf Bar 2500 Неоновий дощ",
+    "categoryId": 28
+}
+
+
+
+
+				Банан Лід
+{
+    "name": "🍌 Elf Bar 800 Банан Лід",
+    "description": "Elf Bar 800 Банан Лід",
+    "categoryId": 23
+}
+{
+    "name": "🍌 Elf Bar 1500 Банан Лід",
+    "description": "Elf Bar 1500 Банан Лід",
+    "categoryId": 25
+}
+{
+    "name": "🍌 Elf Bar 1800 Банан Лід",
+    "description": "Elf Bar 1800 Банан Лід",
+    "categoryId": 26
+}
+{
+    "name": "🍌 Elf Bar 2000 Банан Лід",
+    "description": "Elf Bar 2000 Банан Лід",
+    "categoryId": 27
+}
+{
+    "name": "🍌 Elf Bar 2500 Банан Лід",
+    "description": "Elf Bar 2500 Банан Лід",
+    "categoryId": 28
+}
+
+
+
+				Полуничне морозиво
+{
+    "name": "🍓 Elf Bar 800 Полуничне морозиво",
+    "description": "Elf Bar 800 Полуничне морозиво",
+    "categoryId": 23
+}
+{
+    "name": "🍓 Elf Bar 1500 Полуничне морозиво",
+    "description": "Elf Bar 1500 Полуничне морозиво",
+    "categoryId": 25
+}
+{
+    "name": "🍓 Elf Bar 1800 Полуничне морозиво",
+    "description": "Elf Bar 1800 Полуничне морозиво",
+    "categoryId": 26
+}
+{
+    "name": "🍓 Elf Bar 2000 Полуничне морозиво",
+    "description": "Elf Bar 2000 Полуничне морозиво",
+    "categoryId": 27
+}
+{
+    "name": "🍓 Elf Bar 2500 Полуничне морозиво",
+    "description": "Elf Bar 2500 Полуничне морозиво",
+    "categoryId": 28
+}
+
+
+
+			
+				
+
+
+
+
+
+
+
+
+
+

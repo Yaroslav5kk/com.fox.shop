@@ -54,6 +54,7 @@ public class ProductServiceImpl implements ProductService {
     public List<ProductModel> allByGroup(final long groupId) {
         return productGroupRepository.getOne(groupId).getProducts().
                 stream().
+                filter(product -> product.getProductBalance().getBalance() > 0).
                 map(ProductConverter::fromEntity).
                 collect(Collectors.toList());
     }
@@ -68,6 +69,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public List<ProductModel> searchByNameMatch(final String toSearch) {
         return productRepository.findByNameContaining(toSearch).stream().
+                filter(product -> product.getProductBalance().getBalance() > 0).
                 map(ProductConverter::fromEntity).
                 collect(Collectors.toList());
     }

@@ -14,6 +14,7 @@ import java.util.UUID;
 @Document(collection = "file_info")
 public class FileInfoEntity implements FatherResource {
   @Id
+  @Indexed(unique = true)
   private String id = UUID.randomUUID().toString();
   private int baseId;
   @Indexed(unique=true)

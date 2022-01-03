@@ -7,6 +7,7 @@ public class ProductModel {
     private String name;
     private String description;
     private ImageModel mainImage;
+    private String mainImageStorageId;
     private List<ImageModel> images;
     private MerchantModel merchant;
 
@@ -65,5 +66,13 @@ public class ProductModel {
 
     public void setMerchant(MerchantModel merchant) {
         this.merchant = merchant;
+    }
+
+    public String getMainImageStorageId() {
+        return mainImageStorageId;
+    }
+
+    public void setMainImageStorageId(String mainImageStorageId) {
+        this.mainImageStorageId = mainImageStorageId;
     }
 }

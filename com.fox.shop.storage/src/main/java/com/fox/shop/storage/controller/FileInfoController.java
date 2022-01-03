@@ -16,15 +16,22 @@ public class FileInfoController {
   private final FileInfoService fileInfoService;
 
   public FileInfoController(
-      final FileInfoService fileInfoService
+          final FileInfoService fileInfoService
   ) {
     this.fileInfoService = fileInfoService;
   }
 
   @GetMapping("telegram-id-by-main-id/{baseId}")
   public Mono<ResponseEntity<GeneralResponse<String>>> getTelegramIdByBaseId(
-      @PathVariable final int baseId
+          @PathVariable final int baseId
   ) {
     return fileInfoService.getTelegramIdByBaseId(baseId).map(ResponseEntity::ok);
+  }
+
+  @GetMapping("telegram-id-by-id/{id}")
+  public Mono<ResponseEntity<GeneralResponse<String>>> getTelegramIdByBaseId(
+          @PathVariable final String id
+  ) {
+    return fileInfoService.getTelegramIdById(id).map(ResponseEntity::ok);
   }
 }

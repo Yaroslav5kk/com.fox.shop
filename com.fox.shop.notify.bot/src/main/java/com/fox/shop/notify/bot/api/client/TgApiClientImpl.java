@@ -27,7 +27,7 @@ public class TgApiClientImpl implements TgApiClient {
     public Mono<Message> sendMessage(
             final SendMessage request
     ) {
-        return Mono.just(tgRequestFactory.sendMessage(webClient, request).retrieve().bodyToMono(Message.class).block());
+        return tgRequestFactory.sendMessage(webClient, request).retrieve().bodyToMono(Message.class);
     }
 
     @Override

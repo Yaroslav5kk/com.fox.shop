@@ -11,6 +11,7 @@ public class OrderNotifyRequest {
     private String lastName;
     private String telegramUsername;
     private String phone;
+    private int totalPrice;
     private List<OrderItemNotifyModel> items;
 
     public String getFirstName() {
@@ -67,5 +68,13 @@ public class OrderNotifyRequest {
 
     public void setItems(List<OrderItemNotifyModel> items) {
         this.items = items;
+    }
+
+    public int getTotalPrice() {
+        return totalPrice;
+    }
+
+    public void setTotalPrice(int totalPrice) {
+        this.totalPrice = totalPrice;
     }
 }

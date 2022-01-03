@@ -6,6 +6,7 @@ import java.util.List;
 public class ProductOnCreateRequest {
     private String name;
     private String description;
+    private String mainImageStorageId;
     private long categoryId;;
     private long merchantId;
     private List<Long> images = new ArrayList<>();
@@ -48,5 +49,13 @@ public class ProductOnCreateRequest {
 
     public void setMerchantId(long merchantId) {
         this.merchantId = merchantId;
+    }
+
+    public String getMainImageStorageId() {
+        return mainImageStorageId;
+    }
+
+    public void setMainImageStorageId(String mainImageStorageId) {
+        this.mainImageStorageId = mainImageStorageId;
     }
 }

@@ -3,6 +3,7 @@ package com.fox.shop.base.service;
 import com.fox.shop.base.converter.MerchantConverter;
 import com.fox.shop.base.repository.MerchantRepository;
 import com.fox.shop.base.repository.ProductRepository;
+import com.fox.shop.base.service.i.MerchantService;
 import com.fox.shop.protocol.MerchantModel;
 import org.springframework.stereotype.Service;
 

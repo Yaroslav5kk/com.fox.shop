@@ -1,6 +1,7 @@
 package com.fox.shop.client.bot.ui.scenarios;
 
 import com.fox.shop.client.bot.api.client.i.BaseApiClient;
+import com.fox.shop.client.bot.api.client.i.StorageApiClient;
 import com.fox.shop.client.bot.api.client.i.TelegramApiClient;
 import com.fox.shop.client.bot.context.i.UserDomainStateContext;
 import com.fox.shop.client.bot.context.i.UserHistoryContext;
@@ -31,18 +32,20 @@ public class ProductScenariosImpl implements ProductScenarios {
   private final CommandConfigurationService commandConfigurationService;
   private final PaginationMessageGenerator paginationMessageGenerator;
   private final BaseApiClient baseApiClient;
+  private final StorageApiClient storageApiClient;
 
   public ProductScenariosImpl(
-      final ProductMessageGenerator productMessageGenerator,
-      final UserDomainStateContext userDomainStateContext,
-      final UserProcessStateContext userProcessStateContext,
-      final UserModelDataContext userModelDataContext,
-      final UserHistoryContext userHistoryContext,
-      final TelegramApiClient telegramApiClient,
-      final PrePostCommandHandleMessageGenerator prePostCommandHandleMessageGenerator,
-      final CommandConfigurationService commandConfigurationService,
-      final PaginationMessageGenerator paginationMessageGenerator,
-      final BaseApiClient baseApiClient
+          final ProductMessageGenerator productMessageGenerator,
+          final UserDomainStateContext userDomainStateContext,
+          final UserProcessStateContext userProcessStateContext,
+          final UserModelDataContext userModelDataContext,
+          final UserHistoryContext userHistoryContext,
+          final TelegramApiClient telegramApiClient,
+          final PrePostCommandHandleMessageGenerator prePostCommandHandleMessageGenerator,
+          final CommandConfigurationService commandConfigurationService,
+          final PaginationMessageGenerator paginationMessageGenerator,
+          final BaseApiClient baseApiClient,
+          final StorageApiClient storageApiClient
   ) {
     this.productMessageGenerator = productMessageGenerator;
     this.userDomainStateContext = userDomainStateContext;
@@ -54,52 +57,53 @@ public class ProductScenariosImpl implements ProductScenarios {
     this.commandConfigurationService = commandConfigurationService;
     this.paginationMessageGenerator = paginationMessageGenerator;
     this.baseApiClient = baseApiClient;
+    this.storageApiClient = storageApiClient;
   }
 
   @Override
   public void allByCategory(
-      final long chatId,
-      final User user,
-      final long categoryId
+          final long chatId,
+          final User user,
+          final long categoryId
   ) {
     preHandle(chatId, user.getId(), CommandData.PRODUCT_BY_CATEGORY.getValue());
     userProcessStateContext.free(user.getId());
     userDomainStateContext.start(user.getId());
     userModelDataContext.categoryId(user.getId(), categoryId);
     baseApiClient.productByCategory(categoryId).stream()
-        .map(product -> productMessageGenerator.product(chatId, product, baseApiClient.mainImageByteByProduct(product.getId())))
-        .peek(telegramApiClient::sendPhoto)
-        .collect(Collectors.toList());
+            .map(product -> productMessageGenerator.product(chatId, product, storageApiClient.getTelegramIdById(product.getMainImageStorageId())))
+            .peek(telegramApiClient::sendPhoto)
+            .collect(Collectors.toList());
     telegramApiClient.sendMessage(productMessageGenerator.afterProductByCategory(chatId, user.getId(), userModelDataContext.getCartSessionId(user.getId())));
     postHandle(chatId, user.getId(), CommandData.PRODUCT_BY_CATEGORY.getValue());
   }
 
   @Override
   public void allProductByGroup(
-      final long chatId,
-      final int userId,
-      final long groupId
+          final long chatId,
+          final int userId,
+          final long groupId
   ) {
     preHandle(chatId, userId, CommandData.PRODUCTS_BY_GROUP.getValue());
     userModelDataContext.productGroupId(userId, groupId);
     baseApiClient.productsByGroup(groupId).forEach(productModel -> telegramApiClient.
-        sendPhoto(productMessageGenerator.product(
-            chatId,
-            productModel,
-            baseApiClient.mainImageByteByProduct(productModel.getId())
-        )));
+            sendPhoto(productMessageGenerator.product(
+                    chatId,
+                    productModel,
+                    storageApiClient.getTelegramIdById(productModel.getMainImageStorageId())
+            )));
     telegramApiClient.sendMessage(productMessageGenerator.beginBack(chatId));
     postHandle(chatId, userId, CommandData.PRODUCTS_BY_GROUP.getValue());
   }
 
   @Override
   public void viewProductDescription(
-      final long chatId,
-      final long messageId,
-      final long productId
+          final long chatId,
+          final long messageId,
+          final long productId
   ) {
     telegramApiClient.editMessageCaption(productMessageGenerator
-        .viewProductDescription(chatId, messageId, baseApiClient.productByIds(Arrays.asList(productId)).get(0))
+            .viewProductDescription(chatId, messageId, baseApiClient.productByIds(Arrays.asList(productId)).get(0))
     );
 
   }

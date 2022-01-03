@@ -1,4 +1,4 @@
-package com.fox.shop.base.service;
+package com.fox.shop.base.service.i;
 
 import com.fox.shop.protocol.MerchantModel;
 

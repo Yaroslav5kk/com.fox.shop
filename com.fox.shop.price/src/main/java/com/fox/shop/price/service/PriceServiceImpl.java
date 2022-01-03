@@ -43,7 +43,7 @@ public class PriceServiceImpl implements PriceService {
     public List<ProductPriceModel> getByProductIds(
             final List<Long> productIds
     ) {
-        return priceRepository.getAllByProductId(productIds)
+        return priceRepository.getAllByProductIdIsIn(productIds)
                 .stream()
                 .map(priceEntity -> build(priceEntity, 1))
                 .collect(Collectors.toList());

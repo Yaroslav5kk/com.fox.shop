@@ -31,13 +31,6 @@ public class ProductController {
         return ResponseEntity.ok(productService.get(id));
     }
 
-    @GetMapping(value = "by/kitchen/{kitchenId}")
-    public ResponseEntity<List<ProductModel>> getByKitchen(
-            @PathVariable final long kitchenId
-    ) {
-        return ResponseEntity.ok(productService.getByKitchen(kitchenId));
-    }
-
     @GetMapping(value = "by/group/{groupId}")
     public ResponseEntity<List<ProductModel>> allByGroup(
             @PathVariable final long groupId

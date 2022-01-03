@@ -7,4 +7,8 @@ public interface FileInfoService {
   Mono<GeneralResponse<String>> getTelegramIdByBaseId(
       int baseId
   );
+
+  Mono<GeneralResponse<String>> getTelegramIdById(
+          String id
+  );
 }

@@ -26,6 +26,9 @@ public class OrderViewer {
                 .append(bold("telegram username: "))
                 .append(italic(notifyRequest.getTelegramUsername()))
                 .append("\n")
+                .append(bold("total price: "))
+                .append(italic(notifyRequest.getTotalPrice() + "grn."))
+                .append("\n")
                 .toString();
     }
 

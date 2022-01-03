@@ -11,5 +11,5 @@ public interface PriceRepository extends MongoRepository<PriceEntity, Long> {
 
     PriceEntity getByProductId(long productId);
 
-    List<PriceEntity> getAllByProductId(List<Long> productIds);
+    List<PriceEntity> getAllByProductIdIsIn(List<Long> productIds);
 }

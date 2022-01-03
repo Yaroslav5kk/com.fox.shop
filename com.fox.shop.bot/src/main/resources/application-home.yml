@@ -70,6 +70,14 @@ price:
     endpoint:
       price-by-product-id: api/v1/price/by-product-id
 
+
+##---------------------------------------- storage ----------------------------------------##
+storage:
+  api:
+    url: http://localhost:8088/
+    endpoint:
+      get-telegram-id-by-id: api/v1/file-info/telegram-id-by-id
+
                             ## kafka ##
 kafka:
   server:

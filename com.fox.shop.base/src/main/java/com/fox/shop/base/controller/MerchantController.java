@@ -1,6 +1,6 @@
 package com.fox.shop.base.controller;
 
-import com.fox.shop.base.service.MerchantService;
+import com.fox.shop.base.service.i.MerchantService;
 import com.fox.shop.protocol.MerchantModel;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

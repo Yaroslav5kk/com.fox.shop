@@ -42,9 +42,11 @@ public class TgOrderSenderImpl implements TgOrderSender {
     tgRequest.setChatId(chatId);
     tgRequest.setParseMode("HTML");
     tgRequest.setText(OrderViewer.viewOrderNotify(notifyRequest));
-    tgApiClient.sendMessage(tgRequest).subscribe();
-    notifyOrderItems(notifyRequest.getItems(), chatId);
-    return Mono.empty();
+    final Mono<Message> messageMono = tgApiClient.sendMessage(tgRequest)
+            .doOnSuccess(message -> notifyOrderItems(notifyRequest.getItems(), chatId));
+    messageMono
+            .subscribe();
+    return messageMono;
   }
 
   private void sendSplitMessage(
@@ -64,13 +66,13 @@ public class TgOrderSenderImpl implements TgOrderSender {
   ) {
     for (OrderItemNotifyModel item : items) {
       storageApiClient.getTelegramIdByBaseId(item.getProductMainImageId())
-              .map(id -> {
+              .doOnSuccess(id -> {
                 final SendPhotoFileIdRequest tgRequest = new SendPhotoFileIdRequest();
                 tgRequest.setChatId(chatId);
                 tgRequest.setParseMode("HTML");
                 tgRequest.setPhoto(id);
                 tgRequest.setCaption(OrderViewer.viewOrderItemNotify(item));
-                return tgApiClient.sendPhoto(tgRequest);
+                tgApiClient.sendPhoto(tgRequest).subscribe();
               }).subscribe();
     }
   }

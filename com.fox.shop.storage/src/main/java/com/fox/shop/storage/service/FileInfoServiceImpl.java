@@ -13,16 +13,23 @@ public class FileInfoServiceImpl implements FileInfoService {
   private final FileInfoRepository fileInfoRepository;
 
   public FileInfoServiceImpl(
-      final FileInfoRepository fileInfoRepository
+          final FileInfoRepository fileInfoRepository
   ) {
     this.fileInfoRepository = fileInfoRepository;
   }
 
   @Override
   public Mono<GeneralResponse<String>> getTelegramIdByBaseId(
-      final int baseId
+          final int baseId
   ) {
     return fileInfoRepository.getByBaseId(baseId).map(FileInfoEntity::getTelegramFileId).map(GeneralResponse::new);
+  }
+
+  @Override
+  public Mono<GeneralResponse<String>> getTelegramIdById(
+          final String id
+  ) {
+    return fileInfoRepository.findById(id).map(FileInfoEntity::getTelegramFileId).map(GeneralResponse::new);
   }
 
 }

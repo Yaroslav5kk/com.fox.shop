@@ -86,6 +86,11 @@
             <version>0.0.0</version>
         </dependency>
 
+        <dependency>
+            <groupId>com.fox.shop</groupId>
+            <artifactId>storage.protocol</artifactId>
+            <version>0.0.0</version>
+        </dependency>
 
 
     </dependencies>
