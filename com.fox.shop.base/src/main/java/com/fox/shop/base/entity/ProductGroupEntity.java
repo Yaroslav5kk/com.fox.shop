@@ -14,9 +14,8 @@ public class ProductGroupEntity {
     private long id;
     private String name;
     private String description;
-    @OneToOne
-    @JoinColumn(name = "main_image_id")
-    private ImageEntity mainImage;
+    @Column(name = "main_image_storage_id")
+    private String mainImageStorageId;
     @Enumerated(EnumType.STRING)
     private ProductGroupType type;
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
@@ -54,19 +53,19 @@ public class ProductGroupEntity {
         this.description = description;
     }
 
-    public ImageEntity getMainImage() {
-        return mainImage;
-    }
-
-    public void setMainImage(ImageEntity mainImage) {
-        this.mainImage = mainImage;
-    }
-
     public ProductGroupType getType() {
         return type;
     }
 
     public void setType(ProductGroupType type) {
         this.type = type;
+    }
+
+    public String getMainImageStorageId() {
+        return mainImageStorageId;
+    }
+
+    public void setMainImageStorageId(String mainImageStorageId) {
+        this.mainImageStorageId = mainImageStorageId;
     }
 }

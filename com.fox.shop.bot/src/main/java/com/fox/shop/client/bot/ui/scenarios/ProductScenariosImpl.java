@@ -61,24 +61,6 @@ public class ProductScenariosImpl implements ProductScenarios {
   }
 
   @Override
-  public void allByCategory(
-          final long chatId,
-          final User user,
-          final long categoryId
-  ) {
-    preHandle(chatId, user.getId(), CommandData.PRODUCT_BY_CATEGORY.getValue());
-    userProcessStateContext.free(user.getId());
-    userDomainStateContext.start(user.getId());
-    userModelDataContext.categoryId(user.getId(), categoryId);
-    baseApiClient.productByCategory(categoryId).stream()
-            .map(product -> productMessageGenerator.product(chatId, product, storageApiClient.getTelegramIdById(product.getMainImageStorageId())))
-            .peek(telegramApiClient::sendPhoto)
-            .collect(Collectors.toList());
-    telegramApiClient.sendMessage(productMessageGenerator.afterProductByCategory(chatId, user.getId(), userModelDataContext.getCartSessionId(user.getId())));
-    postHandle(chatId, user.getId(), CommandData.PRODUCT_BY_CATEGORY.getValue());
-  }
-
-  @Override
   public void allProductByGroup(
           final long chatId,
           final int userId,
@@ -103,7 +85,7 @@ public class ProductScenariosImpl implements ProductScenarios {
           final long productId
   ) {
     telegramApiClient.editMessageCaption(productMessageGenerator
-            .viewProductDescription(chatId, messageId, baseApiClient.productByIds(Arrays.asList(productId)).get(0))
+            .viewProductDescription(chatId, messageId, baseApiClient.productsByIds(Arrays.asList(productId)).get(0))
     );
 
   }

@@ -1,7 +1,7 @@
 package com.fox.shop.storage.converter;
 
 import com.fox.shop.storage.entity.FileInfoEntity;
-import com.fox.shop.storage.response.FileInfoResponse;
+import com.fox.shop.storage.protocol.response.FileInfoResponse;
 
 public class FileInfoConverter {
 

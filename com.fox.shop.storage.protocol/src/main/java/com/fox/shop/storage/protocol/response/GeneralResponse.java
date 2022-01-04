@@ -1,4 +1,4 @@
-package com.fox.shop.storage.response;
+package com.fox.shop.storage.protocol.response;
 
 public class GeneralResponse<T> {
   private T result;

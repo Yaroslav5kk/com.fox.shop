@@ -6,7 +6,7 @@ public class GroupOnCreateRequest {
     private String name;
     private String description;
     private ProductGroupType type;
-    private long imageId;
+    private String mainImageStorageId;
 
     public String getName() {
         return name;
@@ -24,19 +24,19 @@ public class GroupOnCreateRequest {
         this.description = description;
     }
 
-    public long getImageId() {
-        return imageId;
-    }
-
-    public void setImageId(long imageId) {
-        this.imageId = imageId;
-    }
-
     public ProductGroupType getType() {
         return type;
     }
 
     public void setType(ProductGroupType type) {
         this.type = type;
+    }
+
+    public String getMainImageStorageId() {
+        return mainImageStorageId;
+    }
+
+    public void setMainImageStorageId(String mainImageStorageId) {
+        this.mainImageStorageId = mainImageStorageId;
     }
 }

@@ -6,9 +6,8 @@ public class ProductModel {
     private long id;
     private String name;
     private String description;
-    private ImageModel mainImage;
     private String mainImageStorageId;
-    private List<ImageModel> images;
+    private String[] imagesStorageIds;
     private MerchantModel merchant;
 
     public long getId() {
@@ -35,31 +34,6 @@ public class ProductModel {
         this.description = description;
     }
 
-    @Override
-    public String toString() {
-        return "KitchenItemModel{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", description='" + description + '\'' +
-                '}';
-    }
-
-    public List<ImageModel> getImages() {
-        return images;
-    }
-
-    public void setImages(List<ImageModel> images) {
-        this.images = images;
-    }
-
-    public ImageModel getMainImage() {
-        return mainImage;
-    }
-
-    public void setMainImage(ImageModel mainImage) {
-        this.mainImage = mainImage;
-    }
-
     public MerchantModel getMerchant() {
         return merchant;
     }
@@ -74,5 +48,14 @@ public class ProductModel {
 
     public void setMainImageStorageId(String mainImageStorageId) {
         this.mainImageStorageId = mainImageStorageId;
+    }
+
+
+    public String[] getImagesStorageIds() {
+        return imagesStorageIds;
+    }
+
+    public void setImagesStorageIds(String[] imagesStorageIds) {
+        this.imagesStorageIds = imagesStorageIds;
     }
 }

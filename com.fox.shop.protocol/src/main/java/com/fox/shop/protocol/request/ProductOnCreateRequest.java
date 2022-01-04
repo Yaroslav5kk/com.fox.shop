@@ -9,7 +9,7 @@ public class ProductOnCreateRequest {
     private String mainImageStorageId;
     private long categoryId;;
     private long merchantId;
-    private List<Long> images = new ArrayList<>();
+    private String[] imagesStorageIds;
 
     public String getName() {
         return name;
@@ -35,14 +35,6 @@ public class ProductOnCreateRequest {
         this.categoryId = categoryId;
     }
 
-    public List<Long> getImages() {
-        return images;
-    }
-
-    public void setImages(List<Long> images) {
-        this.images = images;
-    }
-
     public long getMerchantId() {
         return merchantId;
     }
@@ -57,5 +49,13 @@ public class ProductOnCreateRequest {
 
     public void setMainImageStorageId(String mainImageStorageId) {
         this.mainImageStorageId = mainImageStorageId;
+    }
+
+    public String[] getImagesStorageIds() {
+        return imagesStorageIds;
+    }
+
+    public void setImagesStorageIds(String[] imagesStorageIds) {
+        this.imagesStorageIds = imagesStorageIds;
     }
 }

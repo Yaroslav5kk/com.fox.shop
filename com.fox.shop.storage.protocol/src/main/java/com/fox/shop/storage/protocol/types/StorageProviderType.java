@@ -1,4 +1,4 @@
-package com.fox.shop.storage.types;
+package com.fox.shop.storage.protocol.types;
 
 public enum StorageProviderType {
   REMOTE(),

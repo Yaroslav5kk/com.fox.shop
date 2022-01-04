@@ -2,7 +2,6 @@ package com.fox.shop.base.service;
 
 import com.fox.shop.base.converter.ProductGroupConverter;
 import com.fox.shop.base.entity.ProductGroupEntity;
-import com.fox.shop.base.repository.ImageRepository;
 import com.fox.shop.base.repository.ProductGroupRepository;
 import com.fox.shop.base.repository.ProductRepository;
 import com.fox.shop.base.service.i.GroupsService;
@@ -18,16 +17,13 @@ import java.util.stream.Collectors;
 public class GroupsServiceImpl implements GroupsService {
 
     private final ProductGroupRepository productGroupRepository;
-    private final ImageRepository imageRepository;
     private final ProductRepository productRepository;
 
     public GroupsServiceImpl(
             final ProductGroupRepository productGroupRepository,
-            final ImageRepository imageRepository,
             final ProductRepository productRepository
     ) {
         this.productGroupRepository = productGroupRepository;
-        this.imageRepository = imageRepository;
         this.productRepository = productRepository;
     }
 
@@ -45,7 +41,6 @@ public class GroupsServiceImpl implements GroupsService {
     @Override
     public ProductGroupModel saveProductGroup(final GroupOnCreateRequest request) {
         final ProductGroupEntity toSave = ProductGroupConverter.fromRequestToEntity(request);
-        toSave.setMainImage(imageRepository.getOne(request.getImageId()));
         return ProductGroupConverter.fromEntity(productGroupRepository.save(toSave));
     }
 

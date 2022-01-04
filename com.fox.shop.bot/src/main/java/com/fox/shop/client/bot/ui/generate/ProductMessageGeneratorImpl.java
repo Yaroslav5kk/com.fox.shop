@@ -11,48 +11,17 @@ import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.methods.updatingmessages.EditMessageCaption;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
-
 @Component
 public class ProductMessageGeneratorImpl implements ProductMessageGenerator {
-  private final BaseApiClient baseApiClient;
   private final ProductIKeyboardGenerator productIKeyboardGenerator;
   private final PriceApiClient priceApiClient;
 
   public ProductMessageGeneratorImpl(
-      final BaseApiClient baseApiClient,
       final ProductIKeyboardGenerator productIKeyboardGenerator,
       final PriceApiClient priceApiClient
   ) {
-    this.baseApiClient = baseApiClient;
     this.productIKeyboardGenerator = productIKeyboardGenerator;
     this.priceApiClient = priceApiClient;
-  }
-
-  @Override
-  public List<SendPhotoFileIdRequest> productByCategory(
-      final long chatId,
-      final long categoryId
-  ) {
-    return baseApiClient.productByCategory(categoryId).stream().
-        map(product -> product(chatId, product, baseApiClient.mainImageByteByProduct(product.getId()))).
-        collect(Collectors.toList());
-  }
-
-  @Override
-  public SendMessage afterProductByCategory(
-      final long chatId,
-      final long userId,
-      final Optional<Long> shoppingCartId
-  ) {
-    final SendMessage result = new SendMessage();
-    result.setChatId(chatId);
-    result.setText(ProductViewer.afterProductBycategory());
-    result.setReplyMarkup(productIKeyboardGenerator.afterAllProduct(userId, shoppingCartId));
-    result.setParseMode("HTML");
-    return result;
   }
 
   @Override

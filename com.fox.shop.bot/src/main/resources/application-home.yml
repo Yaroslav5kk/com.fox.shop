@@ -30,18 +30,14 @@ base:
   api:
     url: http://localhost:8080/
   endpoint:
-    category-by-menu: api/category/by/menu
-    product-by-category: api/product/by/category
     product-by-ids: api/product/by/ids
+    product-by-id: api/product
     products-by-group: api/product/by/group
     search-products-by-name: api/product/search
     all-product-group: api/groups/product-group
     save-user: api/user
     all-delivery: api/delivery/all
-    image:
-      byte-by-id: api/image/download/byte
-      main-byte-by-category: api/image/main/download/byte/by/category
-      main-byte-by-product: api/image/main/download/byte/by/product
+
 
                           ## shopping-cart ##
 shopping-cart:
@@ -76,7 +72,7 @@ storage:
   api:
     url: http://localhost:8088/
     endpoint:
-      get-telegram-id-by-id: api/v1/file-info/telegram-id-by-id
+      get-telegram-id: api/v1/file-info/telegram-id
 
                             ## kafka ##
 kafka:

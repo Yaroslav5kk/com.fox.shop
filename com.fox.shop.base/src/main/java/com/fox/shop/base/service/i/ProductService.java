@@ -10,8 +10,6 @@ public interface ProductService {
 
     ProductModel get(long id);
 
-    List<ProductModel> getByKitchen(long kitchenId);
-
     List<ProductModel> allByGroup(long groupId);
 
     List<ProductModel> byIds(List<Long> ids);

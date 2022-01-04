@@ -9,4 +9,9 @@ import reactor.core.publisher.Mono;
 public interface FileInfoRepository extends ReactiveMongoRepository<FileInfoEntity, String> {
 
   Mono<FileInfoEntity> getByBaseId(int baseId);
+
+  Mono<FileInfoEntity> getByBaseProductId(long productId);
+
+
+  Mono<FileInfoEntity> getByBaseProductGroupId(long productGroupId);
 }

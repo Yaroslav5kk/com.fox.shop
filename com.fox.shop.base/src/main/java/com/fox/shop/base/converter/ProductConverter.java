@@ -20,8 +20,6 @@ public class ProductConverter {
     result.setName(entity.getName());
     result.setDescription(entity.getDescription());
     result.setMainImageStorageId(entity.getMainImageStorageId());
-    if (entity.getMainImage() != null)
-      result.setMainImage(ImageConverter.fromEntity(entity.getMainImage()));
     return result;
   }
 

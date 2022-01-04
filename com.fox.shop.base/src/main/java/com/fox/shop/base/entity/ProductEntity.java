@@ -13,13 +13,8 @@ public class ProductEntity {
     @OneToOne
     @JoinColumn(name = "product_balance_id")
     private ProductBalanceEntity productBalance;
-    @JoinColumn(name = "main_image_id")
-    @OneToOne
-    private ImageEntity mainImage;
     @Column(name = "main_image_storage_id")
     private String mainImageStorageId;
-    @ManyToOne
-    private CategoryEntity category;
     @ManyToOne
     private MerchantEntity merchant;
 
@@ -46,22 +41,6 @@ public class ProductEntity {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public CategoryEntity getCategory() {
-        return category;
-    }
-
-    public void setCategory(CategoryEntity category) {
-        this.category = category;
-    }
-
-    public ImageEntity getMainImage() {
-        return mainImage;
-    }
-
-    public void setMainImage(ImageEntity mainImage) {
-        this.mainImage = mainImage;
     }
 
     public MerchantEntity getMerchant() {

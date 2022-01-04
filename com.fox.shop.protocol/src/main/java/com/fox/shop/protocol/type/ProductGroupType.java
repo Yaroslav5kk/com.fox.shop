@@ -1,6 +1,7 @@
 package com.fox.shop.protocol.type;
 
 public enum ProductGroupType {
-    MAIN(),
-    SEARCH();
+  MAIN(),
+  SEARCH(),
+  CATEGORY();
 }

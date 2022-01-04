@@ -9,16 +9,6 @@ import java.util.List;
 import java.util.Optional;
 
 public interface ProductMessageGenerator {
-  List<SendPhotoFileIdRequest> productByCategory(
-      long chatId,
-      long categoryId
-  );
-
-  SendMessage afterProductByCategory(
-      long chatId,
-      long userId,
-      Optional<Long> shoppingCartId
-  );
 
   SendMessage beginBack(
       long chatId

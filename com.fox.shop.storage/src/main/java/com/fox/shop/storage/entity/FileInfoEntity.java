@@ -1,13 +1,12 @@
 package com.fox.shop.storage.entity;
 
-import com.fox.shop.storage.types.FileFormat;
-import com.fox.shop.storage.types.FileType;
-import com.fox.shop.storage.types.StorageProviderType;
-import com.fox.shop.storage.types.TelegramHolderType;
+import com.fox.shop.storage.protocol.types.FileFormat;
+import com.fox.shop.storage.protocol.types.FileType;
+import com.fox.shop.storage.protocol.types.StorageProviderType;
+import com.fox.shop.storage.protocol.types.TelegramHolderType;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.data.mongodb.core.mapping.Field;
 
 import java.util.UUID;
 
@@ -17,7 +16,9 @@ public class FileInfoEntity implements FatherResource {
   @Indexed(unique = true)
   private String id = UUID.randomUUID().toString();
   private int baseId;
-  @Indexed(unique=true)
+  private long baseProductId;
+  private long baseProductGroupId;
+  @Indexed(unique = true)
   private String filePath;
   private String telegramFileId;
   private FileType fileType;
@@ -27,6 +28,16 @@ public class FileInfoEntity implements FatherResource {
 
   public FileInfoEntity filePath(final String filePath) {
     this.filePath = filePath;
+    return this;
+  }
+
+  public FileInfoEntity baseProductId(final long baseProductId) {
+    this.baseProductId = baseProductId;
+    return this;
+  }
+
+  public FileInfoEntity baseProductGroupId(final long baseProductGroupId) {
+    this.baseProductGroupId = baseProductGroupId;
     return this;
   }
 
@@ -80,7 +91,6 @@ public class FileInfoEntity implements FatherResource {
     this.telegramFileId = telegramFileId;
   }
 
-
   public TelegramHolderType getTelegramHolderType() {
     return telegramHolderType;
   }
@@ -119,5 +129,21 @@ public class FileInfoEntity implements FatherResource {
 
   public void setBaseId(int baseId) {
     this.baseId = baseId;
+  }
+
+  public long getBaseProductId() {
+    return baseProductId;
+  }
+
+  public void setBaseProductId(long baseProductId) {
+    this.baseProductId = baseProductId;
+  }
+
+  public long getBaseProductGroupId() {
+    return baseProductGroupId;
+  }
+
+  public void setBaseProductGroupId(long baseProductGroupId) {
+    this.baseProductGroupId = baseProductGroupId;
   }
 }

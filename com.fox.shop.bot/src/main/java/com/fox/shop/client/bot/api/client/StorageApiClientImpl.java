@@ -5,7 +5,7 @@ import com.fasterxml.jackson.databind.type.SimpleType;
 import com.fox.shop.client.bot.api.client.i.FatherApiClient;
 import com.fox.shop.client.bot.api.client.i.StorageApiClient;
 import com.fox.shop.client.bot.api.factory.i.StorageRequestFactory;
-import com.fox.shop.storage.response.GeneralResponse;
+import com.fox.shop.storage.protocol.response.GeneralResponse;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.springframework.stereotype.Service;

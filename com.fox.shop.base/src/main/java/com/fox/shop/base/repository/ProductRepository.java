@@ -1,6 +1,5 @@
 package com.fox.shop.base.repository;
 
-import com.fox.shop.base.entity.CategoryEntity;
 import com.fox.shop.base.entity.ProductEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

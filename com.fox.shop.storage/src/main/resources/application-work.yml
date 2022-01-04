@@ -18,6 +18,9 @@ spring:
       port: 27017
       database: com_fox_shop_storage
 
+
+
+##---------------------------------------------------- telegram ----------------------------------------------------##
 telegram:
   api:
     endpoints:

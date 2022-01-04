@@ -18,6 +18,8 @@ spring:
       port: 27017
       database: com_fox_shop_storage
 
+
+##---------------------------------------------------- telegram ----------------------------------------------------##
 telegram:
   api:
     endpoints:
@@ -37,5 +39,11 @@ telegram:
       #chat-id: 398656915  # Victor
       chat-id: 308041200  # mine
       base-url: https://api.telegram.org/bot2139497010:AAHpAiEGec8vECZhUmJjSoxVY2fki0bnwBE/
+
+##---------------------------------------------------- base ----------------------------------------------------##
+base:
+  api:
+    url:
+    endpoints:
 
 

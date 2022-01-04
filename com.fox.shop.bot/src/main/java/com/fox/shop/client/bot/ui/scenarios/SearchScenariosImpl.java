@@ -1,6 +1,7 @@
 package com.fox.shop.client.bot.ui.scenarios;
 
 import com.fox.shop.client.bot.api.client.i.BaseApiClient;
+import com.fox.shop.client.bot.api.client.i.StorageApiClient;
 import com.fox.shop.client.bot.api.client.i.TelegramApiClient;
 import com.fox.shop.client.bot.context.i.UserDomainStateContext;
 import com.fox.shop.client.bot.context.i.UserProcessStateContext;
@@ -25,18 +26,20 @@ public class SearchScenariosImpl implements SearchScenarios {
     private final GroupsMessageGenerator groupsMessageGenerator;
     private final BaseApiClient baseApiClient;
     private final ProductMessageGenerator productMessageGenerator;
+    private final StorageApiClient storageApiClient;
 
     public SearchScenariosImpl(
-            final UserDomainStateContext userDomainStateContext,
-            final UserProcessStateContext userProcessStateContext,
-            final SearchMessageGenerator searchMessageGenerator,
-            final TelegramApiClient telegramApiClient,
-            final PrePostCommandHandleMessageGenerator prePostCommandHandleMessageGenerator,
-            final CommandConfigurationService commandConfigurationService,
-            final GroupsMessageGenerator groupsMessageGenerator,
-            final BaseApiClient baseApiClient,
-            final ProductMessageGenerator productMessageGenerator
-    ) {
+        final UserDomainStateContext userDomainStateContext,
+        final UserProcessStateContext userProcessStateContext,
+        final SearchMessageGenerator searchMessageGenerator,
+        final TelegramApiClient telegramApiClient,
+        final PrePostCommandHandleMessageGenerator prePostCommandHandleMessageGenerator,
+        final CommandConfigurationService commandConfigurationService,
+        final GroupsMessageGenerator groupsMessageGenerator,
+        final BaseApiClient baseApiClient,
+        final ProductMessageGenerator productMessageGenerator,
+        final StorageApiClient storageApiClient
+        ) {
         this.userDomainStateContext = userDomainStateContext;
         this.userProcessStateContext = userProcessStateContext;
         this.searchMessageGenerator = searchMessageGenerator;
@@ -46,6 +49,7 @@ public class SearchScenariosImpl implements SearchScenarios {
         this.groupsMessageGenerator = groupsMessageGenerator;
         this.baseApiClient = baseApiClient;
         this.productMessageGenerator = productMessageGenerator;
+        this.storageApiClient = storageApiClient;
     }
 
     @Override
@@ -80,7 +84,7 @@ public class SearchScenariosImpl implements SearchScenarios {
         preHandle(chatId, userId, CommandData.SEARCH_PRODUCT.getValue());
         baseApiClient.searchProductsByName(toSearch).forEach(productModel ->
                 telegramApiClient.sendPhoto(productMessageGenerator.
-                        product(chatId, productModel, baseApiClient.mainImageByteByProduct(productModel.getId())))
+                        product(chatId, productModel, storageApiClient.getTelegramIdById(productModel.getMainImageStorageId())))
         );
         telegramApiClient.sendMessage(productMessageGenerator.beginBack(chatId));
         postHandle(chatId, userId, CommandData.SEARCH_PRODUCT.getValue());

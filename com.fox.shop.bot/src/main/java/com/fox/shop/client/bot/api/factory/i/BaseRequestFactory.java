@@ -8,23 +8,15 @@ import java.util.List;
 
 public interface BaseRequestFactory {
 
-    HttpUriRequest categoryByMenu(long menuId);
-
-    HttpUriRequest productByCategory(long categoryId);
-
-    HttpUriRequest productByIds(List<Long> ids);
-
-    HttpUriRequest mainImageByteByCategory(long categoryId);
+    HttpUriRequest productsByIds(List<Long> ids);
 
     HttpUriRequest searchProductsByName(String name);
 
-    HttpUriRequest mainImageByteByProduct(long productId);
-
     HttpUriRequest allProductGroups(ProductGroupType type);
 
-    HttpUriRequest productsByGroup(long groupId);
+    HttpUriRequest productById(long id);
 
-    HttpUriRequest downloadImageByteById(long id);
+    HttpUriRequest productsByGroup(long groupId);
 
     /*----------------------------------------------users-------------------------------------------------*/
     HttpUriRequest saveUser(UserModel request);
