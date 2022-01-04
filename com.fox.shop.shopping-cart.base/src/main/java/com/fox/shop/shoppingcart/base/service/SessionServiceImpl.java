@@ -96,7 +96,6 @@ public class SessionServiceImpl implements SessionService {
             final CartItemEntity newItemToSave = cartItemRepository.save(cartItemMapper.fromRequestToEntity(request.getCartItem()));
             final ProductModel product = baseApiClient.productById(cartItemOnCreateRequest.getProductId());
             newItemToSave.setProductName(product.getName());
-            newItemToSave.setProductMainImageId(product.getMainImage().getId());
             result.getItems().add(newItemToSave);
         }
 

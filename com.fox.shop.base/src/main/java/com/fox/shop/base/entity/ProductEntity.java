@@ -10,11 +10,11 @@ public class ProductEntity {
     private long id;
     private String name;
     private String description;
+    @Column(name = "main_image_storage_id")
+    private String mainImageStorageId;
     @OneToOne
     @JoinColumn(name = "product_balance_id")
     private ProductBalanceEntity productBalance;
-    @Column(name = "main_image_storage_id")
-    private String mainImageStorageId;
     @ManyToOne
     private MerchantEntity merchant;
 

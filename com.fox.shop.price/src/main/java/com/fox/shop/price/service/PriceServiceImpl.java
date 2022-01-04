@@ -14,49 +14,49 @@ import java.util.stream.Collectors;
 @Service
 public class PriceServiceImpl implements PriceService {
 
-    private final PriceConverter priceConverter;
-    private final PriceRepository priceRepository;
+  private final PriceConverter priceConverter;
+  private final PriceRepository priceRepository;
 
-    public PriceServiceImpl(
-            final PriceConverter priceConverter,
-            final PriceRepository priceRepository
-    ) {
-        this.priceConverter = priceConverter;
-        this.priceRepository = priceRepository;
-    }
+  public PriceServiceImpl(
+          final PriceConverter priceConverter,
+          final PriceRepository priceRepository
+  ) {
+    this.priceConverter = priceConverter;
+    this.priceRepository = priceRepository;
+  }
 
-    @Override
-    public PriceModel save(final PriceOnCreateRequest request) {
-        return priceConverter.entityToModel(priceRepository
-                .save(priceConverter.requestToEntity(request)));
-    }
+  @Override
+  public PriceModel save(final PriceOnCreateRequest request) {
+    return priceConverter.entityToModel(priceRepository
+            .save(priceConverter.requestToEntity(request)));
+  }
 
-    @Override
-    public ProductPriceModel getByProductId(
-            final long productId,
-            final int quantity
-    ) {
-        return build(priceRepository.getByProductId(productId), quantity);
-    }
+  @Override
+  public ProductPriceModel getByProductId(
+          final long productId,
+          final int quantity
+  ) {
+    return build(priceRepository.getByProductId(productId), quantity);
+  }
 
-    @Override
-    public List<ProductPriceModel> getByProductIds(
-            final List<Long> productIds
-    ) {
-        return priceRepository.getAllByProductIdIsIn(productIds)
-                .stream()
-                .map(priceEntity -> build(priceEntity, 1))
-                .collect(Collectors.toList());
-    }
+  @Override
+  public List<ProductPriceModel> getByProductIds(
+          final List<Long> productIds
+  ) {
+    return priceRepository.getAllByProductIdIsIn(productIds)
+            .stream()
+            .map(priceEntity -> build(priceEntity, 1))
+            .collect(Collectors.toList());
+  }
 
-    private ProductPriceModel build(
-            final PriceEntity price,
-            final int quantity
-    ) {
-        final ProductPriceModel result = new ProductPriceModel(price.getProductId(), price.getPrice());
-        result.setCurrency(price.getCurrency());
-        result.setPrice(price.getPrice() * quantity);
-        result.setPriceToView(String.valueOf(result.getPrice()));
-        return result;
-    }
+  private ProductPriceModel build(
+          final PriceEntity price,
+          final int quantity
+  ) {
+    final ProductPriceModel result = new ProductPriceModel(price.getProductId(), price.getPrice());
+    result.setCurrency(price.getCurrency());
+    result.setPrice((price.getPrice() * quantity) / 100);
+    result.setPriceToView(String.valueOf(result.getPrice()));
+    return result;
+  }
 }

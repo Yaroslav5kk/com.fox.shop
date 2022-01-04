@@ -22,7 +22,6 @@ public class AnswerCallBackQuerySelectorImpl implements AnswerCallBackQuerySelec
   private final UserDomainStateContext userDomainStateContext;
   private final StartScenariosMenu startScenarios;
   private final UserProcessStateContext userProcessStateContext;
-  private final CategoryScenarios categoryScenarios;
   private final ProductScenarios productScenarios;
   private final ShoppingCartScenarios shoppingCartScenarios;
   private final OrderScenarios orderScenarios;
@@ -31,23 +30,21 @@ public class AnswerCallBackQuerySelectorImpl implements AnswerCallBackQuerySelec
   private final SearchScenarios searchScenarios;
 
   public AnswerCallBackQuerySelectorImpl(
-      final CommandContainer commandContainer,
-      final UserDomainStateContext userDomainStateContext,
-      final StartScenariosMenu startScenarios,
-      final UserProcessStateContext userProcessStateContext,
-      final CategoryScenarios categoryScenarios,
-      final ProductScenarios productScenarios,
-      final ShoppingCartScenarios shoppingCartScenarios,
-      final OrderScenarios orderScenarios,
-      final ResetScenarios resetScenarios,
-      final UserHistoryService userHistoryService,
-      final SearchScenarios searchScenarios
+          final CommandContainer commandContainer,
+          final UserDomainStateContext userDomainStateContext,
+          final StartScenariosMenu startScenarios,
+          final UserProcessStateContext userProcessStateContext,
+          final ProductScenarios productScenarios,
+          final ShoppingCartScenarios shoppingCartScenarios,
+          final OrderScenarios orderScenarios,
+          final ResetScenarios resetScenarios,
+          final UserHistoryService userHistoryService,
+          final SearchScenarios searchScenarios
   ) {
     this.commandContainer = commandContainer;
     this.userDomainStateContext = userDomainStateContext;
     this.startScenarios = startScenarios;
     this.userProcessStateContext = userProcessStateContext;
-    this.categoryScenarios = categoryScenarios;
     this.productScenarios = productScenarios;
     this.shoppingCartScenarios = shoppingCartScenarios;
     this.orderScenarios = orderScenarios;
@@ -58,7 +55,7 @@ public class AnswerCallBackQuerySelectorImpl implements AnswerCallBackQuerySelec
 
   @Override
   public void select(
-      final Update update
+          final Update update
   ) {
     final long chatId = UpdateExtractor.chatId(update);
     final User user = UpdateExtractor.user(update);
@@ -75,8 +72,8 @@ public class AnswerCallBackQuerySelectorImpl implements AnswerCallBackQuerySelec
     }
 
     UserDomainState domainState = command.startsWith("/") && UserDomainState.isMain(CommandData.fromValue(command))
-        ? UserDomainState.fromCommand(CommandData.fromValue(command))
-        : userDomainStateContext.current(userId);
+            ? UserDomainState.fromCommand(CommandData.fromValue(command))
+            : userDomainStateContext.current(userId);
     userHistoryService.removeOldMessages(chatId, domainState);
     userDomainStateContext.put(userId, domainState);
     switch (domainState) {
@@ -129,10 +126,10 @@ public class AnswerCallBackQuerySelectorImpl implements AnswerCallBackQuerySelec
   }
 
   public void handleProcess(
-      final long chatId,
-      final int userId,
-      final int callbackQueryData,
-      final String enteredText
+          final long chatId,
+          final int userId,
+          final int callbackQueryData,
+          final String enteredText
   ) {
     final UserProcessState processState = userProcessStateContext.current(userId);
 
@@ -144,8 +141,8 @@ public class AnswerCallBackQuerySelectorImpl implements AnswerCallBackQuerySelec
       return Long.valueOf(input);
     }
     return divided.length > 1
-        ? Long.valueOf(divided[1])
-        : 0l;
+            ? Long.valueOf(divided[1])
+            : 0l;
   }
 }
 
