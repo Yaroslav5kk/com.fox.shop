@@ -9,6 +9,7 @@ public class ProductModel {
     private String mainImageStorageId;
     private String[] imagesStorageIds;
     private MerchantModel merchant;
+    private ProductBalanceModel productBalance;
 
     public long getId() {
         return id;
@@ -57,5 +58,13 @@ public class ProductModel {
 
     public void setImagesStorageIds(String[] imagesStorageIds) {
         this.imagesStorageIds = imagesStorageIds;
+    }
+
+    public ProductBalanceModel getProductBalance() {
+        return productBalance;
+    }
+
+    public void setProductBalance(ProductBalanceModel productBalance) {
+        this.productBalance = productBalance;
     }
 }

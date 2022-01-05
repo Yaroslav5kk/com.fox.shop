@@ -12,10 +12,6 @@ public interface TelegramRequestFactory {
     HttpUriRequest sendMessage(SendMessage sendMessage);
 
     HttpUriRequest sendPhoto(
-            SendPhoto sendPhoto
-    );
-
-    HttpUriRequest sendPhoto(
             SendPhotoFileIdRequest sendPhoto
     );
 

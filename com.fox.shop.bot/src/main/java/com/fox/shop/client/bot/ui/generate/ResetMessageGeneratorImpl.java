@@ -1,5 +1,6 @@
 package com.fox.shop.client.bot.ui.generate;
 
+import com.fox.shop.client.bot.model.request.SendPhotoFileIdRequest;
 import com.fox.shop.client.bot.ui.generate.i.ResetMessageGenerator;
 import com.fox.shop.client.bot.ui.view.ResetViewer;
 import org.springframework.stereotype.Component;
@@ -10,10 +11,10 @@ public class ResetMessageGeneratorImpl implements ResetMessageGenerator {
 
 
   @Override
-  public SendPhoto reset(
+  public SendPhotoFileIdRequest reset(
       final long chatId
   ) {
-    final SendPhoto result = new SendPhoto();
+    final SendPhotoFileIdRequest result = new SendPhotoFileIdRequest();
     result.setChatId(chatId);
     result.setParseMode("HTML");
     result.setCaption(ResetViewer.reset());

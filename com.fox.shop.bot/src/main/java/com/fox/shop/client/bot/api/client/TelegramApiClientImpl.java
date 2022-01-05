@@ -61,22 +61,6 @@ public class TelegramApiClientImpl implements TelegramApiClient, FatherApiClient
   }
 
   @Override
-  public Message sendPhoto(
-      final SendPhoto sendPhoto
-  ) {
-    final Optional<GeneralTelegramResponse> response = executeRequestAndExtractResponse(
-        telegramRequestFactory.sendPhoto(sendPhoto),
-        SimpleType.constructUnsafe(GeneralTelegramResponse.class)
-    );
-    if (response.isPresent()) {
-      final Message responseMessage = response.get().getResult();
-      userHistoryContext.chatIdMessage(responseMessage.getChatId(), Long.valueOf(responseMessage.getMessageId()));
-      return responseMessage;
-    }
-    return new Message();
-  }
-
-  @Override
   public List<Message> sendMessage(final List<SendMessage> sendMessages) {
     final List<Message> result = new ArrayList<>();
     sendMessages.forEach(sendMessage -> result.add(sendMessage(sendMessage)));

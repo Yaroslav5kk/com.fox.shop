@@ -35,4 +35,6 @@ public class ProductBalanceEntity {
   public void setBalance(short balance) {
     this.balance = balance;
   }
+
+
 }

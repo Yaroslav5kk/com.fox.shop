@@ -86,33 +86,6 @@ public class TelegramRequestFactoryImpl implements TelegramRequestFactory, Fathe
 
   @Override
   public HttpUriRequest sendPhoto(
-      final SendPhoto sendPhoto
-  ) {
-    final String fullUri = buildFullUri(
-        url,
-        sendPhotoPath,
-        null
-    );
-    final HttpPost result = new HttpPost(fullUri);
-    final List<Pair<String, String>> stringParamsKeyValue = new ArrayList<>();
-    try {
-      stringParamsKeyValue.addAll(Arrays.asList(
-          Pair.of("chat_id", String.valueOf(sendPhoto.getChatId())),
-          Pair.of("caption", Strings.nullToEmpty(sendPhoto.getCaption())),
-          Pair.of("parse_mode", "HTML")
-      ));
-      if (sendPhoto.getReplyMarkup() != null)
-        stringParamsKeyValue.add(Pair.of("reply_markup", objectMapper.writeValueAsString(sendPhoto.getReplyMarkup())));
-    } catch (JsonProcessingException e) {
-      e.printStackTrace();
-    }
-    final Pair<String, File> keyFile = Pair.of("photo", sendPhoto.getPhoto().getNewMediaFile());
-    result.setEntity(buildMultipartFormData(stringParamsKeyValue, Arrays.asList(keyFile)));
-    return result;
-  }
-
-  @Override
-  public HttpUriRequest sendPhoto(
       final SendPhotoFileIdRequest sendPhoto
   ) {
     final String fullUri = buildFullUri(

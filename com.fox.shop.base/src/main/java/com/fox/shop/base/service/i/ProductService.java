@@ -2,17 +2,19 @@ package com.fox.shop.base.service.i;
 
 import com.fox.shop.protocol.ProductModel;
 import com.fox.shop.protocol.request.ProductOnCreateRequest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
 public interface ProductService {
-    ProductModel save(ProductOnCreateRequest request);
+  ProductModel save(ProductOnCreateRequest request);
 
-    ProductModel get(long id);
+  ProductModel get(long id);
 
-    List<ProductModel> allByGroup(long groupId);
+  Page<ProductModel> allByGroup(long groupId, Pageable pageable);
 
-    List<ProductModel> byIds(List<Long> ids);
+  Page<ProductModel> byIds(List<Long> ids, Pageable pageable);
 
-    List<ProductModel> searchByNameMatch(String toSearch);
+  Page<ProductModel> searchByNameMatch(String toSearch, Pageable pageable);
 }

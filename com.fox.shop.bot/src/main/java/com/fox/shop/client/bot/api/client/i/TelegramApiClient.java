@@ -17,10 +17,6 @@ public interface TelegramApiClient {
             SendPhotoFileIdRequest sendPhoto
     );
 
-    Message sendPhoto(
-            SendPhoto sendPhoto
-    );
-
     List<Message> sendMessage(List<SendMessage> sendMessage);
 
     Message sendMessage(SendMessage sendMessage);
