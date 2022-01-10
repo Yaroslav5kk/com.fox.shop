@@ -12,6 +12,7 @@ import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.entity.ContentType;
 import org.apache.http.entity.StringEntity;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.util.Pair;
 import org.springframework.stereotype.Service;
 
@@ -55,9 +56,9 @@ public class BaseRequestFactoryImpl implements BaseRequestFactory, FatherRequest
     ids.forEach(it -> queryListAsString.append(it).append(","));
     queryListAsString.deleteCharAt(queryListAsString.length() - 1);
     final String fullUri = buildFullUri(
-        url,
-        productsByIds,
-        Arrays.asList(Pair.of("ids", queryListAsString.toString()))
+            url,
+            productsByIds,
+            Arrays.asList(Pair.of("ids", queryListAsString.toString()))
     );
     return new HttpGet(fullUri);
   }
@@ -65,19 +66,25 @@ public class BaseRequestFactoryImpl implements BaseRequestFactory, FatherRequest
   @Override
   public HttpUriRequest productById(final long id) {
     final String fullUri = buildFullUri(
-        url,
-        productById + "/" + id,
-        Collections.emptyList()
+            url,
+            productById + "/" + id,
+            Collections.emptyList()
     );
     return new HttpGet(fullUri);
   }
 
   @Override
-  public HttpUriRequest productsByGroup(final long groupId) {
+  public HttpUriRequest productsByGroup(
+          final long groupId,
+          final Pageable pageable
+  ) {
     final String fullUri = buildFullUri(
-        url,
-        productsByGroup + "/" + groupId,
-        null
+            url,
+            productsByGroup + "/" + groupId,
+            Arrays.asList(
+                    Pair.of("page", String.valueOf(pageable.getPageNumber())),
+                    Pair.of("size", String.valueOf(pageable.getPageSize()))
+            )
     );
     return new HttpGet(fullUri);
   }
@@ -85,9 +92,9 @@ public class BaseRequestFactoryImpl implements BaseRequestFactory, FatherRequest
   @Override
   public HttpUriRequest searchProductsByName(final String name) {
     final String fullUri = buildFullUri(
-        url,
-        searchProductsByName + "/" + name,
-        null
+            url,
+            searchProductsByName + "/" + name.replaceAll(" ", "%20"),
+            null
     );
     return new HttpGet(fullUri);
   }
@@ -96,9 +103,9 @@ public class BaseRequestFactoryImpl implements BaseRequestFactory, FatherRequest
   @Override
   public HttpUriRequest allProductGroups(final ProductGroupType type) {
     final String fullUri = buildFullUri(
-        url,
-        allProductGroups,
-        Arrays.asList(Pair.of("type", type.name()))
+            url,
+            allProductGroups,
+            Arrays.asList(Pair.of("type", type.name()))
     );
     return new HttpGet(fullUri);
   }
@@ -107,9 +114,9 @@ public class BaseRequestFactoryImpl implements BaseRequestFactory, FatherRequest
   @Override
   public HttpUriRequest saveUser(final UserModel request) {
     final String fullUri = buildFullUri(
-        url,
-        saveUser,
-        null
+            url,
+            saveUser,
+            null
     );
     final HttpPost result = new HttpPost(fullUri);
     result.setHeader("Content-Type", ContentType.APPLICATION_JSON.getMimeType());
@@ -127,9 +134,9 @@ public class BaseRequestFactoryImpl implements BaseRequestFactory, FatherRequest
   @Override
   public HttpUriRequest getAllDelivery() {
     final String fullUri = buildFullUri(
-        url,
-        allDelivery,
-        null
+            url,
+            allDelivery,
+            null
     );
     return new HttpGet(fullUri);
   }

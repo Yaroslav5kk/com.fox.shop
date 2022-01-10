@@ -49,8 +49,8 @@ public class ProductServiceImpl implements ProductService {
       final long groupId,
       final Pageable pageable
   ) {
-    final Specification<ProductEntity> specification = productSpecificationFactory.productBalanceGreaterThan((short) 0)
-        .and(productSpecificationFactory.byGroupId(groupId));
+    final Specification<ProductEntity> specification = productSpecificationFactory.byGroupId(groupId)
+        .and(productSpecificationFactory.productBalanceGreaterThan((short) 0));
     return productRepository.findAll(specification, pageable).
         map(ProductConverter::fromEntity);
   }

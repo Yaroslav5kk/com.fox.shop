@@ -18,7 +18,7 @@ public class ProductEntity {
   private ProductBalanceEntity productBalance;
   @ManyToOne
   private MerchantEntity merchant;
-  @ManyToMany
+  @ManyToMany(mappedBy = "products")
   private List<ProductGroupEntity> groups;
 
 

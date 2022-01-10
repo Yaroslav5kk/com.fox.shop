@@ -29,7 +29,7 @@ public class PrePostCommandHandleMessageGeneratorImpl implements PrePostCommandH
         final SendPhotoFileIdRequest result = new SendPhotoFileIdRequest();
         result.setChatId(chatId);
         result.setParseMode("HTML");
-        result.setPhoto(commandConfigurationService.get(command).getPreHandleFileIdOnTelegram());
+        result.setPhoto(commandConfigurationService.get(command).getPreHandleFileIdOnStorage());
         result.setCaption(commandConfigurationService.get(command).getPreHandleMessageText());
         return result;
     }

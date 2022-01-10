@@ -2,24 +2,23 @@ package com.fox.shop.client.bot.api.factory.i;
 
 import com.fox.shop.client.bot.model.request.SendMediaGroupRequest;
 import com.fox.shop.client.bot.model.request.SendPhotoFileIdRequest;
-import org.apache.http.client.methods.HttpUriRequest;
+import com.squareup.okhttp.Request;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
-import org.telegram.telegrambots.meta.api.methods.send.SendPhoto;
 import org.telegram.telegrambots.meta.api.methods.updatingmessages.EditMessageCaption;
 import org.telegram.telegrambots.meta.api.methods.updatingmessages.EditMessageText;
 
 public interface TelegramRequestFactory {
-    HttpUriRequest sendMessage(SendMessage sendMessage);
+    Request sendMessage(SendMessage sendMessage);
 
-    HttpUriRequest sendPhoto(
+    Request sendPhoto(
             SendPhotoFileIdRequest sendPhoto
     );
 
-    HttpUriRequest sendMediaGroup(SendMediaGroupRequest sendMediaGroup);
+    Request sendMediaGroup(SendMediaGroupRequest sendMediaGroup);
 
-    HttpUriRequest deleteMessage(long chatId, long messageId);
+    Request deleteMessage(long chatId, long messageId);
 
-  HttpUriRequest editMessageCaption(EditMessageCaption editMessageCaption);
+  Request editMessageCaption(EditMessageCaption editMessageCaption);
 
-    HttpUriRequest editMessageText(EditMessageText editMessageText);
+    Request editMessageText(EditMessageText editMessageText);
 }

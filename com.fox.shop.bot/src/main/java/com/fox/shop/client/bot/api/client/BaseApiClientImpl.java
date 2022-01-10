@@ -12,8 +12,10 @@ import com.fox.shop.protocol.ProductModel;
 import com.fox.shop.protocol.type.ProductGroupType;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -26,8 +28,8 @@ public class BaseApiClientImpl implements BaseApiClient, FatherApiClient {
   private final ObjectMapper objectMapper;
 
   public BaseApiClientImpl(
-      final BaseRequestFactory baseRequestFactory,
-      final ObjectMapper objectMapper
+          final BaseRequestFactory baseRequestFactory,
+          final ObjectMapper objectMapper
   ) {
     this.baseRequestFactory = baseRequestFactory;
     this.client = HttpClients.createDefault();
@@ -36,83 +38,86 @@ public class BaseApiClientImpl implements BaseApiClient, FatherApiClient {
 
   /*--------------------------------------------- product ----------------------------------------------------*/
   @Override
-  public List<ProductModel> productsByGroup(final long groupId) {
+  public List<ProductModel> productsByGroup(
+          final long groupId,
+          final Pageable pageable
+  ) {
     final Optional<List<ProductModel>> response = executeRequestAndExtractResponse(
-        baseRequestFactory.productsByGroup(groupId),
-        objectMapper.getTypeFactory().constructCollectionType(List.class, ProductModel.class)
+            baseRequestFactory.productsByGroup(groupId, pageable),
+            objectMapper.getTypeFactory().constructCollectionType(ArrayList.class, ProductModel.class)
     );
     return response.isPresent()
-        ? response.get()
-        : Collections.emptyList();
+            ? response.get()
+            : Collections.emptyList();
   }
 
   @Override
   public List<ProductModel> searchProductsByName(final String name) {
     final Optional<List<ProductModel>> response = executeRequestAndExtractResponse(
-        baseRequestFactory.searchProductsByName(name),
-        objectMapper.getTypeFactory().constructCollectionType(List.class, ProductModel.class)
+            baseRequestFactory.searchProductsByName(name),
+            objectMapper.getTypeFactory().constructCollectionType(ArrayList.class, ProductModel.class)
     );
     return response.isPresent()
-        ? response.get()
-        : Collections.emptyList();
+            ? response.get()
+            : Collections.emptyList();
   }
 
   @Override
   public List<ProductModel> productsByIds(final List<Long> ids) {
     final Optional<List<ProductModel>> response = executeRequestAndExtractResponse(
-        baseRequestFactory.productsByIds(ids),
-        objectMapper.getTypeFactory().constructCollectionType(List.class, ProductModel.class)
+            baseRequestFactory.productsByIds(ids),
+            objectMapper.getTypeFactory().constructCollectionType(ArrayList.class, ProductModel.class)
     );
     return response.isPresent()
-        ? response.get()
-        : Collections.emptyList();
+            ? response.get()
+            : Collections.emptyList();
   }
 
   @Override
   public ProductModel productById(final long id) {
     final Optional<ProductModel> response = executeRequestAndExtractResponse(
-        baseRequestFactory.productById(id),
-        SimpleType.constructUnsafe(ProductModel.class)
+            baseRequestFactory.productById(id),
+            SimpleType.constructUnsafe(ProductModel.class)
     );
     return response.isPresent()
-        ? response.get()
-        : new ProductModel();
+            ? response.get()
+            : new ProductModel();
   }
 
 
   @Override
   public List<ProductGroupModel> allProductGroups(final ProductGroupType type) {
     final Optional<List<ProductGroupModel>> response = executeRequestAndExtractResponse(
-        baseRequestFactory.allProductGroups(type),
-        objectMapper.getTypeFactory().constructCollectionType(List.class, ProductGroupModel.class)
+            baseRequestFactory.allProductGroups(type),
+            objectMapper.getTypeFactory().constructCollectionType(List.class, ProductGroupModel.class)
     );
     return response.isPresent()
-        ? response.get()
-        : Collections.emptyList();
+            ? response.get()
+            : Collections.emptyList();
   }
 
   /*--------------------------------------------- users ----------------------------------------------------*/
   @Override
   public UserModel saveUser(final UserModel userModel) {
     final Optional<UserModel> response = executeRequestAndExtractResponse(
-        baseRequestFactory.saveUser(userModel),
-        SimpleType.constructUnsafe(UserModel.class)
+            baseRequestFactory.saveUser(userModel),
+            SimpleType.constructUnsafe(UserModel.class)
     );
     return response.isPresent()
-        ? response.get()
-        : new UserModel();
+            ? response.get()
+            : new UserModel();
   }
 
   /*--------------------------------------------- delivery ----------------------------------------------------*/
   @Override
   public List<DeliveryModel> getALlDelivery() {
     final Optional<List<DeliveryModel>> response = executeRequestAndExtractResponse(
-        baseRequestFactory.getAllDelivery(),
-        objectMapper.getTypeFactory().constructCollectionType(List.class, DeliveryModel.class)
+            baseRequestFactory.getAllDelivery(),
+            objectMapper.getTypeFactory().constructCollectionType(List.class, DeliveryModel.class)
     );
     return response.isPresent()
-        ? response.get()
-        : Collections.EMPTY_LIST;
+            ? response.get()
+            : Collections.EMPTY_LIST;
   }
 
   @Override

@@ -73,7 +73,8 @@ public interface UserModelDataContext {
       long cartSessionId
   );
 
-    Optional<Long> getCartSessionId(int userId);
+  Optional<Long> getCartSessionId(int userId);
 
-    void clearAll(int userId);
+
+  void clearAll(int userId);
 }

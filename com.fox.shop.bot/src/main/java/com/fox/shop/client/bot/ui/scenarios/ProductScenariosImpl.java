@@ -3,29 +3,30 @@ package com.fox.shop.client.bot.ui.scenarios;
 import com.fox.shop.client.bot.api.client.i.BaseApiClient;
 import com.fox.shop.client.bot.api.client.i.StorageApiClient;
 import com.fox.shop.client.bot.api.client.i.TelegramApiClient;
-import com.fox.shop.client.bot.context.i.UserDomainStateContext;
-import com.fox.shop.client.bot.context.i.UserHistoryContext;
-import com.fox.shop.client.bot.context.i.UserModelDataContext;
-import com.fox.shop.client.bot.context.i.UserProcessStateContext;
+import com.fox.shop.client.bot.context.i.*;
 import com.fox.shop.client.bot.model.types.CommandData;
 import com.fox.shop.client.bot.service.i.CommandConfigurationService;
 import com.fox.shop.client.bot.ui.generate.i.PaginationMessageGenerator;
 import com.fox.shop.client.bot.ui.generate.i.PrePostCommandHandleMessageGenerator;
 import com.fox.shop.client.bot.ui.generate.i.ProductMessageGenerator;
 import com.fox.shop.client.bot.ui.scenarios.i.ProductScenarios;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Component;
-import org.telegram.telegrambots.meta.api.objects.User;
 
 import java.util.Arrays;
-import java.util.stream.Collectors;
 
 @Component
 public class ProductScenariosImpl implements ProductScenarios {
+
+  @Value("${content.product.pagination-size}")
+  private int paginationSize;
 
   private final ProductMessageGenerator productMessageGenerator;
   private final UserDomainStateContext userDomainStateContext;
   private final UserProcessStateContext userProcessStateContext;
   private final UserModelDataContext userModelDataContext;
+  private final PaginationDataContext paginationDataContext;
   private final UserHistoryContext userHistoryContext;
   private final TelegramApiClient telegramApiClient;
   private final PrePostCommandHandleMessageGenerator prePostCommandHandleMessageGenerator;
@@ -39,6 +40,7 @@ public class ProductScenariosImpl implements ProductScenarios {
           final UserDomainStateContext userDomainStateContext,
           final UserProcessStateContext userProcessStateContext,
           final UserModelDataContext userModelDataContext,
+          final PaginationDataContext paginationDataContext,
           final UserHistoryContext userHistoryContext,
           final TelegramApiClient telegramApiClient,
           final PrePostCommandHandleMessageGenerator prePostCommandHandleMessageGenerator,
@@ -51,6 +53,7 @@ public class ProductScenariosImpl implements ProductScenarios {
     this.userDomainStateContext = userDomainStateContext;
     this.userProcessStateContext = userProcessStateContext;
     this.userModelDataContext = userModelDataContext;
+    this.paginationDataContext = paginationDataContext;
     this.userHistoryContext = userHistoryContext;
     this.telegramApiClient = telegramApiClient;
     this.prePostCommandHandleMessageGenerator = prePostCommandHandleMessageGenerator;
@@ -68,7 +71,10 @@ public class ProductScenariosImpl implements ProductScenarios {
   ) {
     preHandle(chatId, userId, CommandData.PRODUCTS_BY_GROUP.getValue());
     userModelDataContext.productGroupId(userId, groupId);
-    baseApiClient.productsByGroup(groupId).forEach(productModel -> telegramApiClient.
+    baseApiClient.productsByGroup(
+            groupId,
+            PageRequest.of(paginationDataContext.getNextPage(userId), paginationSize)
+    ).forEach(productModel -> telegramApiClient.
             sendPhoto(productMessageGenerator.product(
                     chatId,
                     productModel,

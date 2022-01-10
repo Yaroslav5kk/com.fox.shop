@@ -90,3 +90,9 @@ spring:
       host: localhost
       port: 27017
       database: com_fox_shop_bot
+
+
+
+content:
+  product:
+    pagination-size: 3

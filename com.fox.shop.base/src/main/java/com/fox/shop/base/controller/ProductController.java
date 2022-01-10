@@ -34,26 +34,26 @@ public class ProductController {
   }
 
   @GetMapping(value = "by/group/{groupId}")
-  public ResponseEntity<Page<ProductModel>> allByGroup(
+  public ResponseEntity<List<ProductModel>> allByGroup(
       @PathVariable final long groupId,
       final Pageable pageable
   ) {
-    return ResponseEntity.ok(productService.allByGroup(groupId, pageable));
+    return ResponseEntity.ok(productService.allByGroup(groupId, pageable).getContent());
   }
 
   @GetMapping(value = "by/ids")
-  public ResponseEntity<Page<ProductModel>> getByIds(
+  public ResponseEntity<List<ProductModel>> getByIds(
       @RequestParam final List<Long> ids,
       final Pageable pageable
   ) {
-    return ResponseEntity.ok(productService.byIds(ids, pageable));
+    return ResponseEntity.ok(productService.byIds(ids, pageable).getContent());
   }
 
   @GetMapping(value = "/search/{value}")
-  public ResponseEntity<Page<ProductModel>> searchByNameMatch(
+  public ResponseEntity<List<ProductModel>> searchByNameMatch(
       @PathVariable final String value,
       final Pageable pageable
   ) {
-    return ResponseEntity.ok(productService.searchByNameMatch(value, pageable));
+    return ResponseEntity.ok(productService.searchByNameMatch(value, pageable).getContent());
   }
 }

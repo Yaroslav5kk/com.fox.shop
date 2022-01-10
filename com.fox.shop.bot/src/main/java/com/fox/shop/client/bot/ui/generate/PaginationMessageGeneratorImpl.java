@@ -28,9 +28,4 @@ public class PaginationMessageGeneratorImpl implements PaginationMessageGenerato
         result.setParseMode("HTML");
         return result;
     }
-
-    @Override
-    public boolean isNeedPagination(final int amountElements){
-        return paginationKeyboardGenerator.isNeedPagination(amountElements);
-    }
 }

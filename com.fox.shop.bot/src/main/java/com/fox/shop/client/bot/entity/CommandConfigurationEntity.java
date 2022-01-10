@@ -9,8 +9,8 @@ public class CommandConfigurationEntity {
   @Id
   private String command;
   //often file is an image
-  @Field(name = "pre_handle_file_id_on_telegram")
-  private String preHandleFileIdOnTelegram;
+  @Field(name = "pre_handle_file_id_on_storage")
+  private String preHandleFileIdOnStorage;
   @Field(name = "pre_handle_message_text")
   private String preHandleMessageText;
   @Field(name = "is_to_sent_pre_handle_file")
@@ -30,12 +30,12 @@ public class CommandConfigurationEntity {
     this.command = command;
   }
 
-  public String getPreHandleFileIdOnTelegram() {
-    return preHandleFileIdOnTelegram;
+  public String getPreHandleFileIdOnStorage() {
+    return preHandleFileIdOnStorage;
   }
 
-  public void setPreHandleFileIdOnTelegram(String preHandleFileIdOnTelegram) {
-    this.preHandleFileIdOnTelegram = preHandleFileIdOnTelegram;
+  public void setPreHandleFileIdOnStorage(String preHandleFileIdOnStorage) {
+    this.preHandleFileIdOnStorage = preHandleFileIdOnStorage;
   }
 
   public boolean isToSentPreHandleFile() {

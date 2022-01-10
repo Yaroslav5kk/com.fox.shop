@@ -6,6 +6,4 @@ public interface PaginationMessageGenerator {
     SendMessage pagination(
             long chatId
     );
-
-    boolean isNeedPagination(int amountElements);
 }

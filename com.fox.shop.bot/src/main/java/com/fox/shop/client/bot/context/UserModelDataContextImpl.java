@@ -34,16 +34,16 @@ public class UserModelDataContextImpl implements UserModelDataContext {
 
   @Override
   public void orderOnCreateRequest(
-      final Integer userId,
-      final OrderOnCreateRequest order
+          final Integer userId,
+          final OrderOnCreateRequest order
   ) {
     userIdOrderOnCreateRequest.put(userId, order);
   }
 
   @Override
   public void cartItems(
-      final Integer userId,
-      final CartItemOnCreateRequest cartItem
+          final Integer userId,
+          final CartItemOnCreateRequest cartItem
   ) {
     userIdCartItem.put(userId, cartItem);
   }
@@ -64,8 +64,8 @@ public class UserModelDataContextImpl implements UserModelDataContext {
 
   @Override
   public void categoryId(
-      final Integer userId,
-      final Long categoryId
+          final Integer userId,
+          final Long categoryId
   ) {
     userIdProductGroupIdFromRequest.put(userId, null);
     userIdCategoryIdFromRequest.put(userId, categoryId);
@@ -73,45 +73,45 @@ public class UserModelDataContextImpl implements UserModelDataContext {
 
   @Override
   public Long getCategoryIdFromRequest(
-      final Integer userId
+          final Integer userId
   ) {
     return userIdCategoryIdFromRequest.get(userId);
   }
 
   @Override
   public void productId(
-      final Integer userId,
-      final Long productId
+          final Integer userId,
+          final Long productId
   ) {
     userIdProductIdFromRequest.put(userId, productId);
   }
 
   @Override
   public Long getProductIdFromRequest(
-      final Integer userId
+          final Integer userId
   ) {
     return userIdProductIdFromRequest.get(userId);
   }
 
   @Override
   public void cartItemId(
-      final Integer userId,
-      final Long cartItemId
+          final Integer userId,
+          final Long cartItemId
   ) {
     userIdCartItemIdFromRequest.put(userId, cartItemId);
   }
 
   @Override
   public Long getCartItemIdFromRequest(
-      final Integer userId
+          final Integer userId
   ) {
     return userIdCartItemIdFromRequest.get(userId);
   }
 
   @Override
   public void productGroupId(
-      final Integer userId,
-      final long productGroupId
+          final Integer userId,
+          final long productGroupId
   ) {
     userIdCategoryIdFromRequest.put(userId, null);
     userIdProductGroupIdFromRequest.put(userId, productGroupId);
@@ -119,22 +119,22 @@ public class UserModelDataContextImpl implements UserModelDataContext {
 
   @Override
   public Long getProductGroupId(
-      final Integer userId
+          final Integer userId
   ) {
     return userIdProductGroupIdFromRequest.get(userId);
   }
 
   @Override
   public void registerUserModel(
-      final Integer userId,
-      final UserModel user
+          final Integer userId,
+          final UserModel user
   ) {
     userIdRegisterUserModel.put(userId, user);
   }
 
   @Override
   public UserModel getRegisterUserModel(
-      final Integer userId
+          final Integer userId
   ) {
     if (userIdRegisterUserModel.containsKey(userId))
       return userIdRegisterUserModel.get(userId);
@@ -145,8 +145,8 @@ public class UserModelDataContextImpl implements UserModelDataContext {
 
   @Override
   public void cartSessionId(
-      final int userId,
-      final long cartSessionId
+          final int userId,
+          final long cartSessionId
   ) {
     userIdCartSessionId.put(userId, cartSessionId);
   }
@@ -157,7 +157,7 @@ public class UserModelDataContextImpl implements UserModelDataContext {
   }
 
   @Override
-  public void clearAll(final int userId){
+  public void clearAll(final int userId) {
     userIdOrderOnCreateRequest.remove(userId);
     userIdCartItem.remove(userId);
     userIdCartSessionId.remove(userId);

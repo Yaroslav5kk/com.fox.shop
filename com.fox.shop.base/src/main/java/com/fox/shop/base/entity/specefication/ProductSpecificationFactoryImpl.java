@@ -16,7 +16,7 @@ public class ProductSpecificationFactoryImpl implements ProductSpecificationFact
   public Specification<ProductEntity> byGroupId(
       final long groupId
   ) {
-    return (root, criteriaQuery, criteriaBuilder) -> criteriaBuilder.in(root.get(ProductEntity_.GROUPS).get(ProductGroupEntity_.ID)).value(groupId);
+    return (root, criteriaQuery, criteriaBuilder) -> criteriaBuilder.in(root.join(ProductEntity_.GROUPS).get(ProductGroupEntity_.ID)).value(groupId);
   }
 
   @Override

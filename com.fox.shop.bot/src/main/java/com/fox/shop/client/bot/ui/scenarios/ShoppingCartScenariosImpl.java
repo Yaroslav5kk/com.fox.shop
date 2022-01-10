@@ -16,6 +16,7 @@ import com.fox.shop.shoppingcart.protocol.model.full.FullCartSessionModel;
 import com.fox.shop.shoppingcart.protocol.model.request.AddToCartRequest;
 import com.fox.shop.shoppingcart.protocol.model.request.CartItemOnCreateRequest;
 import com.fox.shop.shoppingcart.protocol.types.SessionOriginType;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.objects.User;
 
@@ -38,20 +39,20 @@ public class ShoppingCartScenariosImpl implements ShoppingCartScenarios {
   private final StorageApiClient storageApiClient;
 
   public ShoppingCartScenariosImpl(
-      final UserProcessStateContext userProcessStateContext,
-      final UserDomainStateContext userDomainStateContext,
-      final TelegramApiClient telegramApiClient,
-      final ShoppingCartMessageGenerator shoppingCartMessageGenerator,
-      final ShoppingCartApiClient shoppingCartApiClient,
-      final CommonMessageGenerator commonMessageGenerator,
-      final UserModelDataContext userModelDataContext,
-      final KafkaProducer kafkaProducer,
-      final ProductMessageGenerator productMessageGenerator,
-      final StartMessageGeneratorMenu startMessageGeneratorMenu,
-      final PrePostCommandHandleMessageGenerator prePostCommandHandleMessageGenerator,
-      final CommandConfigurationService commandConfigurationService,
-      final BaseApiClient baseApiClient,
-      final StorageApiClient storageApiClient
+          final UserProcessStateContext userProcessStateContext,
+          final UserDomainStateContext userDomainStateContext,
+          final TelegramApiClient telegramApiClient,
+          final ShoppingCartMessageGenerator shoppingCartMessageGenerator,
+          final ShoppingCartApiClient shoppingCartApiClient,
+          final CommonMessageGenerator commonMessageGenerator,
+          final UserModelDataContext userModelDataContext,
+          final KafkaProducer kafkaProducer,
+          final ProductMessageGenerator productMessageGenerator,
+          final StartMessageGeneratorMenu startMessageGeneratorMenu,
+          final PrePostCommandHandleMessageGenerator prePostCommandHandleMessageGenerator,
+          final CommandConfigurationService commandConfigurationService,
+          final BaseApiClient baseApiClient,
+          final StorageApiClient storageApiClient
   ) {
     this.userProcessStateContext = userProcessStateContext;
     this.userDomainStateContext = userDomainStateContext;
@@ -71,8 +72,8 @@ public class ShoppingCartScenariosImpl implements ShoppingCartScenarios {
 
   @Override
   public void getCartSession(
-      final long chatId,
-      final User user
+          final long chatId,
+          final User user
   ) {
     preHandle(chatId, user.getId(), CommandData.GET_CART_SESSION.getValue());
     final FullCartSessionModel sessionModel = shoppingCartApiClient.getCartSessionByUser(user.getId());
@@ -80,14 +81,14 @@ public class ShoppingCartScenariosImpl implements ShoppingCartScenarios {
       telegramApiClient.sendMessage(shoppingCartMessageGenerator.emptyCartSession(chatId));
     else
       telegramApiClient.sendMessage(shoppingCartMessageGenerator.
-          getCartSession(chatId, sessionModel));
+              getCartSession(chatId, sessionModel));
     postHandle(chatId, user.getId(), CommandData.GET_CART_SESSION.getValue());
   }
 
   @Override
   public void editCartSession(
-      final long chatId,
-      final int userId
+          final long chatId,
+          final int userId
   ) {
     preHandle(chatId, userId, CommandData.EDIT_CART_SESSION.getValue());
     userDomainStateContext.setItemQuantityOnUpdateHandle(userId);
@@ -96,7 +97,7 @@ public class ShoppingCartScenariosImpl implements ShoppingCartScenarios {
       telegramApiClient.sendMessage(shoppingCartMessageGenerator.emptyCartSession(chatId));
     else {
       shoppingCartMessageGenerator.
-          editCartSessionTitle(chatId, sessionModel).forEach(telegramApiClient::sendPhoto);
+              editCartSessionTitle(chatId, sessionModel).forEach(telegramApiClient::sendPhoto);
       telegramApiClient.sendMessage(shoppingCartMessageGenerator.beginBack(chatId));
     }
     postHandle(chatId, userId, CommandData.EDIT_CART_SESSION.getValue());
@@ -104,22 +105,22 @@ public class ShoppingCartScenariosImpl implements ShoppingCartScenarios {
 
   @Override
   public void clearCartSession(
-      final long chatId,
-      final User user
+          final long chatId,
+          final User user
   ) {
     preHandle(chatId, user.getId(), CommandData.CLEAR_CART_SESSION.getValue());
     shoppingCartApiClient.clearCartSessionByUser(user.getId());
     userModelDataContext.clearAll(user.getId());
     telegramApiClient.sendMessage(shoppingCartMessageGenerator.
-        successClearCartSession(chatId));
+            successClearCartSession(chatId));
     postHandle(chatId, user.getId(), CommandData.CLEAR_CART_SESSION.getValue());
   }
 
   @Override
   public void addToCart(
-      final long chatId,
-      final int userId,
-      final long productId
+          final long chatId,
+          final int userId,
+          final long productId
   ) {
     preHandle(chatId, userId, CommandData.ADD_TO_CART.getValue());
     userDomainStateContext.setItemQuantityOnAddToCart(userId);
@@ -131,9 +132,9 @@ public class ShoppingCartScenariosImpl implements ShoppingCartScenarios {
 
   @Override
   public void setCartItemQuantityOnUpdateTitle(
-      final long chatId,
-      final int userId,
-      final long itemId
+          final long chatId,
+          final int userId,
+          final long itemId
   ) {
     userModelDataContext.cartItemId(userId, itemId);
     userDomainStateContext.setItemQuantityOnUpdateHandle(userId);
@@ -142,9 +143,9 @@ public class ShoppingCartScenariosImpl implements ShoppingCartScenarios {
 
   @Override
   public void setCartItemQuantityOnUpdateHandle(
-      final long chatId,
-      final int userId,
-      final short quantity
+          final long chatId,
+          final int userId,
+          final short quantity
   ) {
     shoppingCartApiClient.updateCartItemQuantity(userModelDataContext.getCartItemIdFromRequest(userId), quantity);
     editCartSession(chatId, userId);
@@ -152,9 +153,9 @@ public class ShoppingCartScenariosImpl implements ShoppingCartScenarios {
 
   @Override
   public void setItemQuantityForAddToCart(
-      final long chatId,
-      final int userId,
-      final int quantity
+          final long chatId,
+          final int userId,
+          final int quantity
   ) {
     preHandle(chatId, userId, CommandData.SET_ITEM_QUANTITY_ON_UPDATE_TITLE.getValue());
     userModelDataContext.getCartItem(userId).setQuantity(quantity);
@@ -167,12 +168,12 @@ public class ShoppingCartScenariosImpl implements ShoppingCartScenarios {
     final FullCartSessionModel fullCartSessionModel = kafkaProducer.addToCart(addToCartRequest);
     userModelDataContext.cartSessionId(userId, fullCartSessionModel.getId());
     if (userModelDataContext.getProductGroupId(userId) != null)
-      baseApiClient.productsByGroup(userModelDataContext.getProductGroupId(userId)).forEach(productModel -> telegramApiClient.
-          sendPhoto(productMessageGenerator.product(
-              chatId,
-              productModel,
-              storageApiClient.getTelegramIdById(productModel.getMainImageStorageId())
-          )));
+      baseApiClient.productsByGroup(userModelDataContext.getProductGroupId(userId), PageRequest.of(0, 5)).forEach(productModel -> telegramApiClient.
+              sendPhoto(productMessageGenerator.product(
+                      chatId,
+                      productModel,
+                      storageApiClient.getTelegramIdById(productModel.getMainImageStorageId())
+              )));
     telegramApiClient.sendMessage(startMessageGeneratorMenu.base(chatId, userModelDataContext.getCartSessionId(userId)));
     postHandle(chatId, userId, CommandData.SET_ITEM_QUANTITY_ON_UPDATE_TITLE.getValue());
   }

@@ -10,8 +10,11 @@ public class SendPhotoFileIdRequest {
     private long chatId;
     private String photo;
     private String caption;
+    @JsonProperty("disable_notification")
     private boolean disableNotification;
+    @JsonProperty("reply_to_message_id")
     private int replyToMessageId;
+    @JsonProperty("reply_markup")
     private ReplyKeyboard replyMarkup;
     @JsonProperty("parse_mode")
     private String parseMode;

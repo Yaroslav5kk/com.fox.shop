@@ -2,14 +2,16 @@ package com.fox.shop.client.bot.api.factory.i;
 
 import org.springframework.data.util.Pair;
 
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 public interface FatherRequestFactory {
 
   default String buildFullUri(
-      final String url,
-      final String method,
-      final List<Pair<String, String>> keyValue
+          final String url,
+          final String method,
+          final List<Pair<String, String>> keyValue
   ) {
     final StringBuilder result = new StringBuilder(url).append(method).append("?");
     if (keyValue == null) {
@@ -17,10 +19,10 @@ public interface FatherRequestFactory {
       return result.toString();
     }
     keyValue.forEach(queryIt ->
-        result.append(queryIt.getFirst()).
-            append("=").
-            append(queryIt.getSecond()).
-            append("&")
+            result.append(queryIt.getFirst()).
+                    append("=").
+                    append(queryIt.getSecond()).
+                    append("&")
     );
     result.deleteCharAt(result.length() - 1);
     return result.toString();

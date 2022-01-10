@@ -4,6 +4,4 @@ import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMa
 
 public interface PaginationKeyboardGenerator {
     InlineKeyboardMarkup pagination();
-
-    boolean isNeedPagination(int amountElements);
 }
