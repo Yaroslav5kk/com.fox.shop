@@ -7,6 +7,7 @@ import com.fox.shop.client.bot.api.factory.i.TelegramRequestFactory;
 import com.fox.shop.client.bot.context.i.UserHistoryContext;
 import com.fox.shop.client.bot.model.request.SendMediaGroupRequest;
 import com.fox.shop.client.bot.model.request.SendPhotoFileIdRequest;
+import com.fox.shop.client.bot.model.request.TgDeleteMessageRequest;
 import com.fox.shop.client.bot.model.response.DeleteMessageResponse;
 import com.fox.shop.client.bot.model.response.GeneralTelegramResponse;
 import com.fox.shop.client.bot.model.response.SendMediaGroupResponse;
@@ -95,10 +96,13 @@ public class TelegramApiClientImpl implements TelegramApiClient, FatherApiClient
   }
 
   @Override
-  public DeleteMessageResponse deleteMessage(final long chatId, final long messageId) {
+  public DeleteMessageResponse deleteMessage(final TgDeleteMessageRequest deleteMessageRequest) {
     try {
       return objectMapper.readValue(
-              client.newCall(telegramRequestFactory.deleteMessage(chatId, messageId)).execute().body().byteStream(), DeleteMessageResponse.class
+              client.newCall(telegramRequestFactory.deleteMessage(
+                      deleteMessageRequest.getChatId(),
+                      deleteMessageRequest.getMessageId()
+              )).execute().body().byteStream(), DeleteMessageResponse.class
       );
     } catch (IOException e) {
       e.printStackTrace();

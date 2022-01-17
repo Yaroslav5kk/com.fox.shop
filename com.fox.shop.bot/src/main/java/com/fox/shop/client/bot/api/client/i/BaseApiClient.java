@@ -4,6 +4,7 @@ import com.fox.protocol.user.UserModel;
 import com.fox.shop.protocol.DeliveryModel;
 import com.fox.shop.protocol.ProductGroupModel;
 import com.fox.shop.protocol.ProductModel;
+import com.fox.shop.protocol.response.PageResponse;
 import com.fox.shop.protocol.type.ProductGroupType;
 import org.springframework.data.domain.Pageable;
 
@@ -11,9 +12,9 @@ import java.util.List;
 
 public interface BaseApiClient {
 
-  List<ProductModel> productsByGroup(long groupId, Pageable pageable);
+  PageResponse<ProductModel> productsByGroup(int userId, long groupId, Pageable pageable);
 
-  List<ProductModel> searchProductsByName(String name);
+  PageResponse<ProductModel> searchProductsByName(int userId, String name, Pageable pageable);
 
   List<ProductModel> productsByIds(List<Long> ids);
 

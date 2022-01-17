@@ -9,18 +9,17 @@ import com.fox.shop.client.bot.api.factory.i.BaseRequestFactory;
 import com.fox.shop.protocol.DeliveryModel;
 import com.fox.shop.protocol.ProductGroupModel;
 import com.fox.shop.protocol.ProductModel;
+import com.fox.shop.protocol.response.PageResponse;
 import com.fox.shop.protocol.type.ProductGroupType;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
-@Service
 public class BaseApiClientImpl implements BaseApiClient, FatherApiClient {
 
   private final BaseRequestFactory baseRequestFactory;
@@ -38,28 +37,33 @@ public class BaseApiClientImpl implements BaseApiClient, FatherApiClient {
 
   /*--------------------------------------------- product ----------------------------------------------------*/
   @Override
-  public List<ProductModel> productsByGroup(
+  public PageResponse<ProductModel> productsByGroup(
+          final int userId,
           final long groupId,
           final Pageable pageable
   ) {
-    final Optional<List<ProductModel>> response = executeRequestAndExtractResponse(
+    final Optional<PageResponse<ProductModel>> response = executeRequestAndExtractResponse(
             baseRequestFactory.productsByGroup(groupId, pageable),
-            objectMapper.getTypeFactory().constructCollectionType(ArrayList.class, ProductModel.class)
+            objectMapper.getTypeFactory().constructParametricType(PageResponse.class, ProductModel.class)
     );
     return response.isPresent()
             ? response.get()
-            : Collections.emptyList();
+            : PageResponse.empty();
   }
 
   @Override
-  public List<ProductModel> searchProductsByName(final String name) {
-    final Optional<List<ProductModel>> response = executeRequestAndExtractResponse(
+  public PageResponse<ProductModel> searchProductsByName(
+          final int userId,
+          final String name,
+          final Pageable pageable
+  ) {
+    final Optional<PageResponse<ProductModel>> response = executeRequestAndExtractResponse(
             baseRequestFactory.searchProductsByName(name),
-            objectMapper.getTypeFactory().constructCollectionType(ArrayList.class, ProductModel.class)
+            objectMapper.getTypeFactory().constructParametricType(PageResponse.class, ProductModel.class)
     );
     return response.isPresent()
             ? response.get()
-            : Collections.emptyList();
+            : PageResponse.empty();
   }
 
   @Override

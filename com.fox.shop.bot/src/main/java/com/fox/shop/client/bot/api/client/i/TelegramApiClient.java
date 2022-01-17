@@ -2,6 +2,7 @@ package com.fox.shop.client.bot.api.client.i;
 
 import com.fox.shop.client.bot.model.request.SendMediaGroupRequest;
 import com.fox.shop.client.bot.model.request.SendPhotoFileIdRequest;
+import com.fox.shop.client.bot.model.request.TgDeleteMessageRequest;
 import com.fox.shop.client.bot.model.response.DeleteMessageResponse;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.methods.send.SendPhoto;
@@ -23,7 +24,7 @@ public interface TelegramApiClient {
     
     List<Message> sendMediaGroup(SendMediaGroupRequest sendMediaGroup);
 
-    DeleteMessageResponse deleteMessage(long chatId, long messageId);
+    DeleteMessageResponse deleteMessage(TgDeleteMessageRequest deleteMessageRequest);
 
   Message editMessageCaption(EditMessageCaption editMessageCaption);
 

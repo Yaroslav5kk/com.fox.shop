@@ -16,7 +16,6 @@ import com.fox.shop.shoppingcart.protocol.model.full.FullCartSessionModel;
 import com.fox.shop.shoppingcart.protocol.model.request.AddToCartRequest;
 import com.fox.shop.shoppingcart.protocol.model.request.CartItemOnCreateRequest;
 import com.fox.shop.shoppingcart.protocol.types.SessionOriginType;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.objects.User;
 
@@ -168,7 +167,7 @@ public class ShoppingCartScenariosImpl implements ShoppingCartScenarios {
     final FullCartSessionModel fullCartSessionModel = kafkaProducer.addToCart(addToCartRequest);
     userModelDataContext.cartSessionId(userId, fullCartSessionModel.getId());
     if (userModelDataContext.getProductGroupId(userId) != null)
-      baseApiClient.productsByGroup(userModelDataContext.getProductGroupId(userId), PageRequest.of(0, 5)).forEach(productModel -> telegramApiClient.
+      baseApiClient.productsByGroup(userId,userModelDataContext.getProductGroupId(userId), null).getContent().forEach(productModel -> telegramApiClient.
               sendPhoto(productMessageGenerator.product(
                       chatId,
                       productModel,

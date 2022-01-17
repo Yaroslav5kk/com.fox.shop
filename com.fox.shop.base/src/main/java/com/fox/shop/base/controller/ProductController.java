@@ -3,6 +3,7 @@ package com.fox.shop.base.controller;
 import com.fox.shop.base.service.i.ProductService;
 import com.fox.shop.protocol.ProductModel;
 import com.fox.shop.protocol.request.ProductOnCreateRequest;
+import com.fox.shop.protocol.response.PageResponse;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
@@ -34,26 +35,25 @@ public class ProductController {
   }
 
   @GetMapping(value = "by/group/{groupId}")
-  public ResponseEntity<List<ProductModel>> allByGroup(
+  public ResponseEntity<PageResponse<ProductModel>> allByGroup(
       @PathVariable final long groupId,
       final Pageable pageable
   ) {
-    return ResponseEntity.ok(productService.allByGroup(groupId, pageable).getContent());
+    return ResponseEntity.ok(productService.allByGroup(groupId, pageable));
   }
 
   @GetMapping(value = "by/ids")
   public ResponseEntity<List<ProductModel>> getByIds(
-      @RequestParam final List<Long> ids,
-      final Pageable pageable
+      @RequestParam final List<Long> ids
   ) {
-    return ResponseEntity.ok(productService.byIds(ids, pageable).getContent());
+    return ResponseEntity.ok(productService.byIds(ids));
   }
 
   @GetMapping(value = "/search/{value}")
-  public ResponseEntity<List<ProductModel>> searchByNameMatch(
+  public ResponseEntity<PageResponse<ProductModel>> searchByNameMatch(
       @PathVariable final String value,
       final Pageable pageable
   ) {
-    return ResponseEntity.ok(productService.searchByNameMatch(value, pageable).getContent());
+    return ResponseEntity.ok(productService.searchByNameMatch(value, pageable));
   }
 }

@@ -2,10 +2,16 @@ package com.fox.shop.client.bot.model.request;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
+import org.telegram.telegrambots.meta.api.methods.PartialBotApiMethod;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboard;
+import org.telegram.telegrambots.meta.exceptions.TelegramApiRequestException;
+import org.telegram.telegrambots.meta.exceptions.TelegramApiValidationException;
+
+import java.io.Serializable;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class SendPhotoFileIdRequest {
+public class SendPhotoFileIdRequest extends PartialBotApiMethod {
     @JsonProperty("chat_id")
     private long chatId;
     private String photo;
@@ -20,6 +26,11 @@ public class SendPhotoFileIdRequest {
     private String parseMode;
 
     public SendPhotoFileIdRequest() {
+    }
+
+    @Override
+    public Serializable deserializeResponse(String s) throws TelegramApiRequestException {
+        return null;
     }
 
     public String getPhoto() {
@@ -76,5 +87,10 @@ public class SendPhotoFileIdRequest {
 
     public void setParseMode(String parseMode) {
         this.parseMode = parseMode;
+    }
+
+    @Override
+    public void validate() throws TelegramApiValidationException {
+
     }
 }

@@ -2,7 +2,7 @@ package com.fox.shop.base.service.i;
 
 import com.fox.shop.protocol.ProductModel;
 import com.fox.shop.protocol.request.ProductOnCreateRequest;
-import org.springframework.data.domain.Page;
+import com.fox.shop.protocol.response.PageResponse;
 import org.springframework.data.domain.Pageable;
 
 import java.util.List;
@@ -12,9 +12,9 @@ public interface ProductService {
 
   ProductModel get(long id);
 
-  Page<ProductModel> allByGroup(long groupId, Pageable pageable);
+  PageResponse<ProductModel> allByGroup(long groupId, Pageable pageable);
 
-  Page<ProductModel> byIds(List<Long> ids, Pageable pageable);
+  List<ProductModel> byIds(List<Long> ids);
 
-  Page<ProductModel> searchByNameMatch(String toSearch, Pageable pageable);
+  PageResponse<ProductModel> searchByNameMatch(String toSearch, Pageable pageable);
 }

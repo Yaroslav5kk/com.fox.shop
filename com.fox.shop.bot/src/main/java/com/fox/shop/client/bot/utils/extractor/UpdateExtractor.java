@@ -1,7 +1,11 @@
 package com.fox.shop.client.bot.utils.extractor;
 
+import com.fox.shop.client.bot.model.types.CommandData;
 import org.telegram.telegrambots.meta.api.objects.*;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 
 public class UpdateExtractor {
@@ -72,11 +76,40 @@ public class UpdateExtractor {
     return update.getCallbackQuery();
   }
 
-  public static String command(final Update update) {
-    return enteredText(update).split(" ")[0];
+  public static Optional<CommandData> command(final Update update) {
+    final String command = enteredText(update).split(" ")[0];
+    if (CommandData.contains(command))
+      return Optional.of(CommandData.fromValue(command));
+    return Optional.empty();
+  }
+
+  public static List<String> params(final Update update) {
+    final String[] splited = enteredText(update).split(" ");
+    if (splited == null || splited.length < 2)
+      return Collections.emptyList();
+    return Arrays.asList(Arrays.copyOfRange(splited, 1, splited.length - 1));
   }
 
   public static String firstParameter(final Update update) {
     return enteredText(update).split(" ")[1];
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

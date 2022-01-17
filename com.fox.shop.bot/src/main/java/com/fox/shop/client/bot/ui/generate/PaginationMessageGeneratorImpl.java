@@ -1,5 +1,6 @@
 package com.fox.shop.client.bot.ui.generate;
 
+import com.fox.shop.client.bot.model.types.CommandData;
 import com.fox.shop.client.bot.ui.generate.i.PaginationMessageGenerator;
 import com.fox.shop.client.bot.ui.generate.keyboard.i.PaginationKeyboardGenerator;
 import com.fox.shop.client.bot.ui.view.PaginationViewer;
@@ -19,12 +20,13 @@ public class PaginationMessageGeneratorImpl implements PaginationMessageGenerato
 
     @Override
     public SendMessage pagination(
-            final long chatId
+            final long chatId,
+            final String commandData
     ) {
         final SendMessage result = new SendMessage();
         result.setChatId(chatId);
         result.setText(PaginationViewer.pagination());
-        result.setReplyMarkup(paginationKeyboardGenerator.pagination());
+        result.setReplyMarkup(paginationKeyboardGenerator.pagination(commandData));
         result.setParseMode("HTML");
         return result;
     }

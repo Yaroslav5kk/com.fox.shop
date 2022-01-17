@@ -1,6 +1,7 @@
 package com.fox.shop.client.bot.ui.scenarios;
 
 import com.fox.shop.client.bot.api.client.i.TelegramApiClient;
+import com.fox.shop.client.bot.context.i.PaginationDataContext;
 import com.fox.shop.client.bot.context.i.UserDomainStateContext;
 import com.fox.shop.client.bot.context.i.UserModelDataContext;
 import com.fox.shop.client.bot.context.i.UserProcessStateContext;
@@ -28,16 +29,17 @@ public class StartScenariosMenuImpl implements StartScenariosMenu {
   private final GroupsMessageGenerator groupsMessageGenerator;
 
   public StartScenariosMenuImpl(
-      final StartMessageGeneratorMenu startMessageGeneratorMenu,
-      final TelegramApiClient telegramApiClient,
-      final UserService userService,
-      final UserProcessStateContext userProcessStateContext,
-      final UserDomainStateContext userDomainStateContext,
-      final UserModelDataContext userModelDataContext,
-      final PrePostCommandHandleMessageGenerator prePostCommandHandleMessageGenerator,
-      final CommandConfigurationService commandConfigurationService,
-      final GroupsMessageGenerator groupsMessageGenerator
-  ) {
+          final StartMessageGeneratorMenu startMessageGeneratorMenu,
+          final TelegramApiClient telegramApiClient,
+          final UserService userService,
+          final UserProcessStateContext userProcessStateContext,
+          final UserDomainStateContext userDomainStateContext,
+          final UserModelDataContext userModelDataContext,
+          final PrePostCommandHandleMessageGenerator prePostCommandHandleMessageGenerator,
+          final CommandConfigurationService commandConfigurationService,
+          final GroupsMessageGenerator groupsMessageGenerator,
+          final PaginationDataContext paginationDataContext
+          ) {
     this.startMessageGeneratorMenu = startMessageGeneratorMenu;
     this.telegramApiClient = telegramApiClient;
     this.userService = userService;

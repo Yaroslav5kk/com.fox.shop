@@ -22,11 +22,11 @@ public class PaginationIKeyboardGeneratorImpl implements PaginationKeyboardGener
     }
 
     @Override
-    public InlineKeyboardMarkup pagination() {
+    public InlineKeyboardMarkup pagination(final String commandData) {
         final List<Pair<?, ?>> textDataToKeyboard = new LinkedList<>();
         textDataToKeyboard.add(Pair.of(
                 EmojiElementGenerator.nextPage(),
-                CommandData.NEXT_PAGE
+                commandData
         ));
         return inlineKeyboardGenerator.generateHorizontal(textDataToKeyboard);
     }

@@ -3,7 +3,12 @@ package com.fox.shop.client.bot.context.i;
 import com.fox.shop.client.bot.model.types.UserDomainState;
 
 public interface UserDomainStateContext {
-    void start(Integer userId);
+  void setup(
+          int userId,
+          UserDomainState domainState
+  );
+
+  void start(Integer userId);
 
     void finish(Integer userId);
 

@@ -1,4 +1,4 @@
-package com.fox.shop.client.bot.service.answer;
+package com.fox.shop.client.bot.service.interceptor;
 
 import com.fox.shop.client.bot.command.CommandContainer;
 import com.fox.shop.client.bot.context.i.UserDomainStateContext;
@@ -11,12 +11,14 @@ import com.fox.shop.client.bot.service.i.UserHistoryService;
 import com.fox.shop.client.bot.ui.scenarios.i.*;
 import com.fox.shop.client.bot.utils.extractor.UpdateExtractor;
 import com.google.common.primitives.Longs;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.api.objects.User;
 
 @Service
-public class AnswerCallBackQuerySelectorImpl implements AnswerCallBackQuerySelector {
+@Order(3)
+public class TgSelectScenariosInterceptorImpl implements AnswerCallBackQuerySelector {
 
   private final CommandContainer commandContainer;
   private final UserDomainStateContext userDomainStateContext;
@@ -29,7 +31,7 @@ public class AnswerCallBackQuerySelectorImpl implements AnswerCallBackQuerySelec
   private final UserHistoryService userHistoryService;
   private final SearchScenarios searchScenarios;
 
-  public AnswerCallBackQuerySelectorImpl(
+  public TgSelectScenariosInterceptorImpl(
           final CommandContainer commandContainer,
           final UserDomainStateContext userDomainStateContext,
           final StartScenariosMenu startScenarios,
@@ -62,7 +64,7 @@ public class AnswerCallBackQuerySelectorImpl implements AnswerCallBackQuerySelec
     final Integer userId = UpdateExtractor.userId(update);
     final String callbackQuery = UpdateExtractor.callbackQueryData(update);
     final long callbackQueryData = callbackQueryData(callbackQuery);
-    String command = UpdateExtractor.command(update);
+    String command = UpdateExtractor.command(update).get().getValue();
     userHistoryService.snapshot(userId, command);
     command = userHistoryService.handle(userId, command);
 
