@@ -1,4 +1,4 @@
-package com.fox.shop.client.bot.service.interceptor.model;
+package com.fox.shop.client.bot.model;
 
 import com.fox.shop.client.bot.model.types.CommandData;
 import com.fox.shop.client.bot.utils.extractor.UpdateExtractor;
@@ -7,7 +7,7 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 import java.util.List;
 import java.util.Optional;
 
-public class TgCommandInterceptorModel {
+public class TgIncomingCommandModel {
   private int userId;
   private long chatId;
   private long messageId;
@@ -15,8 +15,8 @@ public class TgCommandInterceptorModel {
   private Optional<CommandData> command;
   private List<String> params;
 
-  public static TgCommandInterceptorModel of(final Update update) {
-    final TgCommandInterceptorModel result = new TgCommandInterceptorModel();
+  public static TgIncomingCommandModel of(final Update update) {
+    final TgIncomingCommandModel result = new TgIncomingCommandModel();
     result.setChatId(UpdateExtractor.chatId(update));
     result.setUserId(UpdateExtractor.userId(update));
     result.setMessageId(UpdateExtractor.messageId(update));

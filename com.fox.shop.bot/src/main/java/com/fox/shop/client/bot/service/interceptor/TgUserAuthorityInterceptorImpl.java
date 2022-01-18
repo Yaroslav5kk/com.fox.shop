@@ -2,7 +2,7 @@ package com.fox.shop.client.bot.service.interceptor;
 
 import com.fox.shop.client.bot.context.i.UserDomainStateContext;
 import com.fox.shop.client.bot.service.interceptor.i.FatherIncomingInterceptor;
-import com.fox.shop.client.bot.service.interceptor.model.TgCommandInterceptorModel;
+import com.fox.shop.client.bot.model.TgIncomingCommandModel;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
@@ -20,7 +20,7 @@ public class TgUserAuthorityInterceptorImpl implements FatherIncomingInterceptor
 
   @Override
   public void interapt(
-          final TgCommandInterceptorModel update
+          final TgIncomingCommandModel update
   ) {
   }
 }

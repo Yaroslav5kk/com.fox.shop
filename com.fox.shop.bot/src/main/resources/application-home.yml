@@ -1,6 +1,8 @@
                             ## server ##
 server:
   port: 8081
+
+base-package: com.fox.shop.client.bot
                             ## bot telegram ##
 telegram:
   api:

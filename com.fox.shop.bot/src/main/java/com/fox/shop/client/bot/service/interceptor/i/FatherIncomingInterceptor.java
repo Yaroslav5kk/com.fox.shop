@@ -1,8 +1,8 @@
 package com.fox.shop.client.bot.service.interceptor.i;
 
-import com.fox.shop.client.bot.service.interceptor.model.TgCommandInterceptorModel;
+import com.fox.shop.client.bot.model.TgIncomingCommandModel;
 
 public interface FatherIncomingInterceptor {
 
-  void interapt(TgCommandInterceptorModel update);
+  void interapt(TgIncomingCommandModel update);
 }

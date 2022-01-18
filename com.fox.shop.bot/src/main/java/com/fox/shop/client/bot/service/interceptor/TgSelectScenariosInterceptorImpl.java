@@ -5,11 +5,10 @@ import com.fox.shop.client.bot.context.i.UserDomainStateContext;
 import com.fox.shop.client.bot.context.i.UserProcessStateContext;
 import com.fox.shop.client.bot.model.types.CommandData;
 import com.fox.shop.client.bot.model.types.UserDomainState;
-import com.fox.shop.client.bot.model.types.UserProcessState;
 import com.fox.shop.client.bot.service.i.AnswerCallBackQuerySelector;
 import com.fox.shop.client.bot.service.i.UserHistoryService;
 import com.fox.shop.client.bot.service.interceptor.i.FatherIncomingInterceptor;
-import com.fox.shop.client.bot.service.interceptor.model.TgCommandInterceptorModel;
+import com.fox.shop.client.bot.model.TgIncomingCommandModel;
 import com.fox.shop.client.bot.ui.scenarios.i.*;
 import com.fox.shop.client.bot.utils.extractor.UpdateExtractor;
 import com.google.common.primitives.Longs;
@@ -59,7 +58,7 @@ public class TgSelectScenariosInterceptorImpl implements AnswerCallBackQuerySele
 
   @Override
   public void interapt(
-      final TgCommandInterceptorModel update
+      final TgIncomingCommandModel update
   ) {
     final UserDomainState actualDomainState = userDomainStateContext.current(update.getUserId());
 
@@ -134,7 +133,7 @@ public class TgSelectScenariosInterceptorImpl implements AnswerCallBackQuerySele
   }
 
   private void select(
-      final TgCommandInterceptorModel update
+      final TgIncomingCommandModel update
   ){
     switch (userDomainStateContext.current(update.getUserId())) {
       case START:
