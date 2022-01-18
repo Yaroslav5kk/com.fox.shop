@@ -10,7 +10,8 @@ import java.util.Optional;
 public class TgCommandInterceptorModel {
   private int userId;
   private long chatId;
-  private String data;
+  private long messageId;
+  private String inputData;
   private Optional<CommandData> command;
   private List<String> params;
 
@@ -18,7 +19,8 @@ public class TgCommandInterceptorModel {
     final TgCommandInterceptorModel result = new TgCommandInterceptorModel();
     result.setChatId(UpdateExtractor.chatId(update));
     result.setUserId(UpdateExtractor.userId(update));
-    result.setData(UpdateExtractor.enteredText(update));
+    result.setMessageId(UpdateExtractor.messageId(update));
+    result.setInputData(UpdateExtractor.enteredText(update));
     result.setCommand(UpdateExtractor.command(update));
     result.setParams(UpdateExtractor.params(update));
     return result;
@@ -40,12 +42,12 @@ public class TgCommandInterceptorModel {
     this.chatId = chatId;
   }
 
-  public String getData() {
-    return data;
+  public String getInputData() {
+    return inputData;
   }
 
-  public void setData(String data) {
-    this.data = data;
+  public void setInputData(String inputData) {
+    this.inputData = inputData;
   }
 
   public String getParam0() {
@@ -70,6 +72,14 @@ public class TgCommandInterceptorModel {
 
   public void setCommand(Optional<CommandData> command) {
     this.command = command;
+  }
+
+  public long getMessageId() {
+    return messageId;
+  }
+
+  public void setMessageId(long messageId) {
+    this.messageId = messageId;
   }
 }
 

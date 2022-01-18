@@ -34,15 +34,15 @@ public class UpdateExtractor {
 
   public static User user(final Update update) {
     return update.hasCallbackQuery()
-            ? callbackQuery(update).getFrom()
-            : message(update).getFrom();
+        ? callbackQuery(update).getFrom()
+        : message(update).getFrom();
   }
 
   public static Chat chat(final Update update) {
     return
-            update.hasCallbackQuery()
-                    ? callbackQuery(update).getMessage().getChat()
-                    : message(update).getChat();
+        update.hasCallbackQuery()
+            ? callbackQuery(update).getMessage().getChat()
+            : message(update).getChat();
   }
 
   public static Message message(final Update update) {
@@ -50,7 +50,10 @@ public class UpdateExtractor {
   }
 
   public static long messageId(final Update update) {
-    return update.getMessage().getMessageId();
+    return
+        update.hasCallbackQuery()
+            ? callbackQuery(update).getMessage().getMessageId()
+            : message(update).getMessageId();
   }
 
   public static long callBackQueryMessageId(final Update update) {
@@ -60,8 +63,8 @@ public class UpdateExtractor {
 
   public static String enteredText(final Update update) {
     return update.hasCallbackQuery()
-            ? callbackQueryData(update)
-            : messageText(update);
+        ? callbackQueryData(update)
+        : messageText(update);
   }
 
   public static String callbackQueryData(final Update update) {
