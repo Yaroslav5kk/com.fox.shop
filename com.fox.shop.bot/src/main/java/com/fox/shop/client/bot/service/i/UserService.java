@@ -5,9 +5,12 @@ import org.telegram.telegrambots.meta.api.objects.User;
 
 public interface UserService {
 
-    void createCustomer(User user);
+  void createCustomer(
+      int userId,
+      String userName
+  );
 
-    long getBaseUserIdByTelegramId(long telegramId);
+  long getBaseUserIdByTelegramId(long telegramId);
 
     boolean isActivatedUser(long telegramUserId);
 

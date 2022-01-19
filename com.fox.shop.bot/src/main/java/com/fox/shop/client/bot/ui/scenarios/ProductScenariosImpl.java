@@ -18,9 +18,6 @@ import org.springframework.stereotype.Component;
 @Component
 public class ProductScenariosImpl implements ProductScenarios {
 
-  @Value("${content.product.pagination-size}")
-  private int paginationSize;
-
   private final ProductMessageGenerator productMessageGenerator;
   private final UserDomainStateContext userDomainStateContext;
   private final UserProcessStateContext userProcessStateContext;

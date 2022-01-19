@@ -6,7 +6,7 @@ import org.telegram.telegrambots.meta.api.objects.Message;
 
 import java.util.List;
 
-public interface TelegramMediator {
+public interface TelegramApiMediator {
   List<Message> executeAll(int userId);
 
   default Message execute(SendMessage sendMessage) {

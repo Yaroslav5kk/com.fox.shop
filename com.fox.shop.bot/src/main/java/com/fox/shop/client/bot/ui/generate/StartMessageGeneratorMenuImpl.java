@@ -12,7 +12,6 @@ import java.util.Optional;
 
 @Service
 public class StartMessageGeneratorMenuImpl implements StartMessageGeneratorMenu {
-    private final static String ANSWER_ON_BASE = "choose action";
     private final ReplyKeyboardGenerator replyKeyboardGenerator;
     private final StartIKeyboardGenerator startIKeyboardGenerator;
 

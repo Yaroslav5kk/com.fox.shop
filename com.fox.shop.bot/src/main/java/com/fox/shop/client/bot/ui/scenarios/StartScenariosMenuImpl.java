@@ -29,17 +29,17 @@ public class StartScenariosMenuImpl implements StartScenariosMenu {
   private final GroupsMessageGenerator groupsMessageGenerator;
 
   public StartScenariosMenuImpl(
-          final StartMessageGeneratorMenu startMessageGeneratorMenu,
-          final TelegramApiClient telegramApiClient,
-          final UserService userService,
-          final UserProcessStateContext userProcessStateContext,
-          final UserDomainStateContext userDomainStateContext,
-          final UserModelDataContext userModelDataContext,
-          final PrePostCommandHandleMessageGenerator prePostCommandHandleMessageGenerator,
-          final CommandConfigurationService commandConfigurationService,
-          final GroupsMessageGenerator groupsMessageGenerator,
-          final PaginationDataContext paginationDataContext
-          ) {
+      final StartMessageGeneratorMenu startMessageGeneratorMenu,
+      final TelegramApiClient telegramApiClient,
+      final UserService userService,
+      final UserProcessStateContext userProcessStateContext,
+      final UserDomainStateContext userDomainStateContext,
+      final UserModelDataContext userModelDataContext,
+      final PrePostCommandHandleMessageGenerator prePostCommandHandleMessageGenerator,
+      final CommandConfigurationService commandConfigurationService,
+      final GroupsMessageGenerator groupsMessageGenerator,
+      final PaginationDataContext paginationDataContext
+  ) {
     this.startMessageGeneratorMenu = startMessageGeneratorMenu;
     this.telegramApiClient = telegramApiClient;
     this.userService = userService;
@@ -104,8 +104,8 @@ public class StartScenariosMenuImpl implements StartScenariosMenu {
       final User user,
       final String phone
   ) {
-   userModelDataContext.getRegisterUserModel(user.getId()).setPhone(phone);
-    userService.createCustomer(user);
+    userModelDataContext.getRegisterUserModel(user.getId()).setPhone(phone);
+    userService.createCustomer(user.getId(), user.getUserName());
     groupsMessageGenerator.allMainProductGroups(chatId, user.getId())
         .forEach(sendPhotoFileIdRequest -> telegramApiClient.sendPhoto(sendPhotoFileIdRequest));
   }

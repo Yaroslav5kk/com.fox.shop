@@ -9,6 +9,7 @@ import java.util.Optional;
 
 public class TgIncomingCommandModel {
   private int userId;
+  private String userName;
   private long chatId;
   private long messageId;
   private String inputData;
@@ -18,6 +19,7 @@ public class TgIncomingCommandModel {
   public static TgIncomingCommandModel of(final Update update) {
     final TgIncomingCommandModel result = new TgIncomingCommandModel();
     result.setChatId(UpdateExtractor.chatId(update));
+    result.setUserName(UpdateExtractor.userName(update));
     result.setUserId(UpdateExtractor.userId(update));
     result.setMessageId(UpdateExtractor.messageId(update));
     result.setInputData(UpdateExtractor.enteredText(update));
@@ -80,6 +82,14 @@ public class TgIncomingCommandModel {
 
   public void setMessageId(long messageId) {
     this.messageId = messageId;
+  }
+
+  public String getUserName() {
+    return userName;
+  }
+
+  public void setUserName(String userName) {
+    this.userName = userName;
   }
 }
 

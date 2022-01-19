@@ -1,4 +1,4 @@
-package com.fox.shop.client.bot.service.interceptor.i;
+package com.fox.shop.client.bot.interceptor.i;
 
 import com.fox.shop.client.bot.model.TgIncomingCommandModel;
 

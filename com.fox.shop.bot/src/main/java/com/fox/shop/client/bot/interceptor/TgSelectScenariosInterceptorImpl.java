@@ -1,4 +1,4 @@
-package com.fox.shop.client.bot.service.interceptor;
+package com.fox.shop.client.bot.interceptor;
 
 import com.fox.shop.client.bot.command.CommandContainer;
 import com.fox.shop.client.bot.context.i.UserDomainStateContext;
@@ -7,7 +7,7 @@ import com.fox.shop.client.bot.model.types.CommandData;
 import com.fox.shop.client.bot.model.types.UserDomainState;
 import com.fox.shop.client.bot.service.i.AnswerCallBackQuerySelector;
 import com.fox.shop.client.bot.service.i.UserHistoryService;
-import com.fox.shop.client.bot.service.interceptor.i.FatherIncomingInterceptor;
+import com.fox.shop.client.bot.interceptor.i.FatherIncomingInterceptor;
 import com.fox.shop.client.bot.model.TgIncomingCommandModel;
 import com.fox.shop.client.bot.ui.scenarios.i.*;
 import com.fox.shop.client.bot.utils.extractor.UpdateExtractor;

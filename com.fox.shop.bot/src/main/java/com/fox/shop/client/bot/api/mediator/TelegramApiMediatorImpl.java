@@ -14,12 +14,12 @@ import org.telegram.telegrambots.meta.api.objects.Message;
 import java.util.*;
 
 @Service
-public class TelegramMediatorImpl implements TelegramMediator {
+public class TelegramApiMediatorImpl implements TelegramApiMediator {
   private final TelegramApiClient telegramApiClient;
 
   private Map<Integer, LinkedList<PartialBotApiMethod>> userIdMessagesToSent;
 
-  public TelegramMediatorImpl(
+  public TelegramApiMediatorImpl(
           final TelegramApiClient telegramApiClient
   ) {
     this.telegramApiClient = telegramApiClient;
