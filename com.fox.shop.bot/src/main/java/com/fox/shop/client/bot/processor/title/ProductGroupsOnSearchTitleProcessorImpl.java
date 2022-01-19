@@ -12,20 +12,18 @@ import com.fox.shop.client.bot.ui.generate.keyboard.i.GroupsInlineKeyboardGenera
 import com.fox.shop.client.bot.ui.view.GroupsViewer;
 import com.fox.shop.protocol.ProductGroupModel;
 import com.fox.shop.protocol.type.ProductGroupType;
-import org.telegram.telegrambots.meta.api.methods.PartialBotApiMethod;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 @CommandProcessorComponent
-public class ProductGroupsOnStartTitleProcessorImpl implements TgCommandTitleProcessorFather {
+public class ProductGroupsOnSearchTitleProcessorImpl implements TgCommandTitleProcessorFather {
   private final TelegramApiMediator telegramApiMediator;
   private final StorageApiClient storageApiClient;
   private final GroupsInlineKeyboardGenerator groupsInlineKeyboardGenerator;
   private final BaseApiClient baseApiClient;
 
-  public ProductGroupsOnStartTitleProcessorImpl(
+  public ProductGroupsOnSearchTitleProcessorImpl(
           final TelegramApiMediator telegramApiMediator,
           final StorageApiClient storageApiClient,
           final GroupsInlineKeyboardGenerator groupsInlineKeyboardGenerator,
@@ -39,13 +37,13 @@ public class ProductGroupsOnStartTitleProcessorImpl implements TgCommandTitlePro
 
   @Override
   public void process(final TgIncomingCommandModel incomingCommand) {
-    telegramApiMediator.addMessages(incomingCommand.getUserId(), allProductGroupsOnStart(incomingCommand));
+    telegramApiMediator.addMessages(incomingCommand.getUserId(), allSearchProductGroups(incomingCommand));
   }
 
-  public List<SendPhotoFileIdRequest> allProductGroupsOnStart(
+  private List<SendPhotoFileIdRequest> allSearchProductGroups(
           final TgIncomingCommandModel incomingCommand
   ) {
-    final List<ProductGroupModel> productGroups = baseApiClient.allProductGroups(ProductGroupType.MAIN);
+    final List<ProductGroupModel> productGroups = baseApiClient.allProductGroups(ProductGroupType.SEARCH);
     final List<SendPhotoFileIdRequest> result = new ArrayList<>();
     for (var itGroup : productGroups) {
       final String fileId = storageApiClient.getTelegramIdById(itGroup.getMainImageStorageId());
@@ -62,6 +60,38 @@ public class ProductGroupsOnStartTitleProcessorImpl implements TgCommandTitlePro
 
   @Override
   public CommandData getResponsibleCommand() {
-    return CommandData.ALL_START_PRODUCT_GROUPS;
+    return CommandData.ALL_SEARCH_PRODUCT_GROUPS;
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

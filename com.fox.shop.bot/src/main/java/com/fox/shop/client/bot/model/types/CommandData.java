@@ -47,7 +47,7 @@ public enum CommandData {
   PRODUCTS_BY_GROUP("/products_by_group", "переглянути"),
   ALL_SEARCH_PRODUCT_GROUPS("/all_search_product_groups", "all search product groups"),
   VIEW_PRODUCT_DESCRIPTION("/view_product_description", "детальніше"),
-  ALL_MAIN_PRODUCT_GROUPS("/all_main_product_groups", "all main product groups"),
+  ALL_START_PRODUCT_GROUPS("/all_start_product_groups", "all main product groups"),
   SEARCH_TITLE("/search", "search"),
   SEARCH_PRODUCT("/SEARCH_PRODUCT", "search product");
 

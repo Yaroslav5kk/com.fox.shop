@@ -47,9 +47,9 @@ public class TelegramApiMediatorImpl implements TelegramApiMediator {
   }
 
   @Override
-  public void addMessage(
+  public <T extends PartialBotApiMethod>void addMessage(
           final int userId,
-          final PartialBotApiMethod message
+          final T message
   ) {
     if (!userIdMessagesToSent.containsKey(userId))
       userIdMessagesToSent.put(userId, new LinkedList<>());
@@ -59,72 +59,13 @@ public class TelegramApiMediatorImpl implements TelegramApiMediator {
   @Override
   public void addMessages(
           final int userId,
-          final List<PartialBotApiMethod> messages
+          final List<? extends PartialBotApiMethod> messages
   ) {
     if (!userIdMessagesToSent.containsKey(userId))
       userIdMessagesToSent.put(userId, new LinkedList<>());
     userIdMessagesToSent.get(userId).addAll(messages);
   }
 
- /* @Override
-  public void addSendPhoto(
-          final int userId,
-          final SendPhotoFileIdRequest sendPhoto
-  ) {
-    if (!userIdSendPhoto.containsKey(userId))
-      userIdSendPhoto.put(userId, new LinkedList<>());
-    userIdSendPhoto.get(userId).add(sendPhoto);
-  }
-
-  @Override
-  public void addSendPhoto(
-          final int userId,
-          final List<SendPhotoFileIdRequest> sendPhoto
-  ) {
-    if (!userIdSendPhoto.containsKey(userId))
-      userIdSendPhoto.put(userId, new LinkedList<>());
-    userIdSendPhoto.get(userId).addAll(sendPhoto);
-  }
-
-  @Override
-  public void addEditMessageCaption(
-          final int userId,
-          final EditMessageCaption editMessageCaption
-  ) {
-    if (!userIdEditMessageCaption.containsKey(userId))
-      userIdEditMessageCaption.put(userId, new LinkedList<>());
-    userIdEditMessageCaption.get(userId).add(editMessageCaption);
-  }
-
-  @Override
-  public void addEditMessageCaption(
-          final int userId,
-          final List<EditMessageCaption> editMessageCaptions
-  ) {
-    if (!userIdEditMessageCaption.containsKey(userId))
-      userIdEditMessageCaption.put(userId, new LinkedList<>());
-    userIdEditMessageCaption.get(userId).addAll(editMessageCaptions);
-  }
-
-  @Override
-  public void addEditMessageText(
-          final int userId,
-          final EditMessageText editMessageText
-  ) {
-    if (!userIdEditMessageText.containsKey(userId))
-      userIdEditMessageText.put(userId, new LinkedList<>());
-    userIdEditMessageText.get(userId).add(editMessageText);
-  }
-
-  @Override
-  public void addEditMessageText(
-          final int userId,
-          final List<EditMessageText> editMessageTexts
-  ) {
-    if (!userIdEditMessageText.containsKey(userId))
-      userIdEditMessageText.put(userId, new LinkedList<>());
-    userIdEditMessageText.get(userId).addAll(editMessageTexts);
-  }*/
 }
 
 

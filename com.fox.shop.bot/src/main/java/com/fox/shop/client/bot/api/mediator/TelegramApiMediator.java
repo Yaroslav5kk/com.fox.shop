@@ -9,17 +9,13 @@ import java.util.List;
 public interface TelegramApiMediator {
   List<Message> executeAll(int userId);
 
-  default Message execute(SendMessage sendMessage) {
-    telegramApiClient.sendMessage(sendMessage);
-  }
-
-  void addMessage(
+  <T extends PartialBotApiMethod>void addMessage(
           int userId,
-          PartialBotApiMethod message
+          T message
   );
 
   void addMessages(
           int userId,
-          List<PartialBotApiMethod> messages
+          List<? extends  PartialBotApiMethod> messages
   );
 }
