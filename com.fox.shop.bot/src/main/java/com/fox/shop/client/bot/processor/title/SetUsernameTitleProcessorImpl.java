@@ -9,10 +9,10 @@ import com.fox.shop.client.bot.ui.view.StartViewer;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 
 @CommandProcessorComponent
-public class GetUsernameTitleProcessorImpl implements TgCommandTitleProcessorFather {
+public class SetUsernameTitleProcessorImpl implements TgCommandTitleProcessorFather {
   private final TelegramApiMediator telegramApiMediator;
 
-  public GetUsernameTitleProcessorImpl(
+  public SetUsernameTitleProcessorImpl(
       final TelegramApiMediator telegramApiMediator
   ) {
     this.telegramApiMediator = telegramApiMediator;

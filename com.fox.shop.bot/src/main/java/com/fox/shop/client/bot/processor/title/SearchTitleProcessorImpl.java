@@ -10,38 +10,41 @@ import com.fox.shop.client.bot.model.types.CommandData;
 import com.fox.shop.client.bot.processor.title.i.TgCommandTitleProcessorFather;
 import com.fox.shop.client.bot.ui.generate.keyboard.i.GroupsInlineKeyboardGenerator;
 import com.fox.shop.client.bot.ui.view.GroupsViewer;
+import com.fox.shop.client.bot.ui.view.SearchViewer;
 import com.fox.shop.protocol.ProductGroupModel;
 import com.fox.shop.protocol.type.ProductGroupType;
+import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @CommandProcessorComponent
-public class ProductGroupsOnSearchTitleProcessorImpl implements TgCommandTitleProcessorFather {
+public class SearchTitleProcessorImpl implements TgCommandTitleProcessorFather {
   private final TelegramApiMediator telegramApiMediator;
   private final StorageApiClient storageApiClient;
-  private final GroupsInlineKeyboardGenerator groupsInlineKeyboardGenerator;
   private final BaseApiClient baseApiClient;
+  private final GroupsInlineKeyboardGenerator groupsInlineKeyboardGenerator;
 
-  public ProductGroupsOnSearchTitleProcessorImpl(
-          final TelegramApiMediator telegramApiMediator,
-          final StorageApiClient storageApiClient,
-          final GroupsInlineKeyboardGenerator groupsInlineKeyboardGenerator,
-          final BaseApiClient baseApiClient
+  public SearchTitleProcessorImpl(
+      final TelegramApiMediator telegramApiMediator,
+      final StorageApiClient storageApiClient,
+      final BaseApiClient baseApiClient,
+      final GroupsInlineKeyboardGenerator groupsInlineKeyboardGenerator
   ) {
     this.telegramApiMediator = telegramApiMediator;
     this.storageApiClient = storageApiClient;
-    this.groupsInlineKeyboardGenerator = groupsInlineKeyboardGenerator;
     this.baseApiClient = baseApiClient;
+    this.groupsInlineKeyboardGenerator = groupsInlineKeyboardGenerator;
   }
 
   @Override
   public void process(final TgIncomingCommandModel incomingCommand) {
     telegramApiMediator.addMessages(incomingCommand.getUserId(), allSearchProductGroups(incomingCommand));
+    telegramApiMediator.addMessage(incomingCommand.getUserId(), searchProductTitle(incomingCommand));
   }
 
   private List<SendPhotoFileIdRequest> allSearchProductGroups(
-          final TgIncomingCommandModel incomingCommand
+      final TgIncomingCommandModel incomingCommand
   ) {
     final List<ProductGroupModel> productGroups = baseApiClient.allProductGroups(ProductGroupType.SEARCH);
     final List<SendPhotoFileIdRequest> result = new ArrayList<>();
@@ -58,11 +61,26 @@ public class ProductGroupsOnSearchTitleProcessorImpl implements TgCommandTitlePr
     return result;
   }
 
+  private SendMessage searchProductTitle(
+      final TgIncomingCommandModel incomingCommand
+  ) {
+    final SendMessage result = new SendMessage();
+    result.setChatId(incomingCommand.getChatId());
+    result.setText(SearchViewer.searchProductTitle());
+    result.setParseMode("HTML");
+    return result;
+  }
+
   @Override
   public CommandData getResponsibleCommand() {
-    return CommandData.ALL_SEARCH_PRODUCT_GROUPS;
+    return CommandData.PRODUCTS_BY_GROUP;
   }
 }
+
+
+
+
+
 
 
 

@@ -17,7 +17,7 @@ public class SearchViewer {
     }
 
     public static String searchProductTitle() {
-        return HtmlElementGenerator.bold("Enter that you want.").
+        return HtmlElementGenerator.bold("Напиши, що бажаєш, а ми підберемо! \uD83D\uDE09").
             toString();
     }
 }

@@ -65,8 +65,8 @@ public class ShoppingSessionIKeyboardGeneratorImpl implements ShoppingSessionIKe
     public InlineKeyboardMarkup editSessionItem(final long sessionItemId) {
         final List<Pair<?, ?>> textDataToKeyboard = new ArrayList<>();
         textDataToKeyboard.add(Pair.of(
-                CommandData.SET_ITEM_QUANTITY_ON_UPDATE_TITLE.getDescription(),
-                CommandData.SET_ITEM_QUANTITY_ON_UPDATE_TITLE.getValue() + " " + sessionItemId
+                CommandData.SET_ITEM_QUANTITY_ON_UPDATE_CART_TITLE.getDescription(),
+                CommandData.SET_ITEM_QUANTITY_ON_UPDATE_CART_TITLE.getValue() + " " + sessionItemId
         ));
         return inlineKeyboardGenerator.generate(textDataToKeyboard, 1);
     }

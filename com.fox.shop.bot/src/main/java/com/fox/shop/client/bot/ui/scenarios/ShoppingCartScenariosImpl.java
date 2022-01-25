@@ -156,7 +156,7 @@ public class ShoppingCartScenariosImpl implements ShoppingCartScenarios {
           final int userId,
           final int quantity
   ) {
-    preHandle(chatId, userId, CommandData.SET_ITEM_QUANTITY_ON_UPDATE_TITLE.getValue());
+    preHandle(chatId, userId, CommandData.SET_ITEM_QUANTITY_ON_UPDATE_CART_TITLE.getValue());
     userModelDataContext.getCartItem(userId).setQuantity(quantity);
     userDomainStateContext.addToCart(userId);
     userProcessStateContext.free(userId);
@@ -174,7 +174,7 @@ public class ShoppingCartScenariosImpl implements ShoppingCartScenarios {
                       storageApiClient.getTelegramIdById(productModel.getMainImageStorageId())
               )));
     telegramApiClient.sendMessage(startMessageGeneratorMenu.base(chatId, userModelDataContext.getCartSessionId(userId)));
-    postHandle(chatId, userId, CommandData.SET_ITEM_QUANTITY_ON_UPDATE_TITLE.getValue());
+    postHandle(chatId, userId, CommandData.SET_ITEM_QUANTITY_ON_UPDATE_CART_TITLE.getValue());
   }
 
   @Override

@@ -12,12 +12,13 @@ public enum CommandData {
   MINUS_ONE("/minus_one", "-1"),
   DELETE_CART_ITEM("/delete_cart_item", "delete"),
   SET_ITEM_QUANTITY_ON_ADD_TO_CART("/set_item_quantity_on_add_to_cart", "new quantity"),
-  SET_ITEM_QUANTITY_ON_UPDATE_TITLE("/set_item_quantity_on_update_title", " new quantity"),
-  SET_ITEM_QUANTITY_ON_UPDATE_HANDLE("/set_item_quantity_on_update_handle", "new quantity"),
+  SET_ITEM_QUANTITY_ON_UPDATE_CART_TITLE("/set_item_quantity_on_update_title", " new quantity"),
+  SET_ITEM_QUANTITY_ON_UPDATE_CART_HANDLE("/set_item_quantity_on_update_handle", "new quantity"),
   SET_VALUE("/set_value", "set value"),
   GET_USERNAME_TITLE("/set_username_title", "set username title"),
   GET_USERNAME_HANDLE("/set_username_handle", "set username handle"),
-  GET_PHONE("/get_phone", "set phone"),
+  GET_PHONE_TITLE("/get_phone_title", "set phone"),
+  GET_PHONE_HANDLE("/get_phone_handle", "set phone"),
   SET_URL("/set_url", "set url"),
   ENTER_OTHER_VALUE("/enter_other", "enter other"),
   NEXT_PAGE("/next_page", "next"),
@@ -48,7 +49,8 @@ public enum CommandData {
   ALL_SEARCH_PRODUCT_GROUPS("/all_search_product_groups", "all search product groups"),
   VIEW_PRODUCT_DESCRIPTION("/view_product_description", "детальніше"),
   ALL_START_PRODUCT_GROUPS("/all_start_product_groups", "all main product groups"),
-  SEARCH_TITLE("/search", "search"),
+  SEARCH_TITLE("/search_title", "search title"),
+  SEARCH_HANDLE("/search_handle", "search handle"),
   SEARCH_PRODUCT("/SEARCH_PRODUCT", "search product");
 
   private final String value;

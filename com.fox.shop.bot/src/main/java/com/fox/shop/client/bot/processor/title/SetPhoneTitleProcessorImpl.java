@@ -5,18 +5,16 @@ import com.fox.shop.client.bot.api.mediator.TelegramApiMediator;
 import com.fox.shop.client.bot.model.TgIncomingCommandModel;
 import com.fox.shop.client.bot.model.types.CommandData;
 import com.fox.shop.client.bot.processor.title.i.TgCommandTitleProcessorFather;
-import com.fox.shop.client.bot.ui.generate.i.StartMessageGeneratorMenu;
 import com.fox.shop.client.bot.ui.generate.keyboard.i.ReplyKeyboardGenerator;
-import com.fox.shop.client.bot.ui.generate.keyboard.i.StartIKeyboardGenerator;
 import com.fox.shop.client.bot.ui.view.StartViewer;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 
 @CommandProcessorComponent
-public class GetPhoneTitleProcessorImpl implements TgCommandTitleProcessorFather {
+public class SetPhoneTitleProcessorImpl implements TgCommandTitleProcessorFather {
   private final ReplyKeyboardGenerator replyKeyboardGenerator;
   private final TelegramApiMediator telegramApiMediator;
 
-  public GetPhoneTitleProcessorImpl(
+  public SetPhoneTitleProcessorImpl(
       final ReplyKeyboardGenerator replyKeyboardGenerator,
       final TelegramApiMediator telegramApiMediator
   ) {
@@ -42,6 +40,6 @@ public class GetPhoneTitleProcessorImpl implements TgCommandTitleProcessorFather
 
   @Override
   public CommandData getResponsibleCommand() {
-    return CommandData.GET_PHONE;
+    return CommandData.GET_PHONE_TITLE;
   }
 }
