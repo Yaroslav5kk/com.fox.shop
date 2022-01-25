@@ -34,7 +34,7 @@ public class UserServiceImpl implements UserService {
 
   @Override
   public void createCustomer(
-      final int userId,
+      final long userId,
       final String userName
   ) {
     if (userInfoRepository.existsByTelegramUserId(userId) && userInfoRepository.findByTelegramUserId(userId).isActivated())
@@ -65,7 +65,7 @@ public class UserServiceImpl implements UserService {
   }
 
   private UserModel buildUserModel(
-      final int userId,
+      final long userId,
       final String userName
   ) {
     final UserModel result = userModelDataContext.getRegisterUserModel(userId);

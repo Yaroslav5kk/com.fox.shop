@@ -1,7 +1,5 @@
 package com.fox.shop.client.bot.context.model;
 
-import com.fox.shop.client.bot.model.types.UserDomainState;
-import com.fox.shop.client.bot.model.types.UserProcessState;
 import com.fox.shop.ordering.protocol.request.OrderOnCreateRequest;
 import com.fox.shop.shoppingcart.protocol.model.request.CartItemOnCreateRequest;
 

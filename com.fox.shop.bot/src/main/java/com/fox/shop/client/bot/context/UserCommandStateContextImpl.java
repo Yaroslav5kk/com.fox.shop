@@ -9,7 +9,7 @@ import java.util.Map;
 
 @Service
 public class UserCommandStateContextImpl implements UserCommandStateContext {
-  private final Map<Integer, CommandData> userCommandMap;
+  private final Map<Long, CommandData> userCommandMap;
 
   public UserCommandStateContextImpl() {
     userCommandMap = new HashMap<>();
@@ -17,14 +17,14 @@ public class UserCommandStateContextImpl implements UserCommandStateContext {
 
   @Override
   public void setup(
-      final int userId,
+      final long userId,
       final CommandData domainState
   ) {
     userCommandMap.put(userId, domainState);
   }
 
   @Override
-  public CommandData current(final Integer userId) {
+  public CommandData current(final long userId) {
     if (userCommandMap.containsKey(userId))
       return userCommandMap.get(userId);
     userCommandMap.put(userId, CommandData.START);

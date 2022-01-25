@@ -3,14 +3,13 @@ package com.fox.shop.client.bot.ui.scenarios;
 import com.fox.shop.client.bot.api.client.i.BaseApiClient;
 import com.fox.shop.client.bot.api.client.i.ShoppingCartApiClient;
 import com.fox.shop.client.bot.api.client.i.StorageApiClient;
-import com.fox.shop.client.bot.api.client.i.TelegramApiClient;
-import com.fox.shop.client.bot.context.i.UserDomainStateContext;
+import com.fox.shop.client.bot.api.mediator.TelegramApiMediator;
 import com.fox.shop.client.bot.context.i.UserModelDataContext;
-import com.fox.shop.client.bot.context.i.UserProcessStateContext;
 import com.fox.shop.client.bot.kafka.KafkaProducer;
-import com.fox.shop.client.bot.model.types.CommandData;
-import com.fox.shop.client.bot.service.i.CommandConfigurationService;
-import com.fox.shop.client.bot.ui.generate.i.*;
+import com.fox.shop.client.bot.model.TgIncomingCommandModel;
+import com.fox.shop.client.bot.ui.generate.i.ProductMessageGenerator;
+import com.fox.shop.client.bot.ui.generate.i.ShoppingCartMessageGenerator;
+import com.fox.shop.client.bot.ui.generate.i.StartMessageGeneratorMenu;
 import com.fox.shop.client.bot.ui.scenarios.i.ShoppingCartScenarios;
 import com.fox.shop.shoppingcart.protocol.model.full.FullCartSessionModel;
 import com.fox.shop.shoppingcart.protocol.model.request.AddToCartRequest;
@@ -22,144 +21,118 @@ import org.telegram.telegrambots.meta.api.objects.User;
 @Component
 public class ShoppingCartScenariosImpl implements ShoppingCartScenarios {
 
-  private final UserProcessStateContext userProcessStateContext;
-  private final UserDomainStateContext userDomainStateContext;
-  private final TelegramApiClient telegramApiClient;
   private final ShoppingCartMessageGenerator shoppingCartMessageGenerator;
   private final ShoppingCartApiClient shoppingCartApiClient;
-  private final CommonMessageGenerator commonMessageGenerator;
   private final UserModelDataContext userModelDataContext;
   private final KafkaProducer kafkaProducer;
   private final ProductMessageGenerator productMessageGenerator;
   private final StartMessageGeneratorMenu startMessageGeneratorMenu;
-  private final PrePostCommandHandleMessageGenerator prePostCommandHandleMessageGenerator;
-  private final CommandConfigurationService commandConfigurationService;
   private final BaseApiClient baseApiClient;
   private final StorageApiClient storageApiClient;
+  private final TelegramApiMediator telegramApiMediator;
 
   public ShoppingCartScenariosImpl(
-          final UserProcessStateContext userProcessStateContext,
-          final UserDomainStateContext userDomainStateContext,
-          final TelegramApiClient telegramApiClient,
-          final ShoppingCartMessageGenerator shoppingCartMessageGenerator,
-          final ShoppingCartApiClient shoppingCartApiClient,
-          final CommonMessageGenerator commonMessageGenerator,
-          final UserModelDataContext userModelDataContext,
-          final KafkaProducer kafkaProducer,
-          final ProductMessageGenerator productMessageGenerator,
-          final StartMessageGeneratorMenu startMessageGeneratorMenu,
-          final PrePostCommandHandleMessageGenerator prePostCommandHandleMessageGenerator,
-          final CommandConfigurationService commandConfigurationService,
-          final BaseApiClient baseApiClient,
-          final StorageApiClient storageApiClient
+      final ShoppingCartMessageGenerator shoppingCartMessageGenerator,
+      final ShoppingCartApiClient shoppingCartApiClient,
+      final UserModelDataContext userModelDataContext,
+      final KafkaProducer kafkaProducer,
+      final ProductMessageGenerator productMessageGenerator,
+      final StartMessageGeneratorMenu startMessageGeneratorMenu,
+      final BaseApiClient baseApiClient,
+      final StorageApiClient storageApiClient,
+      final TelegramApiMediator telegramApiMediator
   ) {
-    this.userProcessStateContext = userProcessStateContext;
-    this.userDomainStateContext = userDomainStateContext;
-    this.telegramApiClient = telegramApiClient;
     this.shoppingCartMessageGenerator = shoppingCartMessageGenerator;
     this.shoppingCartApiClient = shoppingCartApiClient;
-    this.commonMessageGenerator = commonMessageGenerator;
     this.userModelDataContext = userModelDataContext;
     this.kafkaProducer = kafkaProducer;
     this.productMessageGenerator = productMessageGenerator;
     this.startMessageGeneratorMenu = startMessageGeneratorMenu;
-    this.prePostCommandHandleMessageGenerator = prePostCommandHandleMessageGenerator;
-    this.commandConfigurationService = commandConfigurationService;
     this.baseApiClient = baseApiClient;
     this.storageApiClient = storageApiClient;
+    this.telegramApiMediator = telegramApiMediator;
   }
 
   @Override
   public void getCartSession(
-          final long chatId,
-          final User user
+      final TgIncomingCommandModel incomingCommand
   ) {
-    preHandle(chatId, user.getId(), CommandData.GET_CART_SESSION.getValue());
-    final FullCartSessionModel sessionModel = shoppingCartApiClient.getCartSessionByUser(user.getId());
+    final long userId = incomingCommand.getUserId();
+    final long chatId = incomingCommand.getChatId();
+    final FullCartSessionModel sessionModel = shoppingCartApiClient.getCartSessionByUser(userId);
     if (sessionModel.getId() == 0)
-      telegramApiClient.sendMessage(shoppingCartMessageGenerator.emptyCartSession(chatId));
+      telegramApiMediator.addMessage(shoppingCartMessageGenerator.emptyCartSession(chatId));
     else
-      telegramApiClient.sendMessage(shoppingCartMessageGenerator.
-              getCartSession(chatId, sessionModel));
-    postHandle(chatId, user.getId(), CommandData.GET_CART_SESSION.getValue());
+      telegramApiMediator.addMessage(shoppingCartMessageGenerator.
+          getCartSession(chatId, sessionModel));
   }
 
   @Override
   public void editCartSession(
-          final long chatId,
-          final int userId
+      final TgIncomingCommandModel incomingCommand
   ) {
-    preHandle(chatId, userId, CommandData.EDIT_CART_SESSION.getValue());
-    userDomainStateContext.setItemQuantityOnUpdateHandle(userId);
+    final long userId = incomingCommand.getUserId();
+    final long chatId = incomingCommand.getChatId();
     final FullCartSessionModel sessionModel = shoppingCartApiClient.getCartSessionByUser(userId);
     if (sessionModel.getId() == 0)
-      telegramApiClient.sendMessage(shoppingCartMessageGenerator.emptyCartSession(chatId));
+      telegramApiMediator.addMessage(shoppingCartMessageGenerator.emptyCartSession(chatId));
     else {
-      shoppingCartMessageGenerator.
-              editCartSessionTitle(chatId, sessionModel).forEach(telegramApiClient::sendPhoto);
-      telegramApiClient.sendMessage(shoppingCartMessageGenerator.beginBack(chatId));
+      telegramApiMediator.addMessages(shoppingCartMessageGenerator.
+          editCartSessionTitle(chatId, sessionModel));
     }
-    postHandle(chatId, userId, CommandData.EDIT_CART_SESSION.getValue());
   }
 
   @Override
   public void clearCartSession(
-          final long chatId,
-          final User user
+      final TgIncomingCommandModel incomingCommand
   ) {
-    preHandle(chatId, user.getId(), CommandData.CLEAR_CART_SESSION.getValue());
-    shoppingCartApiClient.clearCartSessionByUser(user.getId());
-    userModelDataContext.clearAll(user.getId());
-    telegramApiClient.sendMessage(shoppingCartMessageGenerator.
-            successClearCartSession(chatId));
-    postHandle(chatId, user.getId(), CommandData.CLEAR_CART_SESSION.getValue());
+    final long userId = incomingCommand.getUserId();
+    final long chatId = incomingCommand.getChatId();
+    shoppingCartApiClient.clearCartSessionByUser(userId);
+    userModelDataContext.clearAll(userId);
+    telegramApiMediator.addMessage(shoppingCartMessageGenerator.
+        successClearCartSession(chatId));
   }
 
   @Override
   public void addToCart(
-          final long chatId,
-          final int userId,
-          final long productId
+      final TgIncomingCommandModel incomingCommand
   ) {
-    preHandle(chatId, userId, CommandData.ADD_TO_CART.getValue());
-    userDomainStateContext.setItemQuantityOnAddToCart(userId);
-    userModelDataContext.cartItems(userId, new CartItemOnCreateRequest(productId));
-    userModelDataContext.productId(userId, productId);
-    telegramApiClient.sendMessage(shoppingCartMessageGenerator.setItemQuantityTitle(chatId));
+    final long userId = incomingCommand.getUserId();
+    final long chatId = incomingCommand.getChatId();
+    userModelDataContext.cartItems(userId, new CartItemOnCreateRequest(incomingCommand.getInputDataAsLong()));
+    userModelDataContext.productId(userId, incomingCommand.getInputDataAsLong());
+    telegramApiMediator.addMessage(shoppingCartMessageGenerator.setItemQuantityTitle(chatId));
     return;
   }
 
   @Override
   public void setCartItemQuantityOnUpdateTitle(
-          final long chatId,
-          final int userId,
-          final long itemId
+      final TgIncomingCommandModel incomingCommand
   ) {
-    userModelDataContext.cartItemId(userId, itemId);
-    userDomainStateContext.setItemQuantityOnUpdateHandle(userId);
-    telegramApiClient.sendMessage(shoppingCartMessageGenerator.setItemQuantityTitle(chatId));
+    final long userId = incomingCommand.getUserId();
+    final long chatId = incomingCommand.getChatId();
+    userModelDataContext.cartItemId(userId, incomingCommand.getInputDataAsLong());
+    telegramApiMediator.addMessage(shoppingCartMessageGenerator.setItemQuantityTitle(chatId));
   }
 
   @Override
   public void setCartItemQuantityOnUpdateHandle(
-          final long chatId,
-          final int userId,
-          final short quantity
+      final TgIncomingCommandModel incomingCommand
   ) {
-    shoppingCartApiClient.updateCartItemQuantity(userModelDataContext.getCartItemIdFromRequest(userId), quantity);
-    editCartSession(chatId, userId);
+    final long userId = incomingCommand.getUserId();
+    final long chatId = incomingCommand.getChatId();
+    shoppingCartApiClient.updateCartItemQuantity(userModelDataContext.getCartItemIdFromRequest(userId), Short.valueOf(incomingCommand.getInputData()));
+    editCartSession(incomingCommand);
   }
 
   @Override
   public void setItemQuantityForAddToCart(
-          final long chatId,
-          final int userId,
-          final int quantity
+      final TgIncomingCommandModel incomingCommand
   ) {
-    preHandle(chatId, userId, CommandData.SET_ITEM_QUANTITY_ON_UPDATE_CART_TITLE.getValue());
-    userModelDataContext.getCartItem(userId).setQuantity(quantity);
-    userDomainStateContext.addToCart(userId);
-    userProcessStateContext.free(userId);
+    final long userId = incomingCommand.getUserId();
+    final long chatId = incomingCommand.getChatId();
+    userModelDataContext.getCartItem(userId).setQuantity(Integer.valueOf(incomingCommand.getInputData()));
     final AddToCartRequest addToCartRequest = new AddToCartRequest();
     addToCartRequest.setUserId(userId);
     addToCartRequest.setCartItem(userModelDataContext.getCartItem(userId));
@@ -167,28 +140,12 @@ public class ShoppingCartScenariosImpl implements ShoppingCartScenarios {
     final FullCartSessionModel fullCartSessionModel = kafkaProducer.addToCart(addToCartRequest);
     userModelDataContext.cartSessionId(userId, fullCartSessionModel.getId());
     if (userModelDataContext.getProductGroupId(userId) != null)
-      baseApiClient.productsByGroup(userId,userModelDataContext.getProductGroupId(userId), null).getContent().forEach(productModel -> telegramApiClient.
-              sendPhoto(productMessageGenerator.product(
-                      chatId,
-                      productModel,
-                      storageApiClient.getTelegramIdById(productModel.getMainImageStorageId())
-              )));
-    telegramApiClient.sendMessage(startMessageGeneratorMenu.base(chatId, userModelDataContext.getCartSessionId(userId)));
-    postHandle(chatId, userId, CommandData.SET_ITEM_QUANTITY_ON_UPDATE_CART_TITLE.getValue());
-  }
-
-  @Override
-  public PrePostCommandHandleMessageGenerator getPrePostCommandHandleMessageGenerator() {
-    return prePostCommandHandleMessageGenerator;
-  }
-
-  @Override
-  public TelegramApiClient getTelegramApiClient() {
-    return telegramApiClient;
-  }
-
-  @Override
-  public CommandConfigurationService getCommandConfigurationService() {
-    return commandConfigurationService;
+      baseApiClient.productsByGroup(userId, userModelDataContext.getProductGroupId(userId), null).getContent().forEach(productModel ->
+          telegramApiMediator.addMessage(productMessageGenerator.product(
+              chatId,
+              productModel,
+              storageApiClient.getTelegramIdById(productModel.getMainImageStorageId())
+          )));
+    telegramApiMediator.addMessage(startMessageGeneratorMenu.base(chatId, userModelDataContext.getCartSessionId(userId)));
   }
 }

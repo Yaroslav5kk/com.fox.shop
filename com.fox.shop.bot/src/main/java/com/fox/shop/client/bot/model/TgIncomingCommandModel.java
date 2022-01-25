@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Optional;
 
 public class TgIncomingCommandModel {
-  private int userId;
+  private long userId;
   private String userName;
   private long chatId;
   private long messageId;
@@ -28,11 +28,15 @@ public class TgIncomingCommandModel {
     return result;
   }
 
-  public int getUserId() {
+  public long getInputDataAsLong(){
+    return Long.parseLong(inputData);
+  }
+
+  public long getUserId() {
     return userId;
   }
 
-  public void setUserId(int userId) {
+  public void setUserId(long userId) {
     this.userId = userId;
   }
 

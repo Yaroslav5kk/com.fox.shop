@@ -7,15 +7,13 @@ import org.telegram.telegrambots.meta.api.objects.Message;
 import java.util.List;
 
 public interface TelegramApiMediator {
-  List<Message> executeAll(int userId);
+  List<Message> executeAll();
 
   <T extends PartialBotApiMethod>void addMessage(
-          int userId,
           T message
   );
 
   void addMessages(
-          int userId,
           List<? extends  PartialBotApiMethod> messages
   );
 }

@@ -1,8 +1,6 @@
 package com.fox.shop.client.bot.command.process;
 
-import com.fox.shop.client.bot.context.i.UserDomainStateContext;
 import com.fox.shop.client.bot.context.i.UserHistoryContext;
-import com.fox.shop.client.bot.context.i.UserProcessStateContext;
 import com.fox.shop.client.bot.ui.generate.i.CommonMessageGenerator;
 import com.fox.shop.client.bot.command.AnonymizerCommand;
 import com.fox.shop.client.bot.model.types.CommandData;

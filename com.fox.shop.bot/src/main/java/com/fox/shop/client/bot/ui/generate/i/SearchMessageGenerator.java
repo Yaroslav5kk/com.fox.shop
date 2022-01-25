@@ -6,12 +6,4 @@ public interface SearchMessageGenerator {
   SendMessage searchTitle(
       long chatId
   );
-
-  SendMessage searchMerchantTitle(
-      long chatId
-  );
-
-  SendMessage searchProductTitle(
-      long chatId
-  );
 }

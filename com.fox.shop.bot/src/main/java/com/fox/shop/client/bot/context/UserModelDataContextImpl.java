@@ -12,14 +12,14 @@ import java.util.Optional;
 
 @Service
 public class UserModelDataContextImpl implements UserModelDataContext {
-  private final Map<Integer, OrderOnCreateRequest> userIdOrderOnCreateRequest;
-  private final Map<Integer, CartItemOnCreateRequest> userIdCartItem;
-  private final Map<Integer, Long> userIdCategoryIdFromRequest;
-  private final Map<Integer, Long> userIdProductGroupIdFromRequest;
-  private final Map<Integer, Long> userIdProductIdFromRequest;
-  private final Map<Integer, Long> userIdCartItemIdFromRequest;
-  private final Map<Integer, UserModel> userIdRegisterUserModel;
-  private final Map<Integer, Long> userIdCartSessionId;
+  private final Map<Long, OrderOnCreateRequest> userIdOrderOnCreateRequest;
+  private final Map<Long, CartItemOnCreateRequest> userIdCartItem;
+  private final Map<Long, Long> userIdCategoryIdFromRequest;
+  private final Map<Long, Long> userIdProductGroupIdFromRequest;
+  private final Map<Long, Long> userIdProductIdFromRequest;
+  private final Map<Long, Long> userIdCartItemIdFromRequest;
+  private final Map<Long, UserModel> userIdRegisterUserModel;
+  private final Map<Long, Long> userIdCartSessionId;
 
   public UserModelDataContextImpl() {
     userIdOrderOnCreateRequest = new HashMap<>();
@@ -34,7 +34,7 @@ public class UserModelDataContextImpl implements UserModelDataContext {
 
   @Override
   public void orderOnCreateRequest(
-          final Integer userId,
+          final long userId,
           final OrderOnCreateRequest order
   ) {
     userIdOrderOnCreateRequest.put(userId, order);
@@ -42,21 +42,21 @@ public class UserModelDataContextImpl implements UserModelDataContext {
 
   @Override
   public void cartItems(
-          final Integer userId,
+          final long userId,
           final CartItemOnCreateRequest cartItem
   ) {
     userIdCartItem.put(userId, cartItem);
   }
 
   @Override
-  public OrderOnCreateRequest getOrderOnCreateRequest(final Integer userId) {
+  public OrderOnCreateRequest getOrderOnCreateRequest(final long userId) {
     if (!userIdOrderOnCreateRequest.containsKey(userId))
       userIdOrderOnCreateRequest.put(userId, new OrderOnCreateRequest());
     return userIdOrderOnCreateRequest.get(userId);
   }
 
   @Override
-  public CartItemOnCreateRequest getCartItem(final Integer userId) {
+  public CartItemOnCreateRequest getCartItem(final long userId) {
     if (!userIdCartItem.containsKey(userId))
       userIdCartItem.put(userId, new CartItemOnCreateRequest());
     return userIdCartItem.get(userId);
@@ -64,53 +64,53 @@ public class UserModelDataContextImpl implements UserModelDataContext {
 
   @Override
   public void categoryId(
-          final Integer userId,
-          final Long categoryId
+          final long userId,
+          final long categoryId
   ) {
     userIdProductGroupIdFromRequest.put(userId, null);
     userIdCategoryIdFromRequest.put(userId, categoryId);
   }
 
   @Override
-  public Long getCategoryIdFromRequest(
-          final Integer userId
+  public long getCategoryIdFromRequest(
+          final long userId
   ) {
     return userIdCategoryIdFromRequest.get(userId);
   }
 
   @Override
   public void productId(
-          final Integer userId,
-          final Long productId
+          final long userId,
+          final long productId
   ) {
     userIdProductIdFromRequest.put(userId, productId);
   }
 
   @Override
   public Long getProductIdFromRequest(
-          final Integer userId
+          final long userId
   ) {
     return userIdProductIdFromRequest.get(userId);
   }
 
   @Override
   public void cartItemId(
-          final Integer userId,
-          final Long cartItemId
+          final long userId,
+          final long cartItemId
   ) {
     userIdCartItemIdFromRequest.put(userId, cartItemId);
   }
 
   @Override
   public Long getCartItemIdFromRequest(
-          final Integer userId
+          final long userId
   ) {
     return userIdCartItemIdFromRequest.get(userId);
   }
 
   @Override
   public void productGroupId(
-          final Integer userId,
+          final long userId,
           final long productGroupId
   ) {
     userIdCategoryIdFromRequest.put(userId, null);
@@ -119,14 +119,14 @@ public class UserModelDataContextImpl implements UserModelDataContext {
 
   @Override
   public Long getProductGroupId(
-          final Integer userId
+          final long userId
   ) {
     return userIdProductGroupIdFromRequest.get(userId);
   }
 
   @Override
   public void registerUserModel(
-          final Integer userId,
+          final long userId,
           final UserModel user
   ) {
     userIdRegisterUserModel.put(userId, user);
@@ -134,7 +134,7 @@ public class UserModelDataContextImpl implements UserModelDataContext {
 
   @Override
   public UserModel getRegisterUserModel(
-          final Integer userId
+          final long userId
   ) {
     if (userIdRegisterUserModel.containsKey(userId))
       return userIdRegisterUserModel.get(userId);
@@ -145,19 +145,19 @@ public class UserModelDataContextImpl implements UserModelDataContext {
 
   @Override
   public void cartSessionId(
-          final int userId,
+          final long userId,
           final long cartSessionId
   ) {
     userIdCartSessionId.put(userId, cartSessionId);
   }
 
   @Override
-  public Optional<Long> getCartSessionId(final int userId) {
+  public Optional<Long> getCartSessionId(final long userId) {
     return Optional.ofNullable(userIdCartSessionId.get(userId));
   }
 
   @Override
-  public void clearAll(final int userId) {
+  public void clearAll(final long userId) {
     userIdOrderOnCreateRequest.remove(userId);
     userIdCartItem.remove(userId);
     userIdCartSessionId.remove(userId);

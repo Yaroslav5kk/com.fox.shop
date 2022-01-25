@@ -4,9 +4,9 @@ import com.fox.shop.client.bot.model.types.CommandData;
 
 public interface UserCommandStateContext {
   void setup(
-      int userId,
+      long userId,
       CommandData domainState
   );
 
-  CommandData current(Integer userId);
+  CommandData current(long userId);
 }

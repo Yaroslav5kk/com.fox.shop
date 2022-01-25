@@ -1,10 +1,7 @@
 package com.fox.shop.client.bot.interceptor;
 
 import com.fox.shop.client.bot.command.CommandContainer;
-import com.fox.shop.client.bot.context.i.UserDomainStateContext;
-import com.fox.shop.client.bot.context.i.UserProcessStateContext;
 import com.fox.shop.client.bot.model.types.CommandData;
-import com.fox.shop.client.bot.model.types.UserDomainState;
 import com.fox.shop.client.bot.service.i.AnswerCallBackQuerySelector;
 import com.fox.shop.client.bot.service.i.UserHistoryService;
 import com.fox.shop.client.bot.interceptor.i.FatherIncomingInterceptor;
@@ -78,19 +75,16 @@ public class TgSelectScenariosInterceptorImpl implements AnswerCallBackQuerySele
     userHistoryService.snapshot(userId, command);
     command = userHistoryService.handle(userId, command);
 
-    UserDomainState domainState = command.startsWith("/") && UserDomainState.isMain(CommandData.fromValue(command))
+    CommandData domainState = command.startsWith("/") && UserDomainState.isMain(CommandData.fromValue(command))
         ? UserDomainState.fromCommand(CommandData.fromValue(command))
         : userDomainStateContext.current(userId);
     userHistoryService.removeOldMessages(chatId, domainState);
     userDomainStateContext.put(userId, domainState);
     switch (domainState) {
       case START:
-        startScenarios.base(chatId, user);
+        startScenarios.start(chatId, user);
         break;
-      case RESET:
-        resetScenarios.reset(chatId, userId);
-        break;
-      case GET_CART_SESSION:
+     case GET_CART_SESSION:
         shoppingCartScenarios.getCartSession(chatId, user);
         break;
       case CLEAN_CART_SESSION:
@@ -131,59 +125,6 @@ public class TgSelectScenariosInterceptorImpl implements AnswerCallBackQuerySele
         break;
     }
   }
-
-  private void select(
-      final TgIncomingCommandModel update
-  ){
-    switch (userDomainStateContext.current(update.getUserId())) {
-      case START:
-        startScenarios.base(chatId, user);
-        break;
-      case RESET:
-        resetScenarios.reset(chatId, userId);
-        break;
-      case GET_CART_SESSION:
-        shoppingCartScenarios.getCartSession(chatId, user);
-        break;
-      case CLEAN_CART_SESSION:
-        shoppingCartScenarios.clearCartSession(chatId, user);
-        break;
-      case EDIT_CART_SESSION:
-        shoppingCartScenarios.editCartSession(chatId, userId);
-        break;
-      case SET_ITEM_QUANTITY_ON_ADD_TO_CART:
-        shoppingCartScenarios.setItemQuantityForAddToCart(chatId, userId, (int) callbackQueryData);
-        break;
-      case SET_ITEM_QUANTITY_ON_UPDATE_TITLE:
-        shoppingCartScenarios.setCartItemQuantityOnUpdateTitle(chatId, userId, (short) callbackQueryData);
-        break;
-      case SET_ITEM_QUANTITY_ON_UPDATE_HANDLE:
-        shoppingCartScenarios.setCartItemQuantityOnUpdateHandle(chatId, userId, (short) callbackQueryData);
-        break;
-      case ADD_TO_CART:
-        shoppingCartScenarios.addToCart(chatId, userId, callbackQueryData);
-        break;
-      case MAKE_ORDER_TITLE:
-        orderScenarios.makeOrderTitle(chatId, user, callbackQueryData);
-        break;
-      case SET_ORDER_CONTACT_INFO_TITLE:
-        orderScenarios.setOrderContactInfo(chatId, user, callbackQueryData);
-        break;
-      case PRODUCTS_BY_GROUP:
-        productScenarios.allProductByGroup(chatId, userId, Long.valueOf(callbackQueryData));
-        break;
-      case VIEW_PRODUCT_DESCRIPTION:
-        productScenarios.viewProductDescription(chatId, UpdateExtractor.callBackQueryMessageId(update), Long.valueOf(callbackQueryData));
-        break;
-      case SEARCH_TITLE:
-        searchScenarios.searchTitle(chatId, userId);
-        break;
-      case SEARCH_PRODUCT:
-        searchScenarios.searchProductTitle(chatId, userId);
-        break;
-    }
-  }
-
 
   private long callbackQueryData(final String input) {
     final String[] divided = input.split(" ");

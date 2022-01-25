@@ -1,7 +1,6 @@
 package com.fox.shop.client.bot.command.menu;
 
 import com.fox.shop.client.bot.command.AnonymizerCommand;
-import com.fox.shop.client.bot.context.i.UserDomainStateContext;
 import com.fox.shop.client.bot.context.i.UserHistoryContext;
 import com.fox.shop.client.bot.model.types.CommandData;
 import com.fox.shop.client.bot.service.i.UserService;
@@ -32,7 +31,7 @@ public class StartCommand extends AnonymizerCommand {
 
     @Override
     public void execute(AbsSender absSender, User user, Chat chat, String[] strings) {
-        startScenariosMenu.base(chat.getId(), user);
+        startScenariosMenu.start(chat.getId(), user);
         userHistoryContext.snapshot(user.getId(), CommandData.START.getValue());
     }
 }

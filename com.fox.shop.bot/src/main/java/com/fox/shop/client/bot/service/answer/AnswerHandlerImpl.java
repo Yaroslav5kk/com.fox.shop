@@ -1,8 +1,6 @@
 package com.fox.shop.client.bot.service.answer;
 
-import com.fox.shop.client.bot.context.i.UserDomainStateContext;
 import com.fox.shop.client.bot.context.i.UserHistoryContext;
-import com.fox.shop.client.bot.model.types.UserDomainState;
 import com.fox.shop.client.bot.service.i.AnswerHandler;
 import com.fox.shop.client.bot.ui.scenarios.i.OrderScenarios;
 import com.fox.shop.client.bot.ui.scenarios.i.SearchScenarios;
@@ -57,7 +55,7 @@ public class AnswerHandlerImpl implements AnswerHandler {
                 startScenariosMenu.getPhoneHandle(chatId, user, UpdateExtractor.phone(update).orElse(enteredText));
                 break;
             case SEARCH_PRODUCT:
-                searchScenarios.searchProductHandle(chatId, userId, enteredText);
+                searchScenarios.searchHandle(chatId, userId, enteredText);
                 break;
             case SET_ITEM_QUANTITY_ON_ADD_TO_CART:
                 shoppingCartScenarios.setCartItemQuantityOnUpdateHandle(chatId, userId, Short.valueOf(enteredText));

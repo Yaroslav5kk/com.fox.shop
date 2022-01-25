@@ -3,7 +3,6 @@ package com.fox.shop.client.bot.service;
 import com.fox.shop.client.bot.api.client.i.TelegramApiClient;
 import com.fox.shop.client.bot.context.i.UserHistoryContext;
 import com.fox.shop.client.bot.model.types.CommandData;
-import com.fox.shop.client.bot.model.types.UserDomainState;
 import com.fox.shop.client.bot.service.i.UserHistoryService;
 import org.springframework.stereotype.Component;
 

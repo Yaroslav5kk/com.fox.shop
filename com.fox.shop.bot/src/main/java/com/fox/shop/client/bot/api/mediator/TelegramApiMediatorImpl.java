@@ -11,25 +11,27 @@ import org.telegram.telegrambots.meta.api.methods.updatingmessages.EditMessageCa
 import org.telegram.telegrambots.meta.api.methods.updatingmessages.EditMessageText;
 import org.telegram.telegrambots.meta.api.objects.Message;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 
 @Service
 public class TelegramApiMediatorImpl implements TelegramApiMediator {
   private final TelegramApiClient telegramApiClient;
 
-  private Map<Integer, LinkedList<PartialBotApiMethod>> userIdMessagesToSent;
+  private LinkedList<PartialBotApiMethod> userIdMessagesToSent;
 
   public TelegramApiMediatorImpl(
-          final TelegramApiClient telegramApiClient
+      final TelegramApiClient telegramApiClient
   ) {
     this.telegramApiClient = telegramApiClient;
-    this.userIdMessagesToSent = new HashMap<>();
+    this.userIdMessagesToSent = new LinkedList<>();
   }
 
   @Override
-  public List<Message> executeAll(final int userId) {
+  public List<Message> executeAll() {
     final List<Message> result = new ArrayList<>();
-    userIdMessagesToSent.get(userId).forEach(message -> {
+    userIdMessagesToSent.forEach(message -> {
       if (message instanceof SendMessage)
         result.add(telegramApiClient.sendMessage((SendMessage) message));
       else if (message instanceof SendPhotoFileIdRequest)
@@ -47,23 +49,17 @@ public class TelegramApiMediatorImpl implements TelegramApiMediator {
   }
 
   @Override
-  public <T extends PartialBotApiMethod>void addMessage(
-          final int userId,
-          final T message
+  public <T extends PartialBotApiMethod> void addMessage(
+      final T message
   ) {
-    if (!userIdMessagesToSent.containsKey(userId))
-      userIdMessagesToSent.put(userId, new LinkedList<>());
-    userIdMessagesToSent.get(userId).add(message);
+    userIdMessagesToSent.add(message);
   }
 
   @Override
   public void addMessages(
-          final int userId,
-          final List<? extends PartialBotApiMethod> messages
+      final List<? extends PartialBotApiMethod> messages
   ) {
-    if (!userIdMessagesToSent.containsKey(userId))
-      userIdMessagesToSent.put(userId, new LinkedList<>());
-    userIdMessagesToSent.get(userId).addAll(messages);
+    userIdMessagesToSent.addAll(messages);
   }
 
 }

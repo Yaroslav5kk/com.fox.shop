@@ -1,127 +1,92 @@
 package com.fox.shop.client.bot.ui.scenarios;
 
-import com.fox.shop.client.bot.api.client.i.TelegramApiClient;
-import com.fox.shop.client.bot.context.i.PaginationDataContext;
-import com.fox.shop.client.bot.context.i.UserDomainStateContext;
+import com.fox.shop.client.bot.api.client.i.BaseApiClient;
+import com.fox.shop.client.bot.api.mediator.TelegramApiMediator;
+import com.fox.shop.client.bot.context.i.UserCommandStateContext;
 import com.fox.shop.client.bot.context.i.UserModelDataContext;
-import com.fox.shop.client.bot.context.i.UserProcessStateContext;
+import com.fox.shop.client.bot.model.TgIncomingCommandModel;
 import com.fox.shop.client.bot.model.types.CommandData;
-import com.fox.shop.client.bot.service.i.CommandConfigurationService;
 import com.fox.shop.client.bot.service.i.UserService;
 import com.fox.shop.client.bot.ui.generate.i.GroupsMessageGenerator;
-import com.fox.shop.client.bot.ui.generate.i.PrePostCommandHandleMessageGenerator;
 import com.fox.shop.client.bot.ui.generate.i.StartMessageGeneratorMenu;
 import com.fox.shop.client.bot.ui.scenarios.i.StartScenariosMenu;
 import org.springframework.stereotype.Service;
-import org.telegram.telegrambots.meta.api.objects.User;
 
 @Service
 public class StartScenariosMenuImpl implements StartScenariosMenu {
 
   private final StartMessageGeneratorMenu startMessageGeneratorMenu;
-  private final TelegramApiClient telegramApiClient;
   private final UserService userService;
-  private final UserProcessStateContext userProcessStateContext;
-  private final UserDomainStateContext userDomainStateContext;
   private final UserModelDataContext userModelDataContext;
-  private final PrePostCommandHandleMessageGenerator prePostCommandHandleMessageGenerator;
-  private final CommandConfigurationService commandConfigurationService;
   private final GroupsMessageGenerator groupsMessageGenerator;
+  private final UserCommandStateContext userCommandStateContext;
+  private final TelegramApiMediator telegramApiMediator;
 
   public StartScenariosMenuImpl(
       final StartMessageGeneratorMenu startMessageGeneratorMenu,
-      final TelegramApiClient telegramApiClient,
       final UserService userService,
-      final UserProcessStateContext userProcessStateContext,
-      final UserDomainStateContext userDomainStateContext,
       final UserModelDataContext userModelDataContext,
-      final PrePostCommandHandleMessageGenerator prePostCommandHandleMessageGenerator,
-      final CommandConfigurationService commandConfigurationService,
       final GroupsMessageGenerator groupsMessageGenerator,
-      final PaginationDataContext paginationDataContext
-  ) {
+      final UserCommandStateContext userCommandStateContext,
+      final TelegramApiMediator telegramApiMediator
+      ) {
     this.startMessageGeneratorMenu = startMessageGeneratorMenu;
-    this.telegramApiClient = telegramApiClient;
     this.userService = userService;
-    this.userProcessStateContext = userProcessStateContext;
-    this.userDomainStateContext = userDomainStateContext;
     this.userModelDataContext = userModelDataContext;
-    this.prePostCommandHandleMessageGenerator = prePostCommandHandleMessageGenerator;
-    this.commandConfigurationService = commandConfigurationService;
     this.groupsMessageGenerator = groupsMessageGenerator;
+    this.userCommandStateContext = userCommandStateContext;
+    this.telegramApiMediator = telegramApiMediator;
   }
 
   @Override
-  public void base(
-      final Long chatId,
-      final User user
+  public void start(
+      final TgIncomingCommandModel incomingCommand
   ) {
-    final int userId = user.getId();
-    preHandle(chatId, userId, CommandData.START.getValue());
+    final long userId = incomingCommand.getUserId();
+    final long chatId = incomingCommand.getChatId();
     if (!userService.isActivatedUser(userId)) {
-      getNameTitle(chatId, userId);
+      getNameTitle(incomingCommand);
       return;
     } else {
-      groupsMessageGenerator.allMainProductGroups(chatId, user.getId())
-          .forEach(sendPhotoFileIdRequest -> telegramApiClient.sendPhoto(sendPhotoFileIdRequest));
+      groupsMessageGenerator.allMainProductGroups(chatId, userId)
+          .forEach(sendPhotoFileIdRequest -> telegramApiMediator.addMessage(sendPhotoFileIdRequest));
     }
-    telegramApiClient.sendMessage(startMessageGeneratorMenu.base(chatId, userModelDataContext.getCartSessionId(userId)));
+    telegramApiMediator.addMessage(startMessageGeneratorMenu.base(chatId, userModelDataContext.getCartSessionId(userId)));
     userModelDataContext.clearAll(userId);
-    postHandle(chatId, userId, CommandData.START.getValue());
   }
 
   @Override
   public void getNameTitle(
-      final long chatId,
-      final int userId
+      final TgIncomingCommandModel incomingCommand
   ) {
-    userDomainStateContext.setName(userId);
-    telegramApiClient.sendMessage(startMessageGeneratorMenu.getName(chatId));
+    userCommandStateContext.setup(incomingCommand.getUserId(), CommandData.GET_USERNAME_HANDLE);
+    telegramApiMediator.addMessage(startMessageGeneratorMenu.getName(incomingCommand.getChatId()));
   }
 
   @Override
   public void getNameHandle(
-      final long chatId,
-      final String name,
-      final int userId
+      final TgIncomingCommandModel incomingCommand
   ) {
-    userModelDataContext.getRegisterUserModel(userId).setFirstName(name);
-    getPhoneTitle(chatId, userId);
+    userModelDataContext.getRegisterUserModel(incomingCommand.getUserId()).setFirstName(incomingCommand.getInputData());
+    getPhoneTitle(incomingCommand);
   }
 
   @Override
   public void getPhoneTitle(
-      final long chatId,
-      final int userId
+      final TgIncomingCommandModel incomingCommand
   ) {
-    userDomainStateContext.setPhone(userId);
-    telegramApiClient.sendMessage(startMessageGeneratorMenu.getPhone(chatId));
+    userCommandStateContext.setup(incomingCommand.getUserId(), CommandData.GET_PHONE_HANDLE);
+    telegramApiMediator.addMessage(startMessageGeneratorMenu.getPhone(incomingCommand.getChatId()));
   }
 
   @Override
   public void getPhoneHandle(
-      final long chatId,
-      final User user,
-      final String phone
+      final TgIncomingCommandModel incomingCommand
   ) {
-    userModelDataContext.getRegisterUserModel(user.getId()).setPhone(phone);
-    userService.createCustomer(user.getId(), user.getUserName());
-    groupsMessageGenerator.allMainProductGroups(chatId, user.getId())
-        .forEach(sendPhotoFileIdRequest -> telegramApiClient.sendPhoto(sendPhotoFileIdRequest));
+    userModelDataContext.getRegisterUserModel(incomingCommand.getUserId()).setPhone(incomingCommand.getInputData());
+    userService.createCustomer(incomingCommand.getUserId(), incomingCommand.getUserName());
+    groupsMessageGenerator.allMainProductGroups(incomingCommand.getChatId(), incomingCommand.getUserId())
+        .forEach(sendPhotoFileIdRequest -> telegramApiMediator.addMessage(sendPhotoFileIdRequest));
   }
 
-  @Override
-  public PrePostCommandHandleMessageGenerator getPrePostCommandHandleMessageGenerator() {
-    return prePostCommandHandleMessageGenerator;
-  }
-
-  @Override
-  public TelegramApiClient getTelegramApiClient() {
-    return telegramApiClient;
-  }
-
-  @Override
-  public CommandConfigurationService getCommandConfigurationService() {
-    return commandConfigurationService;
-  }
 }

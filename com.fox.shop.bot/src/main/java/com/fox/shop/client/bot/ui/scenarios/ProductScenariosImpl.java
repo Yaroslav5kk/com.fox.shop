@@ -7,12 +7,10 @@ import com.fox.shop.client.bot.context.i.*;
 import com.fox.shop.client.bot.model.types.CommandData;
 import com.fox.shop.client.bot.service.i.CommandConfigurationService;
 import com.fox.shop.client.bot.ui.generate.i.PaginationMessageGenerator;
-import com.fox.shop.client.bot.ui.generate.i.PrePostCommandHandleMessageGenerator;
 import com.fox.shop.client.bot.ui.generate.i.ProductMessageGenerator;
 import com.fox.shop.client.bot.ui.scenarios.i.ProductScenarios;
 import com.fox.shop.protocol.ProductModel;
 import com.fox.shop.protocol.response.PageResponse;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 @Component

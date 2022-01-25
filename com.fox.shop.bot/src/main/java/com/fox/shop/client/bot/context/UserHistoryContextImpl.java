@@ -1,9 +1,7 @@
 package com.fox.shop.client.bot.context;
 
-import com.fox.shop.client.bot.context.i.UserDomainStateContext;
 import com.fox.shop.client.bot.context.i.UserHistoryContext;
 import com.fox.shop.client.bot.context.i.UserModelDataContext;
-import com.fox.shop.client.bot.context.i.UserProcessStateContext;
 import com.fox.shop.client.bot.context.model.UserHistoryStateModel;
 import org.springframework.stereotype.Component;
 
@@ -16,17 +14,14 @@ import java.util.Stack;
 public class UserHistoryContextImpl implements UserHistoryContext {
   private final Map<Integer, Stack<UserHistoryStateModel>> userIdHistory;
   private final Map<Long, LinkedList<Long>> chatIdMessages;
-  private final UserProcessStateContext userProcessStateContext;
   private final UserDomainStateContext userDomainStateContext;
   private final UserModelDataContext userModelDataContext;
   private final Map<Long, Long> productIdMessageId;
 
   public UserHistoryContextImpl(
-      final UserProcessStateContext userProcessStateContext,
       final UserDomainStateContext userDomainStateContext,
       final UserModelDataContext userModelDataContext
   ) {
-    this.userProcessStateContext = userProcessStateContext;
     this.userDomainStateContext = userDomainStateContext;
     this.userModelDataContext = userModelDataContext;
     userIdHistory = new HashMap<>();
@@ -70,7 +65,6 @@ public class UserHistoryContextImpl implements UserHistoryContext {
     final UserHistoryStateModel userHistory = new UserHistoryStateModel(userId);
     userHistory.setCommand(command);
     userHistory.setDomainState(userDomainStateContext.current(userId));
-    userHistory.setProcessState(userProcessStateContext.current(userId));
     userHistory.setCartItemOnCreateRequest(userModelDataContext.getCartItem(userId));
     userHistory.setOrderOnCreateRequest(userModelDataContext.getOrderOnCreateRequest(userId));
     if (userIdHistory.containsKey(userId)) {
@@ -86,7 +80,6 @@ public class UserHistoryContextImpl implements UserHistoryContext {
   public String back(final int userId) {
     final UserHistoryStateModel userHistory = userIdHistory.get(userId).pop();
     userDomainStateContext.put(userId, userHistory.getDomainState());
-    userProcessStateContext.put(userId, userHistory.getProcessState());
     userModelDataContext.cartItems(userId, userHistory.getCartItemOnCreateRequest());
     userModelDataContext.orderOnCreateRequest(userId, userHistory.getOrderOnCreateRequest());
     return userHistory.getCommand();

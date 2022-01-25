@@ -6,7 +6,7 @@ import org.telegram.telegrambots.meta.api.objects.User;
 public interface UserService {
 
   void createCustomer(
-      int userId,
+      long userId,
       String userName
   );
 

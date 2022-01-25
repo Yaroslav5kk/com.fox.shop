@@ -1,45 +1,35 @@
 package com.fox.shop.client.bot.ui.scenarios.i;
 
+import com.fox.shop.client.bot.model.TgIncomingCommandModel;
 import org.telegram.telegrambots.meta.api.objects.User;
 
 public interface ShoppingCartScenarios extends Scenarios {
     void getCartSession(
-            long chatId,
-            User user
+        TgIncomingCommandModel incomingCommand
     );
 
     void editCartSession(
-            long chatId,
-            int userId
+        TgIncomingCommandModel incomingCommand
     );
 
     void clearCartSession(
-            long chatId,
-            User user
+        TgIncomingCommandModel incomingCommand
     );
 
     void addToCart(
-            long chatId,
-            int userId,
-            long productId
+        TgIncomingCommandModel incomingCommand
     );
 
     void setCartItemQuantityOnUpdateTitle(
-            long chatId,
-            int userId,
-            long itemId
+        TgIncomingCommandModel incomingCommand
     );
 
     void setCartItemQuantityOnUpdateHandle(
-            long chatId,
-            int userId,
-            short quantity
+        TgIncomingCommandModel incomingCommand
     );
 
     void setItemQuantityForAddToCart(
-            long chatId,
-            int userId,
-            int quantity
+        TgIncomingCommandModel incomingCommand
     );
 
 }

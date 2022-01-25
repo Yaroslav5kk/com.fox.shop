@@ -2,9 +2,7 @@ package com.fox.shop.client.bot.ui.generate;
 
 import com.fox.shop.client.bot.api.client.i.BaseApiClient;
 import com.fox.shop.client.bot.api.client.i.ShoppingCartApiClient;
-import com.fox.shop.client.bot.context.i.UserDomainStateContext;
 import com.fox.shop.client.bot.context.i.UserModelDataContext;
-import com.fox.shop.client.bot.context.i.UserProcessStateContext;
 import com.fox.shop.client.bot.model.request.SendPhotoFileIdRequest;
 import com.fox.shop.client.bot.ui.generate.i.InlineKeyboardGenerator;
 import com.fox.shop.client.bot.ui.generate.i.OrderMessageGenerator;

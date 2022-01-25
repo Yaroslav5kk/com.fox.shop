@@ -1,32 +1,26 @@
 package com.fox.shop.client.bot.ui.scenarios.i;
 
+import com.fox.shop.client.bot.model.TgIncomingCommandModel;
 import org.telegram.telegrambots.meta.api.objects.User;
 
 public interface StartScenariosMenu extends Scenarios{
-    void base(
-            Long chatId,
-            final User user
+    void start(
+        TgIncomingCommandModel incomingCommand
     );
 
     void getNameTitle(
-            long chatId,
-            int userId
+        TgIncomingCommandModel incomingCommand
     );
 
     void getNameHandle(
-            long chatId,
-            String name,
-            int userId
+        TgIncomingCommandModel incomingCommand
     );
 
     void getPhoneTitle(
-            long chatId,
-            int userId
+        TgIncomingCommandModel incomingCommand
     );
 
     void getPhoneHandle(
-            long chatId,
-            User user,
-            String phone
+        TgIncomingCommandModel incomingCommand
     );
 }

@@ -34,25 +34,4 @@ public class SearchMessageGeneratorImpl implements SearchMessageGenerator {
         return result;
     }
 
-    @Override
-    public SendMessage searchMerchantTitle(
-        final long chatId
-    ){
-        final SendMessage result = new SendMessage();
-        result.setChatId(chatId);
-        result.setText(SearchViewer.searchMerchantTitle());
-        result.setParseMode("HTML");
-        return result;
-    }
-
-    @Override
-    public SendMessage searchProductTitle(
-        final long chatId
-    ){
-        final SendMessage result = new SendMessage();
-        result.setChatId(chatId);
-        result.setText(SearchViewer.searchProductTitle());
-        result.setParseMode("HTML");
-        return result;
-    }
 }

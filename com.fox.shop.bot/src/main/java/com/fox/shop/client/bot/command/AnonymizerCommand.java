@@ -1,6 +1,5 @@
 package com.fox.shop.client.bot.command;
 
-import com.fox.shop.client.bot.context.i.UserDomainStateContext;
 import com.fox.shop.client.bot.context.i.UserHistoryContext;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

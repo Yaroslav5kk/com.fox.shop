@@ -1,80 +1,80 @@
 package com.fox.shop.client.bot.context.i;
 
+import com.fox.protocol.user.UserModel;
 import com.fox.shop.ordering.protocol.request.OrderOnCreateRequest;
 import com.fox.shop.shoppingcart.protocol.model.request.CartItemOnCreateRequest;
-import com.fox.protocol.user.UserModel;
 
 import java.util.Optional;
 
 public interface UserModelDataContext {
 
-    void orderOnCreateRequest(
-            Integer userId,
-            OrderOnCreateRequest initOrderRequest
-    );
+  void orderOnCreateRequest(
+      long userId,
+      OrderOnCreateRequest initOrderRequest
+  );
 
-    void cartItems(
-            Integer userId,
-            CartItemOnCreateRequest cartItem
-    );
+  void cartItems(
+      long userId,
+      CartItemOnCreateRequest cartItem
+  );
 
-    OrderOnCreateRequest getOrderOnCreateRequest(Integer userId);
+  OrderOnCreateRequest getOrderOnCreateRequest(long userId);
 
-    CartItemOnCreateRequest getCartItem(Integer userId);
+  CartItemOnCreateRequest getCartItem(long userId);
 
 
-    void categoryId(
-            Integer userId,
-            Long categoryId
-    );
+  void categoryId(
+      long userId,
+      long categoryId
+  );
 
-    Long getCategoryIdFromRequest(
-            Integer userId
-    );
+  long getCategoryIdFromRequest(
+      long userId
+  );
 
-    void productId(
-            Integer userId,
-            Long productId
-    );
+  void productId(
+      long userId,
+      long productId
+  );
 
-    Long getProductIdFromRequest(
-            Integer userId
-    );
+  Long getProductIdFromRequest(
+      long userId
+  );
 
-    void cartItemId(
-            Integer userId,
-            Long cartItemId
-    );
+  void cartItemId(
+      long userId,
+      long cartItemId
+  );
 
-    Long getCartItemIdFromRequest(
-            Integer userId
-    );
+  Long getCartItemIdFromRequest(
+      long userId
+  );
 
-    void productGroupId(
-            Integer userId,
-            long productGroupId
-    );
+  void productGroupId(
+      long userId,
+      long productGroupId
+  );
 
-    Long getProductGroupId(
-            Integer userId
-    );
+  Long getProductGroupId(
+      long userId
+  );
 
-    void registerUserModel(
-            Integer userId,
-            UserModel user
-    );
+  void registerUserModel(
+      long userId,
+      UserModel user
+  );
 
-    UserModel getRegisterUserModel(
-            Integer userId
-    );
+  UserModel getRegisterUserModel(
+      long userId
+  );
 
   void cartSessionId(
-      int userId,
+      long userId,
       long cartSessionId
   );
 
-  Optional<Long> getCartSessionId(int userId);
+  Optional<Long> getCartSessionId(long userId);
 
 
-  void clearAll(int userId);
+  void clearAll(long userId);
 }
