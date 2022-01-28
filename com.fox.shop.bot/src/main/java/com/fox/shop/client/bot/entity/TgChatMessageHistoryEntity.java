@@ -5,20 +5,12 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 
-@Document(collection = "user_message_history")
-public class TgUserMessageHistoryEntity {
+@Document(collection = "chat_message_history")
+public class TgChatMessageHistoryEntity {
   @Id
-  private long userId;
+  private long chatId;
   private CommandData command;
   private long[] messagesIds;
-
-  public long getUserId() {
-    return userId;
-  }
-
-  public void setUserId(long userId) {
-    this.userId = userId;
-  }
 
   public CommandData getCommand() {
     return command;
@@ -34,6 +26,14 @@ public class TgUserMessageHistoryEntity {
 
   public void setMessagesIds(long[] messagesIds) {
     this.messagesIds = messagesIds;
+  }
+
+  public long getChatId() {
+    return chatId;
+  }
+
+  public void setChatId(long chatId) {
+    this.chatId = chatId;
   }
 }
 
