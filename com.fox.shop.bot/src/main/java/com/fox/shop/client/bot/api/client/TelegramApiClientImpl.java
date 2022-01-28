@@ -4,7 +4,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fox.shop.client.bot.api.client.i.FatherApiClient;
 import com.fox.shop.client.bot.api.client.i.TelegramApiClient;
 import com.fox.shop.client.bot.api.factory.i.TelegramRequestFactory;
-import com.fox.shop.client.bot.context.i.UserHistoryContext;
 import com.fox.shop.client.bot.model.request.SendMediaGroupRequest;
 import com.fox.shop.client.bot.model.request.SendPhotoFileIdRequest;
 import com.fox.shop.client.bot.model.request.TgDeleteMessageRequest;

@@ -1,116 +1,69 @@
 package com.fox.shop.client.bot.ui.scenarios;
 
-import com.fox.shop.client.bot.api.client.i.BaseApiClient;
 import com.fox.shop.client.bot.api.client.i.OrderingApiClient;
 import com.fox.shop.client.bot.api.client.i.ShoppingCartApiClient;
-import com.fox.shop.client.bot.api.client.i.TelegramApiClient;
-import com.fox.shop.client.bot.context.i.UserModelDataContext;
-import com.fox.shop.client.bot.kafka.KafkaProducer;
-import com.fox.shop.client.bot.model.types.CommandData;
-import com.fox.shop.client.bot.service.i.CommandConfigurationService;
-import com.fox.shop.client.bot.service.i.UserService;
+import com.fox.shop.client.bot.api.mediator.TelegramApiMediator;
+import com.fox.shop.client.bot.context.i.TgUserSessionContext;
+import com.fox.shop.client.bot.model.TgIncomingCommandModel;
 import com.fox.shop.client.bot.ui.generate.i.OrderMessageGenerator;
 import com.fox.shop.client.bot.ui.scenarios.i.OrderScenarios;
 import com.fox.shop.ordering.protocol.request.OrderOnCreateRequest;
 import com.fox.shop.ordering.protocol.types.OrderOriginType;
 import org.springframework.stereotype.Component;
-import org.telegram.telegrambots.meta.api.objects.User;
 
 @Component
 public class OrderScenariosImpl implements OrderScenarios {
 
-    private final UserProcessStateContext userProcessStateContext;
-    private final UserDomainStateContext userDomainStateContext;
-    private final UserModelDataContext userModelDataContext;
-    private final TelegramApiClient telegramApiClient;
-    private final OrderMessageGenerator orderMessageGenerator;
-    private final KafkaProducer kafkaProducer;
-    private final PrePostCommandHandleMessageGenerator prePostCommandHandleMessageGenerator;
-    private final CommandConfigurationService commandConfigurationService;
-    private final ShoppingCartApiClient shoppingCartApiClient;
-    private final OrderingApiClient orderingApiClient;
-    private BaseApiClient baseApiClient;
-    private final UserService userService;
+  private final TgUserSessionContext tgUserSessionContext;
+  private final OrderMessageGenerator orderMessageGenerator;
+  private final ShoppingCartApiClient shoppingCartApiClient;
+  private final OrderingApiClient orderingApiClient;
+  private final TelegramApiMediator telegramApiMediator;
 
-    public OrderScenariosImpl(
-            final UserProcessStateContext userProcessStateContext,
-            final UserDomainStateContext userDomainStateContext,
-            final UserModelDataContext userModelDataContext,
-            final TelegramApiClient telegramApiClient,
-            final OrderMessageGenerator orderMessageGenerator,
-            final KafkaProducer kafkaProducer,
-            final PrePostCommandHandleMessageGenerator prePostCommandHandleMessageGenerator,
-            final CommandConfigurationService commandConfigurationService,
-            final ShoppingCartApiClient shoppingCartApiClient,
-            final OrderingApiClient orderingApiClient,
-            final BaseApiClient baseApiClient,
-            final UserService userService
-    ) {
-        this.userProcessStateContext = userProcessStateContext;
-        this.userDomainStateContext = userDomainStateContext;
-        this.userModelDataContext = userModelDataContext;
-        this.telegramApiClient = telegramApiClient;
-        this.orderMessageGenerator = orderMessageGenerator;
-        this.kafkaProducer = kafkaProducer;
-        this.prePostCommandHandleMessageGenerator = prePostCommandHandleMessageGenerator;
-        this.commandConfigurationService = commandConfigurationService;
-        this.shoppingCartApiClient = shoppingCartApiClient;
-        this.orderingApiClient = orderingApiClient;
-        this.baseApiClient = baseApiClient;
-        this.userService = userService;
-    }
+  public OrderScenariosImpl(
+      final TgUserSessionContext tgUserSessionContext,
+      final OrderMessageGenerator orderMessageGenerator,
+      final ShoppingCartApiClient shoppingCartApiClient,
+      final OrderingApiClient orderingApiClient,
+      final TelegramApiMediator telegramApiMediator
+  ) {
+    this.tgUserSessionContext = tgUserSessionContext;
+    this.orderMessageGenerator = orderMessageGenerator;
+    this.shoppingCartApiClient = shoppingCartApiClient;
+    this.orderingApiClient = orderingApiClient;
+    this.telegramApiMediator = telegramApiMediator;
+  }
 
-    @Override
-    public void makeOrderTitle(
-            final long chatId,
-            final User user,
-            final long cartSessionId
-    ) {
-        final OrderOnCreateRequest request = new OrderOnCreateRequest();
-        request.setTelegramUsername(user.getUserName());
-        request.setFirstname(user.getFirstName());
-        request.setLastname(user.getLastName());
-        request.setShoppingCartSessionId(cartSessionId);
-        request.setOriginType(OrderOriginType.TELEGRAM);
-        orderingApiClient.initOrder(request);
-        telegramApiClient.sendPhoto(orderMessageGenerator.makeOrderTitle(chatId));
-        shoppingCartApiClient.clearCartSessionByUser(user.getId());
-        userModelDataContext.clearAll(user.getId());
-    }
+  @Override
+  public void makeOrderTitle(
+      final TgIncomingCommandModel incomingCommand
+  ) {
 
-    @Override
-    public void setOrderContactInfo(
-            final long chatId,
-            final User user,
-            final long cartSessionId
-    ) {
-        userModelDataContext.getOrderOnCreateRequest(user.getId()).setShoppingCartSessionId(cartSessionId);
-        telegramApiClient.sendMessage(orderMessageGenerator.setOrderContactInfoTitle(chatId));
-    }
+    final OrderOnCreateRequest request = new OrderOnCreateRequest();
+    request.setTelegramUsername(incomingCommand.getUserName());
+    request.setFirstname("to change first name, get from base service");
+    request.setLastname("to change first name, get from base service");
+    request.setShoppingCartSessionId(incomingCommand.getInputDataAsLong());
+    request.setOriginType(OrderOriginType.TELEGRAM);
+    orderingApiClient.initOrder(request);
+    telegramApiMediator.addMessage(orderMessageGenerator.makeOrderTitle(incomingCommand.getChatId()));
+    shoppingCartApiClient.clearCartSessionByUser(incomingCommand.getUserId());
+    tgUserSessionContext.clearAll(incomingCommand.getUserId());
+  }
 
-    @Override
-    public void setOrderContactInfoFromProfileHandle(
-            final long chatId,
-            final User user
-    ) {
-        preHandle(chatId, user.getId(), CommandData.SET_ORDER_CONTACT_INFO_TITLE.getValue());
-        //userModelDataContext.getOrderOnCreateRequest(user.getId()).setShoppingCartSessionId(cartSessionId);
-        telegramApiClient.sendMessage(orderMessageGenerator.setOrderContactInfoTitle(chatId));
-        postHandle(chatId, user.getId(), CommandData.SET_ORDER_CONTACT_INFO_TITLE.getValue());
-    }
+  @Override
+  public void setOrderContactInfo(
+      final TgIncomingCommandModel incomingCommand
+  ) {
+    tgUserSessionContext.getSession(incomingCommand.getUserId()).getOrderOnCreateRequest().setShoppingCartSessionId(incomingCommand.getInputDataAsLong());
+    telegramApiMediator.addMessage(orderMessageGenerator.setOrderContactInfoTitle(incomingCommand.getChatId()));
+  }
 
-    @Override
-    public PrePostCommandHandleMessageGenerator getPrePostCommandHandleMessageGenerator() {
-        return prePostCommandHandleMessageGenerator;
-    }
+  @Override
+  public void setOrderContactInfoFromProfileHandle(
+      final TgIncomingCommandModel incomingCommand
+  ) {
+    telegramApiMediator.addMessage(orderMessageGenerator.setOrderContactInfoTitle(incomingCommand.getChatId()));
+  }
 
-    @Override
-    public TelegramApiClient getTelegramApiClient() {
-        return telegramApiClient;
-    }
-
-    @Override
-    public CommandConfigurationService getCommandConfigurationService() {
-        return commandConfigurationService;
-    }
 }

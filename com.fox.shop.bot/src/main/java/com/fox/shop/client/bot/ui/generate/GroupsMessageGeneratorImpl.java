@@ -33,7 +33,7 @@ public class GroupsMessageGeneratorImpl implements GroupsMessageGenerator {
   @Override
   public List<SendPhotoFileIdRequest> allSearchProductGroups(
       final long chatId,
-      final int userId
+      final long userId
   ) {
     final List<ProductGroupModel> productGroups = baseApiClient.allProductGroups(ProductGroupType.SEARCH);
     final List<SendPhotoFileIdRequest> result = new ArrayList<>();
@@ -53,7 +53,7 @@ public class GroupsMessageGeneratorImpl implements GroupsMessageGenerator {
   @Override
   public List<SendPhotoFileIdRequest> allMainProductGroups(
       final long chatId,
-      final int userId
+      final long userId
   ) {
     final List<ProductGroupModel> productGroups = baseApiClient.allProductGroups(ProductGroupType.MAIN);
     final List<SendPhotoFileIdRequest> result = new ArrayList<>();

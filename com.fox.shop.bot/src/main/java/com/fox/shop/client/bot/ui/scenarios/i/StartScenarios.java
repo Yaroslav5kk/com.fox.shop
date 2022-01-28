@@ -3,7 +3,7 @@ package com.fox.shop.client.bot.ui.scenarios.i;
 import com.fox.shop.client.bot.model.TgIncomingCommandModel;
 import org.telegram.telegrambots.meta.api.objects.User;
 
-public interface StartScenariosMenu extends Scenarios{
+public interface StartScenarios extends Scenarios{
     void start(
         TgIncomingCommandModel incomingCommand
     );

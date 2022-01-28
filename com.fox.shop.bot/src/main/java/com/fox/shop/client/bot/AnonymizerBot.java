@@ -1,8 +1,6 @@
 package com.fox.shop.client.bot;
 
-import com.fox.shop.client.bot.command.CommandContainer;
-import com.fox.shop.client.bot.service.i.AnswerCallBackQuerySelector;
-import com.fox.shop.client.bot.service.i.AnswerHandler;
+import com.fox.shop.client.bot.command.StartCommand;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
@@ -21,31 +19,21 @@ public final class AnonymizerBot extends TelegramLongPollingCommandBot {
     private final static String botName = "dev_smart_collector_bot";
     @Value("${telegram.bot.token}")
     private String botToken;
-    private final AnswerCallBackQuerySelector callBackQuerySelector;
-    private final AnswerHandler answerHandler;
 
 
     public AnonymizerBot(
-            final DefaultBotOptions botOptions,
-            final CommandContainer commandContainer,
-            final AnswerCallBackQuerySelector callBackQuerySelector,
-            final AnswerHandler answerHandler
-    ) {
+        final DefaultBotOptions botOptions,
+        final StartCommand startCommand
+        ) {
         super(botOptions);
-        this.callBackQuerySelector = callBackQuerySelector;
-        this.answerHandler = answerHandler;
-        registerCommand(commandContainer);
-
+        register(startCommand);
         handleNotCommand();
     }
 
     // обработка сообщения не начинающегося с '/'
     @Override
     public void processNonCommandUpdate(final Update update) {
-        if (update.hasCallbackQuery())
-            callBackQuerySelector.select(update);
-        else if (update.hasMessage())
-            answerHandler.handle(update);
+
     }
 
 
@@ -59,9 +47,6 @@ public final class AnonymizerBot extends TelegramLongPollingCommandBot {
         return botName;
     }
 
-    private void registerCommand(final CommandContainer commandContainer) {
-        register(commandContainer.getStartCommand());
-    }
 
     private void handleNotCommand() {
         registerDefaultAction(((absSender, message) -> {

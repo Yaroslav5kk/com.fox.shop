@@ -33,8 +33,8 @@ public class ShoppingSessionIKeyboardGeneratorImpl implements ShoppingSessionIKe
                 CommandData.EDIT_CART_SESSION.getValue() + " " + cartSessionId
         ));
         textDataToKeyboard.add(Pair.of(
-                CommandData.CLEAR_CART_SESSION.getDescription(),
-                CommandData.CLEAR_CART_SESSION.getValue()
+                CommandData.CLEAN_CART_SESSION.getDescription(),
+                CommandData.CLEAN_CART_SESSION.getValue()
         ));
         textDataToKeyboard.add(Pair.of(
                 CommandData.BACK.getDescription(),

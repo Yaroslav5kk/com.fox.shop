@@ -3,55 +3,38 @@ package com.fox.shop.client.bot.model.types;
 import org.springframework.util.StringUtils;
 
 public enum CommandData {
+  /*--------------------------------------------------menu/system commands--------------------------------------------------*/
   START("/start", "begin"),
-  MAIN("/main", "main board"),
-  FINISH("/finish", "finish"),
-  RESET("/reset", "reset"),
   BACK("/back", "back"),
-  PLUS_ONE("/plus_one", "+1"),
-  MINUS_ONE("/minus_one", "-1"),
-  DELETE_CART_ITEM("/delete_cart_item", "delete"),
-  SET_ITEM_QUANTITY_ON_ADD_TO_CART("/set_item_quantity_on_add_to_cart", "new quantity"),
+
+  /*--------------------------------------------------shopping cart commands--------------------------------------------------*/
+  SET_ITEM_QUANTITY_ON_ADD_TO_CART_HANDLE("/set_item_quantity_on_add_to_cart", "new quantity"),
   SET_ITEM_QUANTITY_ON_UPDATE_CART_TITLE("/set_item_quantity_on_update_title", " new quantity"),
   SET_ITEM_QUANTITY_ON_UPDATE_CART_HANDLE("/set_item_quantity_on_update_handle", "new quantity"),
-  SET_VALUE("/set_value", "set value"),
-  GET_USERNAME_TITLE("/set_username_title", "set username title"),
-  GET_USERNAME_HANDLE("/set_username_handle", "set username handle"),
-  GET_PHONE_TITLE("/get_phone_title", "set phone"),
-  GET_PHONE_HANDLE("/get_phone_handle", "set phone"),
-  SET_URL("/set_url", "set url"),
-  ENTER_OTHER_VALUE("/enter_other", "enter other"),
-  NEXT_PAGE("/next_page", "next"),
-  PREVIOUS_PAGE("/previous_page", "previous"),
-  SET_PRIORITY("/set_priority", "set priority"),
-  ADD_START_DATE("/add_start_date", "add start date"),
-  ADD_END_DATE("/add_end_date", "add end date"),
   ADD_TO_CART("/add_to_cart", "додати"),
-  PRODUCT_BY_CATEGORY("/product_by_category", "products"),
+  GET_CART_SESSION("/get_cart_session", "get cart session"),
+  EDIT_CART_SESSION("/edit_cart_session", "items"),
+  CLEAN_CART_SESSION("/clean_cart_session", "clean cart session"),
+
+  /*--------------------------------------------------authorize/auth commands--------------------------------------------------*/
+  GET_USERNAME_HANDLE("/set_username_handle", "set username handle"),
+  GET_PHONE_HANDLE("/get_phone_handle", "set phone"),
+
+  /*--------------------------------------------------order commands--------------------------------------------------*/
   MAKE_ORDER_TITLE("/make_order_title", "make order"),
   SET_ORDER_CONTACT_INFO_TITLE("/set_order_contact_info_title", "make order title"),
   SET_ORDER_CONTACT_INFO_FROM_PROFILE("/set_order_contact_info_from_profile", "from profile"),
   ENTER_ORDER_CONTACT_INFO("/enter_order_contact_info", "enter contact info"),
-  SET_ORDER_DELIVERY_INFO_TITLE("/set_order_delivery_info_title", "make order title"),
-  SET_ORDER_ADDRESS_FROM_PROFILE("/set_order_address_from_profile", "from profile"),
-  ENTER_ORDER_ADDRESS("/enter_order_address", "enter address"),
-  INIT_ORDER("/init_order", "init order"),
   ORDER_ON_TIME("/order_on_time", "order on time"),
-  ORDER_ON_TIME_TITLE("/order_on_time_title", "order on time title"),
   ORDER_ON_NAME("/order_on_name", "order on name"),
-  ORDER_ON_NAME_TITLE("/order_on_name_title", "order on name title"),
-  EDIT_CART_SESSION("/edit_cart_session", "items"),
-  GET_CART_SESSION("/get_cart_session", "get cart session"),
-  VIEW_CART_SESSION_PRODUCT("/view_cart_session_product", "view items"),
-  CLEAR_CART_SESSION("/clean_cart_session", "clean cart session"),
-  PAGINATION("/pagination", "go to 'X' page"),
+
+  /*--------------------------------------------------product commands--------------------------------------------------*/
   PRODUCTS_BY_GROUP("/products_by_group", "переглянути"),
-  ALL_SEARCH_PRODUCT_GROUPS("/all_search_product_groups", "all search product groups"),
   VIEW_PRODUCT_DESCRIPTION("/view_product_description", "детальніше"),
-  ALL_START_PRODUCT_GROUPS("/all_start_product_groups", "all main product groups"),
+
+  /*--------------------------------------------------search commands--------------------------------------------------*/
   SEARCH_TITLE("/search_title", "search title"),
-  SEARCH_HANDLE("/search_handle", "search handle"),
-  SEARCH_PRODUCT("/SEARCH_PRODUCT", "search product");
+  SEARCH_HANDLE("/search_handle", "search handle");
 
   private final String value;
   private final String description;

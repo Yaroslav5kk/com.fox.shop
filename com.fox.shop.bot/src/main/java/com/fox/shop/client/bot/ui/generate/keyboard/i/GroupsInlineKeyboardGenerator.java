@@ -5,7 +5,7 @@ import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMa
 public interface GroupsInlineKeyboardGenerator {
 
     InlineKeyboardMarkup productGroup(
-            int userId,
+        long userId,
             long groupId
     );
 }

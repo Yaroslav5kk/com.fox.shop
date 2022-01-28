@@ -121,18 +121,6 @@ public class ShoppingCartMessageGeneratorImpl implements ShoppingCartMessageGene
   }
 
   @Override
-  public SendMessage beginBack(
-      final long chatId
-  ) {
-    final SendMessage result = new SendMessage();
-    result.setChatId(chatId);
-    result.setReplyMarkup(shoppingSessionIKeyboardGenerator.startBack());
-    result.setParseMode("HTML");
-    result.setText(ShoppingSessionViewer.beginBack());
-    return result;
-  }
-
-  @Override
   public SendMessage emptyCartSession(
       final long chatId
   ) {

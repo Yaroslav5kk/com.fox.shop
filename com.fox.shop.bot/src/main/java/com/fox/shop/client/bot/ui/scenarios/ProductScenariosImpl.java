@@ -2,10 +2,10 @@ package com.fox.shop.client.bot.ui.scenarios;
 
 import com.fox.shop.client.bot.api.client.i.BaseApiClient;
 import com.fox.shop.client.bot.api.client.i.StorageApiClient;
-import com.fox.shop.client.bot.api.client.i.TelegramApiClient;
-import com.fox.shop.client.bot.context.i.*;
+import com.fox.shop.client.bot.api.mediator.TelegramApiMediator;
+import com.fox.shop.client.bot.context.i.TgUserSessionContext;
+import com.fox.shop.client.bot.model.TgIncomingCommandModel;
 import com.fox.shop.client.bot.model.types.CommandData;
-import com.fox.shop.client.bot.service.i.CommandConfigurationService;
 import com.fox.shop.client.bot.ui.generate.i.PaginationMessageGenerator;
 import com.fox.shop.client.bot.ui.generate.i.ProductMessageGenerator;
 import com.fox.shop.client.bot.ui.scenarios.i.ProductScenarios;
@@ -17,96 +17,57 @@ import org.springframework.stereotype.Component;
 public class ProductScenariosImpl implements ProductScenarios {
 
   private final ProductMessageGenerator productMessageGenerator;
-  private final UserDomainStateContext userDomainStateContext;
-  private final UserProcessStateContext userProcessStateContext;
-  private final UserModelDataContext userModelDataContext;
-  private final PaginationDataContext paginationDataContext;
-  private final UserHistoryContext userHistoryContext;
-  private final TelegramApiClient telegramApiClient;
-  private final PrePostCommandHandleMessageGenerator prePostCommandHandleMessageGenerator;
-  private final CommandConfigurationService commandConfigurationService;
+  private final TgUserSessionContext tgUserSessionContext;
   private final PaginationMessageGenerator paginationMessageGenerator;
   private final BaseApiClient baseApiClient;
   private final StorageApiClient storageApiClient;
+  private final TelegramApiMediator telegramApiMediator;
 
   public ProductScenariosImpl(
-          final ProductMessageGenerator productMessageGenerator,
-          final UserDomainStateContext userDomainStateContext,
-          final UserProcessStateContext userProcessStateContext,
-          final UserModelDataContext userModelDataContext,
-          final PaginationDataContext paginationDataContext,
-          final UserHistoryContext userHistoryContext,
-          final TelegramApiClient telegramApiClient,
-          final PrePostCommandHandleMessageGenerator prePostCommandHandleMessageGenerator,
-          final CommandConfigurationService commandConfigurationService,
-          final PaginationMessageGenerator paginationMessageGenerator,
-          final BaseApiClient baseApiClient,
-          final StorageApiClient storageApiClient
+      final ProductMessageGenerator productMessageGenerator,
+      final TgUserSessionContext tgUserSessionContext,
+      final PaginationMessageGenerator paginationMessageGenerator,
+      final BaseApiClient baseApiClient,
+      final StorageApiClient storageApiClient,
+      final TelegramApiMediator telegramApiMediator
   ) {
     this.productMessageGenerator = productMessageGenerator;
-    this.userDomainStateContext = userDomainStateContext;
-    this.userProcessStateContext = userProcessStateContext;
-    this.userModelDataContext = userModelDataContext;
-    this.paginationDataContext = paginationDataContext;
-    this.userHistoryContext = userHistoryContext;
-    this.telegramApiClient = telegramApiClient;
-    this.prePostCommandHandleMessageGenerator = prePostCommandHandleMessageGenerator;
-    this.commandConfigurationService = commandConfigurationService;
+    this.tgUserSessionContext = tgUserSessionContext;
     this.paginationMessageGenerator = paginationMessageGenerator;
     this.baseApiClient = baseApiClient;
     this.storageApiClient = storageApiClient;
+    this.telegramApiMediator = telegramApiMediator;
   }
 
   @Override
-  public void allProductByGroup(
-          final long chatId,
-          final int userId,
-          final long groupId
+  public void productByGroup(
+      final TgIncomingCommandModel incomingCommand
   ) {
-    preHandle(chatId, userId, CommandData.PRODUCTS_BY_GROUP.getValue());
-    userModelDataContext.productGroupId(userId, groupId);
+    tgUserSessionContext.getSession(incomingCommand.getUserId()).setProductGroupId(incomingCommand.getInputDataAsLong());
     PageResponse<ProductModel> baseResponse = baseApiClient.productsByGroup(
-            userId,
-            groupId,
-            null
+        incomingCommand.getUserId(),
+        incomingCommand.getInputDataAsLong(),
+        null
     );
     for (final ProductModel productModel : baseResponse.getContent()) {
-      telegramApiClient.
-              sendPhoto(productMessageGenerator.product(
-                      chatId,
-                      productModel,
-                      storageApiClient.getTelegramIdById(productModel.getMainImageStorageId())
-              ));
+      telegramApiMediator.
+          addMessage(productMessageGenerator.product(
+              incomingCommand.getChatId(),
+              productModel,
+              storageApiClient.getTelegramIdById(productModel.getMainImageStorageId())
+          ));
     }
     if (!baseResponse.isLast())
-      telegramApiClient.sendMessage(paginationMessageGenerator.pagination(chatId, CommandData.PRODUCTS_BY_GROUP + " " + groupId));
-    postHandle(chatId, userId, CommandData.PRODUCTS_BY_GROUP.getValue());
+      telegramApiMediator.addMessage(paginationMessageGenerator.pagination(incomingCommand.getChatId(), CommandData.PRODUCTS_BY_GROUP + " " + incomingCommand.getInputData()));
   }
 
   @Override
   public void viewProductDescription(
-          final long chatId,
-          final long messageId,
-          final long productId
+      final TgIncomingCommandModel incomingCommand
   ) {
-    telegramApiClient.editMessageCaption(productMessageGenerator
-            .viewProductDescription(chatId, messageId, baseApiClient.productById(productId))
+    telegramApiMediator.addMessage(productMessageGenerator
+        .viewProductDescription(incomingCommand.getChatId(), incomingCommand.getMessageId(), baseApiClient.productById(incomingCommand.getInputDataAsLong()))
     );
 
-  }
-
-  @Override
-  public PrePostCommandHandleMessageGenerator getPrePostCommandHandleMessageGenerator() {
-    return prePostCommandHandleMessageGenerator;
-  }
-
-  @Override
-  public TelegramApiClient getTelegramApiClient() {
-    return telegramApiClient;
-  }
-
-  @Override
-  public CommandConfigurationService getCommandConfigurationService() {
-    return commandConfigurationService;
   }
 }

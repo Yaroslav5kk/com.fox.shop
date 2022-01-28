@@ -1,23 +1,19 @@
 package com.fox.shop.client.bot.ui.scenarios.i;
 
+import com.fox.shop.client.bot.model.TgIncomingCommandModel;
 import org.telegram.telegrambots.meta.api.objects.User;
 
 public interface OrderScenarios extends Scenarios {
 
     void makeOrderTitle(
-            long chatId,
-            User user,
-            long cartSessionId
+        TgIncomingCommandModel incomingCommand
     );
 
     void setOrderContactInfo(
-            long chatId,
-            User user,
-            long cartSessionId
+        TgIncomingCommandModel incomingCommand
     );
 
     void setOrderContactInfoFromProfileHandle(
-            long chatId,
-            User user
+        TgIncomingCommandModel incomingCommand
     );
 }

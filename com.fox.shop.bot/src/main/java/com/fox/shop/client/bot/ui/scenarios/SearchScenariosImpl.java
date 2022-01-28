@@ -3,7 +3,7 @@ package com.fox.shop.client.bot.ui.scenarios;
 import com.fox.shop.client.bot.api.client.i.BaseApiClient;
 import com.fox.shop.client.bot.api.client.i.StorageApiClient;
 import com.fox.shop.client.bot.api.mediator.TelegramApiMediator;
-import com.fox.shop.client.bot.context.i.UserCommandStateContext;
+import com.fox.shop.client.bot.context.i.TgUserSessionContext;
 import com.fox.shop.client.bot.model.TgIncomingCommandModel;
 import com.fox.shop.client.bot.model.types.CommandData;
 import com.fox.shop.client.bot.ui.generate.i.GroupsMessageGenerator;
@@ -21,7 +21,7 @@ public class SearchScenariosImpl implements SearchScenarios {
   private final ProductMessageGenerator productMessageGenerator;
   private final StorageApiClient storageApiClient;
   private final TelegramApiMediator telegramApiMediator;
-  private final UserCommandStateContext userCommandStateContext;
+  private final TgUserSessionContext tgUserSessionContext;
 
   public SearchScenariosImpl(
       final SearchMessageGenerator searchMessageGenerator,
@@ -30,15 +30,15 @@ public class SearchScenariosImpl implements SearchScenarios {
       final ProductMessageGenerator productMessageGenerator,
       final StorageApiClient storageApiClient,
       final TelegramApiMediator telegramApiMediator,
-      final UserCommandStateContext userCommandStateContext
-  ) {
+      final TgUserSessionContext tgUserSessionContext
+      ) {
     this.searchMessageGenerator = searchMessageGenerator;
     this.groupsMessageGenerator = groupsMessageGenerator;
     this.baseApiClient = baseApiClient;
     this.productMessageGenerator = productMessageGenerator;
     this.storageApiClient = storageApiClient;
     this.telegramApiMediator = telegramApiMediator;
-    this.userCommandStateContext = userCommandStateContext;
+    this.tgUserSessionContext = tgUserSessionContext;
   }
 
   @Override
@@ -47,7 +47,7 @@ public class SearchScenariosImpl implements SearchScenarios {
   ) {
     telegramApiMediator.addMessages(groupsMessageGenerator.allSearchProductGroups(incomingCommand.getChatId(), incomingCommand.getUserId()));
     telegramApiMediator.addMessage(searchMessageGenerator.searchTitle(incomingCommand.getChatId()));
-    userCommandStateContext.setup(incomingCommand.getUserId(), CommandData.SEARCH_HANDLE);
+    tgUserSessionContext.setupCommand(incomingCommand.getUserId(), CommandData.SEARCH_HANDLE);
   }
 
   @Override

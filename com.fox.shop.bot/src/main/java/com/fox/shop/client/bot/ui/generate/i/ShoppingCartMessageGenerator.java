@@ -28,10 +28,6 @@ public interface ShoppingCartMessageGenerator {
             long chatId
     );
 
-    SendMessage beginBack(
-            long chatId
-    );
-
     SendMessage emptyCartSession(
             long chatId
     );

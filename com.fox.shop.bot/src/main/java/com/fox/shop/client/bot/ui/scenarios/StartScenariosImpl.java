@@ -1,40 +1,37 @@
 package com.fox.shop.client.bot.ui.scenarios;
 
-import com.fox.shop.client.bot.api.client.i.BaseApiClient;
 import com.fox.shop.client.bot.api.mediator.TelegramApiMediator;
-import com.fox.shop.client.bot.context.i.UserCommandStateContext;
-import com.fox.shop.client.bot.context.i.UserModelDataContext;
+import com.fox.shop.client.bot.context.i.TgUserSessionContext;
 import com.fox.shop.client.bot.model.TgIncomingCommandModel;
 import com.fox.shop.client.bot.model.types.CommandData;
 import com.fox.shop.client.bot.service.i.UserService;
 import com.fox.shop.client.bot.ui.generate.i.GroupsMessageGenerator;
-import com.fox.shop.client.bot.ui.generate.i.StartMessageGeneratorMenu;
-import com.fox.shop.client.bot.ui.scenarios.i.StartScenariosMenu;
+import com.fox.shop.client.bot.ui.generate.i.StartMessageGenerator;
+import com.fox.shop.client.bot.ui.scenarios.i.StartScenarios;
 import org.springframework.stereotype.Service;
 
-@Service
-public class StartScenariosMenuImpl implements StartScenariosMenu {
+import java.util.Optional;
 
-  private final StartMessageGeneratorMenu startMessageGeneratorMenu;
+@Service
+public class StartScenariosImpl implements StartScenarios {
+
+  private final StartMessageGenerator startMessageGenerator;
   private final UserService userService;
-  private final UserModelDataContext userModelDataContext;
+  private final TgUserSessionContext tgUserSessionContext;
   private final GroupsMessageGenerator groupsMessageGenerator;
-  private final UserCommandStateContext userCommandStateContext;
   private final TelegramApiMediator telegramApiMediator;
 
-  public StartScenariosMenuImpl(
-      final StartMessageGeneratorMenu startMessageGeneratorMenu,
+  public StartScenariosImpl(
+      final StartMessageGenerator startMessageGenerator,
       final UserService userService,
-      final UserModelDataContext userModelDataContext,
+      final TgUserSessionContext tgUserSessionContext,
       final GroupsMessageGenerator groupsMessageGenerator,
-      final UserCommandStateContext userCommandStateContext,
       final TelegramApiMediator telegramApiMediator
-      ) {
-    this.startMessageGeneratorMenu = startMessageGeneratorMenu;
+  ) {
+    this.startMessageGenerator = startMessageGenerator;
     this.userService = userService;
-    this.userModelDataContext = userModelDataContext;
+    this.tgUserSessionContext = tgUserSessionContext;
     this.groupsMessageGenerator = groupsMessageGenerator;
-    this.userCommandStateContext = userCommandStateContext;
     this.telegramApiMediator = telegramApiMediator;
   }
 
@@ -51,23 +48,23 @@ public class StartScenariosMenuImpl implements StartScenariosMenu {
       groupsMessageGenerator.allMainProductGroups(chatId, userId)
           .forEach(sendPhotoFileIdRequest -> telegramApiMediator.addMessage(sendPhotoFileIdRequest));
     }
-    telegramApiMediator.addMessage(startMessageGeneratorMenu.base(chatId, userModelDataContext.getCartSessionId(userId)));
-    userModelDataContext.clearAll(userId);
+    telegramApiMediator.addMessage(startMessageGenerator.start(chatId, Optional.of(tgUserSessionContext.getSession(userId).getCartSessionId())));
+    tgUserSessionContext.clearAll(userId);
   }
 
   @Override
   public void getNameTitle(
       final TgIncomingCommandModel incomingCommand
   ) {
-    userCommandStateContext.setup(incomingCommand.getUserId(), CommandData.GET_USERNAME_HANDLE);
-    telegramApiMediator.addMessage(startMessageGeneratorMenu.getName(incomingCommand.getChatId()));
+    tgUserSessionContext.setupCommand(incomingCommand.getUserId(), CommandData.GET_USERNAME_HANDLE);
+    telegramApiMediator.addMessage(startMessageGenerator.getName(incomingCommand.getChatId()));
   }
 
   @Override
   public void getNameHandle(
       final TgIncomingCommandModel incomingCommand
   ) {
-    userModelDataContext.getRegisterUserModel(incomingCommand.getUserId()).setFirstName(incomingCommand.getInputData());
+    tgUserSessionContext.getSession(incomingCommand.getUserId()).getUserModel().setFirstName(incomingCommand.getInputData());
     getPhoneTitle(incomingCommand);
   }
 
@@ -75,15 +72,15 @@ public class StartScenariosMenuImpl implements StartScenariosMenu {
   public void getPhoneTitle(
       final TgIncomingCommandModel incomingCommand
   ) {
-    userCommandStateContext.setup(incomingCommand.getUserId(), CommandData.GET_PHONE_HANDLE);
-    telegramApiMediator.addMessage(startMessageGeneratorMenu.getPhone(incomingCommand.getChatId()));
+    tgUserSessionContext.setupCommand(incomingCommand.getUserId(), CommandData.GET_PHONE_HANDLE);
+    telegramApiMediator.addMessage(startMessageGenerator.getPhone(incomingCommand.getChatId()));
   }
 
   @Override
   public void getPhoneHandle(
       final TgIncomingCommandModel incomingCommand
   ) {
-    userModelDataContext.getRegisterUserModel(incomingCommand.getUserId()).setPhone(incomingCommand.getInputData());
+    tgUserSessionContext.getSession(incomingCommand.getUserId()).getUserModel().setPhone(incomingCommand.getInputData());
     userService.createCustomer(incomingCommand.getUserId(), incomingCommand.getUserName());
     groupsMessageGenerator.allMainProductGroups(incomingCommand.getChatId(), incomingCommand.getUserId())
         .forEach(sendPhotoFileIdRequest -> telegramApiMediator.addMessage(sendPhotoFileIdRequest));

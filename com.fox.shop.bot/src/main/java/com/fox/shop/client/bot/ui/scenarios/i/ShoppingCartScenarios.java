@@ -28,7 +28,7 @@ public interface ShoppingCartScenarios extends Scenarios {
         TgIncomingCommandModel incomingCommand
     );
 
-    void setItemQuantityForAddToCart(
+    void setItemQuantityOnAddToCartHandle(
         TgIncomingCommandModel incomingCommand
     );
 

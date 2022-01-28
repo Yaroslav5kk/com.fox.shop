@@ -33,7 +33,7 @@ public class ReplyKeyboardGeneratorImpl implements ReplyKeyboardGenerator {
         final List<KeyboardRow> rows = new ArrayList<>();
         final KeyboardRow row = new KeyboardRow();
         final KeyboardButton button = new KeyboardButton();
-        button.setText("Share phone");
+        button.setText("Відправляю");
         button.setRequestContact(true);
         row.add(button);
         rows.add(row);

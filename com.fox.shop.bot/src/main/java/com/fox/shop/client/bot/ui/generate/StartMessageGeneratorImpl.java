@@ -1,6 +1,6 @@
 package com.fox.shop.client.bot.ui.generate;
 
-import com.fox.shop.client.bot.ui.generate.i.StartMessageGeneratorMenu;
+import com.fox.shop.client.bot.ui.generate.i.StartMessageGenerator;
 import com.fox.shop.client.bot.ui.generate.keyboard.i.ReplyKeyboardGenerator;
 import com.fox.shop.client.bot.ui.generate.keyboard.i.StartIKeyboardGenerator;
 import com.fox.shop.client.bot.ui.view.StartViewer;
@@ -11,11 +11,11 @@ import java.util.Optional;
 
 
 @Service
-public class StartMessageGeneratorMenuImpl implements StartMessageGeneratorMenu {
+public class StartMessageGeneratorImpl implements StartMessageGenerator {
     private final ReplyKeyboardGenerator replyKeyboardGenerator;
     private final StartIKeyboardGenerator startIKeyboardGenerator;
 
-    public StartMessageGeneratorMenuImpl(
+    public StartMessageGeneratorImpl(
             final ReplyKeyboardGenerator replyKeyboardGenerator,
             final StartIKeyboardGenerator startIKeyboardGenerator
     ) {
@@ -24,8 +24,8 @@ public class StartMessageGeneratorMenuImpl implements StartMessageGeneratorMenu 
     }
 
     @Override
-    public SendMessage base(
-            final Long chatId,
+    public SendMessage start(
+            final long chatId,
             final Optional<Long> cartSessionId
     ) {
         final SendMessage result = new SendMessage();

@@ -3,33 +3,29 @@ package com.fox.shop.client.bot.service;
 import com.fox.protocol.user.Role;
 import com.fox.protocol.user.UserModel;
 import com.fox.shop.client.bot.api.client.i.BaseApiClient;
-import com.fox.shop.client.bot.context.i.UserModelDataContext;
+import com.fox.shop.client.bot.context.i.TgUserSessionContext;
 import com.fox.shop.client.bot.entity.UserInfoEntity;
 import com.fox.shop.client.bot.model.wrapper.UserWrapper;
 import com.fox.shop.client.bot.repository.UserInfoRepository;
 import com.fox.shop.client.bot.service.i.UserService;
-import com.fox.shop.client.bot.utils.UserValueGenerator;
 import org.springframework.stereotype.Service;
 
 @Service
 public class UserServiceImpl implements UserService {
   private final static Role ROLE_CUSTOMER = Role.USER;
 
-  private final UserValueGenerator valueGenerator;
   private final UserInfoRepository userInfoRepository;
   private final BaseApiClient baseApiClient;
-  private final UserModelDataContext userModelDataContext;
+  private final TgUserSessionContext tgUserSessionContext;
 
   public UserServiceImpl(
-      final UserValueGenerator valueGenerator,
       final UserInfoRepository userInfoRepository,
       final BaseApiClient baseApiClient,
-      final UserModelDataContext userModelDataContext
+      final TgUserSessionContext tgUserSessionContext
   ) {
-    this.valueGenerator = valueGenerator;
     this.userInfoRepository = userInfoRepository;
     this.baseApiClient = baseApiClient;
-    this.userModelDataContext = userModelDataContext;
+    this.tgUserSessionContext = tgUserSessionContext;
   }
 
   @Override
@@ -68,7 +64,7 @@ public class UserServiceImpl implements UserService {
       final long userId,
       final String userName
   ) {
-    final UserModel result = userModelDataContext.getRegisterUserModel(userId);
+    final UserModel result = tgUserSessionContext.getSession(userId).getUserModel();
     result.setPassword("to remove. test password");
     result.setRole(ROLE_CUSTOMER);
     result.setUsername(userName);

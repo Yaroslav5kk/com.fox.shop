@@ -23,11 +23,11 @@ public class PaginationDecoratorBaseApiClientImpl implements BaseApiClient {
   private final PaginationMessageGenerator paginationMessageGenerator;
 
   public PaginationDecoratorBaseApiClientImpl(
-          final BaseApiClient baseApiClient,
-          final PaginationDataContext paginationDataContext,
-          final TelegramApiClient telegramApiClient,
-          final PaginationMessageGenerator paginationMessageGenerator
-          ) {
+      final BaseApiClient baseApiClient,
+      final PaginationDataContext paginationDataContext,
+      final TelegramApiClient telegramApiClient,
+      final PaginationMessageGenerator paginationMessageGenerator
+  ) {
     this.baseApiClient = baseApiClient;
     this.paginationDataContext = paginationDataContext;
     this.telegramApiClient = telegramApiClient;
@@ -35,31 +35,31 @@ public class PaginationDecoratorBaseApiClientImpl implements BaseApiClient {
   }
 
   @Override
-  public PageResponse<ProductModel> productsByGroup(final int userId, final long groupId, final Pageable pageable) {
+  public PageResponse<ProductModel> productsByGroup(final long userId, final long groupId, final Pageable pageable) {
     final PageResponse currentPage = paginationDataContext.getCurrentPage(userId);
     final PageResponse<ProductModel> baseResponse = baseApiClient.productsByGroup(
-            userId,
-            groupId,
-            PageRequest.of(currentPage.getCurrentPage() + 1, paginationDataContext.getPaginationSize())
+        userId,
+        groupId,
+        PageRequest.of(currentPage.getCurrentPage() + 1, paginationDataContext.getPaginationSize())
     );
     paginationDataContext.setCurrentPage(
-            userId,
-            baseResponse
+        userId,
+        baseResponse
     );
     return baseResponse;
   }
 
   @Override
-  public PageResponse<ProductModel> searchProductsByName(final int userId, final String name, final Pageable pageable) {
+  public PageResponse<ProductModel> searchProductsByName(final long userId, final String name, final Pageable pageable) {
     PageResponse currentPage = paginationDataContext.getCurrentPage(userId);
     final PageResponse<ProductModel> baseResponse = baseApiClient.searchProductsByName(
-            userId,
-            name,
-            PageRequest.of(currentPage.getCurrentPage() + 1, paginationDataContext.getPaginationSize())
+        userId,
+        name,
+        PageRequest.of(currentPage.getCurrentPage() + 1, paginationDataContext.getPaginationSize())
     );
     paginationDataContext.setCurrentPage(
-            userId,
-          baseResponse
+        userId,
+        baseResponse
     );
     return baseResponse;
   }

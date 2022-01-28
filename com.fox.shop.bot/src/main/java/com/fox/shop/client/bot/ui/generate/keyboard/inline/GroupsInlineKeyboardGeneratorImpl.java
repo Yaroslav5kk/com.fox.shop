@@ -23,7 +23,7 @@ public class GroupsInlineKeyboardGeneratorImpl implements GroupsInlineKeyboardGe
 
     @Override
     public InlineKeyboardMarkup productGroup(
-            final int userId,
+            final long userId,
             final long groupId
     ) {
         final List<Pair<?, ?>> textDataToKeyboard = new ArrayList<>();
@@ -34,3 +34,58 @@ public class GroupsInlineKeyboardGeneratorImpl implements GroupsInlineKeyboardGe
         return inlineKeyboardGenerator.generate(textDataToKeyboard, 1);
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

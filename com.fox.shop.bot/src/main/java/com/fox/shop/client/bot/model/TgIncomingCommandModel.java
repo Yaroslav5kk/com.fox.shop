@@ -28,7 +28,22 @@ public class TgIncomingCommandModel {
     return result;
   }
 
-  public long getInputDataAsLong(){
+  public TgIncomingCommandModel userId(final long userId) {
+    this.userId = userId;
+    return this;
+  }
+
+  public TgIncomingCommandModel userName(final String userName) {
+    this.userName = userName;
+    return this;
+  }
+
+  public TgIncomingCommandModel chatId(final long chatId) {
+    this.chatId = chatId;
+    return this;
+  }
+
+  public long getInputDataAsLong() {
     return Long.parseLong(inputData);
   }
 

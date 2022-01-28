@@ -1,17 +1,14 @@
 package com.fox.shop.client.bot.ui.scenarios.i;
 
+import com.fox.shop.client.bot.model.TgIncomingCommandModel;
 import org.telegram.telegrambots.meta.api.objects.User;
 
 public interface ProductScenarios extends Scenarios{
-    void allProductByGroup(
-            long chatId,
-            int userId,
-            long groupId
+    void productByGroup(
+        final TgIncomingCommandModel incomingCommand
     );
 
   void viewProductDescription(
-      long chatId,
-      long messageId,
-      long productId
+      final TgIncomingCommandModel incomingCommand
   );
 }

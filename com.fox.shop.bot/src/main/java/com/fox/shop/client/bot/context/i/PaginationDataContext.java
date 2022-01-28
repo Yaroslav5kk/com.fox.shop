@@ -4,17 +4,17 @@ import com.fox.shop.protocol.response.PageResponse;
 
 public interface PaginationDataContext {
   PageResponse setCurrentPage(
-          int userId,
+      long userId,
           PageResponse currentPage
   );
 
-  Integer getNextPageNumber(int userId);
+  Integer getNextPageNumber(long userId);
 
-  PageResponse getCurrentPage(int userId);
+  PageResponse getCurrentPage(long userId);
 
-  void incrementPage(int userId);
+  void incrementPage(long userId);
 
-  void clear(int userId);
+  void clear(long userId);
 
   int getPaginationSize();
 }

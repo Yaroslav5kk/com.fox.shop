@@ -14,7 +14,7 @@ public class PaginationDataContextImpl implements PaginationDataContext {
   @Value("${content.product.pagination-size}")
   private int paginationSize;
 
-  private final Map<Integer, PageResponse> userIdCurrentPage;
+  private final Map<Long, PageResponse> userIdCurrentPage;
 
   public PaginationDataContextImpl() {
     userIdCurrentPage = new HashMap<>();
@@ -22,14 +22,14 @@ public class PaginationDataContextImpl implements PaginationDataContext {
 
   @Override
   public PageResponse setCurrentPage(
-          final int userId,
+          final long userId,
           final PageResponse currentPage
   ) {
     return userIdCurrentPage.put(userId, currentPage);
   }
 
   @Override
-  public Integer getNextPageNumber(final int userId) {
+  public Integer getNextPageNumber(final long userId) {
     PageResponse currentPage = userIdCurrentPage.get(userId);
     if (currentPage == null)
       return userIdCurrentPage.put(userId, PageResponse.empty()).getCurrentPage();
@@ -37,7 +37,7 @@ public class PaginationDataContextImpl implements PaginationDataContext {
   }
 
   @Override
-  public PageResponse getCurrentPage(final int userId) {
+  public PageResponse getCurrentPage(final long userId) {
     PageResponse currentPage = userIdCurrentPage.get(userId);
     if (currentPage == null)
       userIdCurrentPage.put(userId, PageResponse.empty());
@@ -45,12 +45,12 @@ public class PaginationDataContextImpl implements PaginationDataContext {
   }
 
   @Override
-  public void incrementPage(final int userId) {
+  public void incrementPage(final long userId) {
     userIdCurrentPage.get(userId).incrementNumber();
   }
 
   @Override
-  public void clear(final int userId) {
+  public void clear(final long userId) {
     userIdCurrentPage.remove(userId);
   }
 

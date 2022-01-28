@@ -8,11 +8,11 @@ public interface GroupsMessageGenerator {
 
     List<SendPhotoFileIdRequest> allSearchProductGroups(
             long chatId,
-            int userId
+            long userId
     );
 
     List<SendPhotoFileIdRequest> allMainProductGroups(
             long chatId,
-            int userId
+            long userId
     );
 }

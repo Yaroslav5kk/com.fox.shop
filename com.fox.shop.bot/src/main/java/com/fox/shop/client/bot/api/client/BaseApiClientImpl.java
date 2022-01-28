@@ -38,7 +38,7 @@ public class BaseApiClientImpl implements BaseApiClient, FatherApiClient {
   /*--------------------------------------------- product ----------------------------------------------------*/
   @Override
   public PageResponse<ProductModel> productsByGroup(
-          final int userId,
+          final long userId,
           final long groupId,
           final Pageable pageable
   ) {
@@ -53,7 +53,7 @@ public class BaseApiClientImpl implements BaseApiClient, FatherApiClient {
 
   @Override
   public PageResponse<ProductModel> searchProductsByName(
-          final int userId,
+          final long userId,
           final String name,
           final Pageable pageable
   ) {

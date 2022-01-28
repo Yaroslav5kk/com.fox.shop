@@ -4,9 +4,9 @@ import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 
 import java.util.Optional;
 
-public interface StartMessageGeneratorMenu {
-    SendMessage base(
-            Long chatId,
+public interface StartMessageGenerator {
+    SendMessage start(
+        long chatId,
             Optional<Long> cartSessionId
     );
 

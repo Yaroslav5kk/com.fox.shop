@@ -12,9 +12,9 @@ import java.util.List;
 
 public interface BaseApiClient {
 
-  PageResponse<ProductModel> productsByGroup(int userId, long groupId, Pageable pageable);
+  PageResponse<ProductModel> productsByGroup(long userId, long groupId, Pageable pageable);
 
-  PageResponse<ProductModel> searchProductsByName(int userId, String name, Pageable pageable);
+  PageResponse<ProductModel> searchProductsByName(long userId, String name, Pageable pageable);
 
   List<ProductModel> productsByIds(List<Long> ids);
 
