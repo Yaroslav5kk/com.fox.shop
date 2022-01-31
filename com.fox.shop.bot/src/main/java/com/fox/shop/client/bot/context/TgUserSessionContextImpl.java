@@ -1,8 +1,10 @@
 package com.fox.shop.client.bot.context;
 
 import com.fox.shop.client.bot.context.i.TgUserSessionContext;
+import com.fox.shop.client.bot.events.ChangeUserCommandStateApplicationEvent;
 import com.fox.shop.client.bot.model.TgUserSessionModel;
 import com.fox.shop.client.bot.model.types.CommandData;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -11,17 +13,24 @@ import java.util.Map;
 @Service
 public class TgUserSessionContextImpl implements TgUserSessionContext {
   private final Map<Long, TgUserSessionModel> userIdSessionModel;
+  private final ApplicationEventPublisher applicationEventPublisher;
 
-  public TgUserSessionContextImpl() {
+  public TgUserSessionContextImpl(
+          final ApplicationEventPublisher applicationEventPublisher
+  ) {
+    this.applicationEventPublisher = applicationEventPublisher;
     userIdSessionModel = new HashMap<>();
   }
 
   @Override
   public void setupCommand(
-      final long userId,
-      final CommandData command
+          final long userId,
+          final CommandData command
   ) {
-    getSession(userId).setCommand(command);
+    final TgUserSessionModel session = getSession(userId);
+    if (!session.getCommand().equals(command))
+      applicationEventPublisher.publishEvent(new ChangeUserCommandStateApplicationEvent(this, userId));
+    session.setCommand(command);
   }
 
   @Override
@@ -31,7 +40,7 @@ public class TgUserSessionContextImpl implements TgUserSessionContext {
 
   @Override
   public TgUserSessionModel getSession(
-      final long userId
+          final long userId
   ) {
     if (!userIdSessionModel.containsKey(userId)) {
       userIdSessionModel.put(userId, new TgUserSessionModel());

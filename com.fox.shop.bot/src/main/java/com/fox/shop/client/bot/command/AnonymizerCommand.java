@@ -11,20 +11,16 @@ import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
 public abstract class AnonymizerCommand extends BotCommand {
     protected final Logger log = LogManager.getLogger(getClass());
-    private final UserHistoryContext userHistoryContext;
 
     public AnonymizerCommand(
             String commandIdentifier,
-            String description,
-            UserHistoryContext userHistoryContext
+            String description
     ) {
         super(commandIdentifier, description);
-        this.userHistoryContext = userHistoryContext;
     }
 
     @Override
     public void processMessage(AbsSender absSender, Message message, String[] arguments) {
-        userHistoryContext.chatIdMessage(message.getChatId(), Long.valueOf(message.getMessageId()));
         this.execute(absSender, message.getFrom(), message.getChat(), arguments);
     }
 

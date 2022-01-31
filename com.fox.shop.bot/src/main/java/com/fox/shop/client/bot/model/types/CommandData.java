@@ -33,7 +33,7 @@ public enum CommandData {
   VIEW_PRODUCT_DESCRIPTION("/view_product_description", "детальніше"),
 
   /*--------------------------------------------------search commands--------------------------------------------------*/
-  SEARCH_TITLE("/search_title", "search title"),
+  SEARCH_TITLE("/search", "search title"),
   SEARCH_HANDLE("/search_handle", "search handle");
 
   private final String value;

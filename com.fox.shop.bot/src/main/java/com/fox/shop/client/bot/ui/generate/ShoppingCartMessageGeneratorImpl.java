@@ -60,28 +60,6 @@ public class ShoppingCartMessageGeneratorImpl implements ShoppingCartMessageGene
     return result;
   }
 
-    /*@Override
-    public List<SendPhotoFileIdRequest> viewCartItems(
-            final long chatId,
-            final FullCartSessionModel cartSession
-    ) {
-        final Map<Long, Integer> productIdQuantity = cartSession.getItems()
-                .stream()
-                .collect(Collectors.toMap(FullCartItemModel::getProductId, FullCartItemModel::getQuantity));
-
-        final List<ProductModel> products = baseApiClient.productByIds(new ArrayList<>(productIdQuantity.keySet()));
-        final List<SendPhotoFileIdRequest> result = new LinkedList<>();
-        products.forEach(itProduct -> {
-            final SendPhotoFileIdRequest sendPhoto = new SendPhotoFileIdRequest();
-            sendPhoto.setPhoto(uploadImageToTelegramService.getTelegramIdByMainId(itProduct.getMainImage().getId()));
-            sendPhoto.setChatId(chatId);
-            sendPhoto.setParseMode("HTML");
-            sendPhoto.setCaption(ProductViewer.viewWithQuantity(itProduct, productIdQuantity.get(itProduct.getId())));
-            result.add(sendPhoto);
-        });
-        return result;
-    }*/
-
   @Override
   public List<SendPhotoFileIdRequest> editCartSessionTitle(
       final long chatId,
@@ -126,7 +104,6 @@ public class ShoppingCartMessageGeneratorImpl implements ShoppingCartMessageGene
   ) {
     final SendMessage result = new SendMessage();
     result.setChatId(chatId);
-    result.setReplyMarkup(shoppingSessionIKeyboardGenerator.startBack());
     result.setParseMode("HTML");
     result.setText(ShoppingSessionViewer.emptySession());
     return result;
@@ -138,22 +115,8 @@ public class ShoppingCartMessageGeneratorImpl implements ShoppingCartMessageGene
   ) {
     final SendMessage result = new SendMessage();
     result.setChatId(chatId);
-    result.setReplyMarkup(shoppingSessionIKeyboardGenerator.startBack());
     result.setParseMode("HTML");
     result.setText(ShoppingSessionViewer.successClearSession());
-    return result;
-  }
-
-  @Override
-  public SendPhoto successAddToCart(
-      final long chatId,
-      final long cartSessionId
-  ) {
-    final SendPhoto result = new SendPhoto();
-    result.setChatId(chatId);
-    result.setReplyMarkup(shoppingSessionIKeyboardGenerator.successAddToCart(cartSessionId));
-    result.setParseMode("HTML");
-    result.setCaption(ShoppingSessionViewer.successAddToCart());
     return result;
   }
 

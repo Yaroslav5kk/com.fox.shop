@@ -12,21 +12,17 @@ import org.telegram.telegrambots.meta.bots.AbsSender;
 public class StartCommand extends AnonymizerCommand {
 
   private final StartScenarios startScenarios;
-  private final UserHistoryContext userHistoryContext;
 
   public StartCommand(
-      final StartScenarios startScenarios,
-      final UserHistoryContext userHistoryContext
+      final StartScenarios startScenarios
   ) {
-    super(CommandData.START.getValue(), CommandData.START.getDescription(), userHistoryContext);
+    super(CommandData.START.getValue(), CommandData.START.getDescription());
 
     this.startScenarios = startScenarios;
-    this.userHistoryContext = userHistoryContext;
   }
 
   @Override
   public void execute(AbsSender absSender, User user, Chat chat, String[] strings) {
     startScenarios.start(new TgIncomingCommandModel().chatId(chat.getId()).userId(user.getId()));
-    userHistoryContext.snapshot(user.getId(), CommandData.START.getValue());
   }
 }

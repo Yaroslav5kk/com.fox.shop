@@ -5,13 +5,7 @@ import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMa
 public interface ShoppingSessionIKeyboardGenerator {
     InlineKeyboardMarkup getCartSession(long cartSessionId);
 
-    InlineKeyboardMarkup startBack();
-
     InlineKeyboardMarkup editSessionItem(long sessionItemId);
 
     InlineKeyboardMarkup setQuantity();
-
-    InlineKeyboardMarkup beginBack();
-
-    InlineKeyboardMarkup successAddToCart(long cartSessionId);
 }

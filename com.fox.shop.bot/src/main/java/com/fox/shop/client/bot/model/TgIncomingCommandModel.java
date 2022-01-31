@@ -47,6 +47,18 @@ public class TgIncomingCommandModel {
     return Long.parseLong(inputData);
   }
 
+  public long getParam0AsLong() {
+    return Long.parseLong(params.get(0));
+  }
+
+  public String getParam0() {
+    return params.get(0);
+  }
+
+  public String getParam1() {
+    return params.get(1);
+  }
+
   public long getUserId() {
     return userId;
   }
@@ -69,14 +81,6 @@ public class TgIncomingCommandModel {
 
   public void setInputData(String inputData) {
     this.inputData = inputData;
-  }
-
-  public String getParam0() {
-    return params.get(0);
-  }
-
-  public String getParam1() {
-    return params.get(1);
   }
 
   public List<String> getParams() {

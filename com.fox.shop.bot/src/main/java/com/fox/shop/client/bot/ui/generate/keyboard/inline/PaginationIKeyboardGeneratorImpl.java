@@ -25,7 +25,7 @@ public class PaginationIKeyboardGeneratorImpl implements PaginationKeyboardGener
     public InlineKeyboardMarkup pagination(final String commandData) {
         final List<Pair<?, ?>> textDataToKeyboard = new LinkedList<>();
         textDataToKeyboard.add(Pair.of(
-                EmojiElementGenerator.nextPage(),
+                "Завантажити",
                 commandData
         ));
         return inlineKeyboardGenerator.generateHorizontal(textDataToKeyboard);

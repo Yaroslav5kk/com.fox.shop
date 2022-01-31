@@ -10,9 +10,6 @@ import java.util.Optional;
 
 public interface ProductMessageGenerator {
 
-  SendMessage beginBack(
-      long chatId
-  );
 
   SendPhotoFileIdRequest product(
       long chatId,

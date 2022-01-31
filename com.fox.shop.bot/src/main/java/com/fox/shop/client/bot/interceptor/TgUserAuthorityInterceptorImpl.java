@@ -9,13 +9,6 @@ import org.springframework.stereotype.Component;
 @Order(2)
 public class TgUserAuthorityInterceptorImpl implements FatherIncomingInterceptor {
 
-  private final UserCommandStateContext userCommandStateContext;
-
-  public TgUserAuthorityInterceptorImpl(
-      final UserCommandStateContext userCommandStateContext
-  ) {
-    this.userCommandStateContext = userCommandStateContext;
-  }
 
   @Override
   public void interapt(

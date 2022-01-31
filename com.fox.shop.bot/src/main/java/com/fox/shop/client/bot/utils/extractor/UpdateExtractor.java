@@ -90,7 +90,7 @@ public class UpdateExtractor {
     final String[] splited = enteredText(update).split(" ");
     if (splited == null || splited.length < 2)
       return Collections.emptyList();
-    return Arrays.asList(Arrays.copyOfRange(splited, 1, splited.length - 1));
+    return Arrays.asList(Arrays.copyOfRange(splited, 1, splited.length ));
   }
 
   public static String firstParameter(final Update update) {

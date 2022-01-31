@@ -17,7 +17,7 @@ public class OrderViewer {
     }
 
     public static String successfulMadeOrder() {
-        return bold("Your order was successful formed. ")
+        return bold("Вітаємо, ваше замовлення прийнято!\uD83D\uDC99. ")
                 .toString();
     }
 

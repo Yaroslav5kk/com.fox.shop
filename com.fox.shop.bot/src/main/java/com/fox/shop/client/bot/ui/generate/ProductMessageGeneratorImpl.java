@@ -25,18 +25,6 @@ public class ProductMessageGeneratorImpl implements ProductMessageGenerator {
   }
 
   @Override
-  public SendMessage beginBack(
-      final long chatId
-  ) {
-    final SendMessage result = new SendMessage();
-    result.setChatId(chatId);
-    result.setText(ProductViewer.afterProductBycategory());
-    result.setReplyMarkup(productIKeyboardGenerator.beginBack());
-    result.setParseMode("HTML");
-    return result;
-  }
-
-  @Override
   public SendPhotoFileIdRequest product(
       final long chatId,
       final ProductModel product,

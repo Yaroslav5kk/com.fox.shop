@@ -25,38 +25,16 @@ public class ShoppingSessionIKeyboardGeneratorImpl implements ShoppingSessionIKe
     public InlineKeyboardMarkup getCartSession(final long cartSessionId) {
         final List<Pair<?, ?>> textDataToKeyboard = new ArrayList<>();
         textDataToKeyboard.add(Pair.of(
-                CommandData.MAKE_ORDER_TITLE.getDescription(),
+                "Замовити",
                 CommandData.MAKE_ORDER_TITLE.getValue() + " " + cartSessionId
         ));
         textDataToKeyboard.add(Pair.of(
-                CommandData.EDIT_CART_SESSION.getDescription(),
+                "Редагувати",
                 CommandData.EDIT_CART_SESSION.getValue() + " " + cartSessionId
         ));
         textDataToKeyboard.add(Pair.of(
-                CommandData.CLEAN_CART_SESSION.getDescription(),
+                "Очистити",
                 CommandData.CLEAN_CART_SESSION.getValue()
-        ));
-        textDataToKeyboard.add(Pair.of(
-                CommandData.BACK.getDescription(),
-                CommandData.BACK.getValue()
-        ));
-        textDataToKeyboard.add(Pair.of(
-                CommandData.START.getDescription(),
-                CommandData.START.getValue()
-        ));
-        return inlineKeyboardGenerator.generate(textDataToKeyboard, 1);
-    }
-
-    @Override
-    public InlineKeyboardMarkup startBack() {
-        final List<Pair<?, ?>> textDataToKeyboard = new ArrayList<>();
-        textDataToKeyboard.add(Pair.of(
-                CommandData.BACK.getDescription(),
-                CommandData.BACK.getValue()
-        ));
-        textDataToKeyboard.add(Pair.of(
-                CommandData.START.getDescription(),
-                CommandData.START.getValue()
         ));
         return inlineKeyboardGenerator.generate(textDataToKeyboard, 1);
     }
@@ -65,7 +43,7 @@ public class ShoppingSessionIKeyboardGeneratorImpl implements ShoppingSessionIKe
     public InlineKeyboardMarkup editSessionItem(final long sessionItemId) {
         final List<Pair<?, ?>> textDataToKeyboard = new ArrayList<>();
         textDataToKeyboard.add(Pair.of(
-                CommandData.SET_ITEM_QUANTITY_ON_UPDATE_CART_TITLE.getDescription(),
+                "Змінити кількість",
                 CommandData.SET_ITEM_QUANTITY_ON_UPDATE_CART_TITLE.getValue() + " " + sessionItemId
         ));
         return inlineKeyboardGenerator.generate(textDataToKeyboard, 1);
@@ -90,40 +68,4 @@ public class ShoppingSessionIKeyboardGeneratorImpl implements ShoppingSessionIKe
         return inlineKeyboardGenerator.generate(textDataToKeyboard, 1);
     }
 
-
-    @Override
-    public InlineKeyboardMarkup beginBack() {
-        final List<Pair<?, ?>> textDataToKeyboard = new ArrayList<>();
-        textDataToKeyboard.add(Pair.of(
-                CommandData.BACK.getDescription(),
-                CommandData.BACK.getValue()
-        ));
-        textDataToKeyboard.add(Pair.of(
-                CommandData.START.getDescription(),
-                CommandData.START.getValue()
-        ));
-        return inlineKeyboardGenerator.generate(textDataToKeyboard, 1);
-    }
-
-    @Override
-    public InlineKeyboardMarkup successAddToCart(final long cartSessionId) {
-        final List<Pair<?, ?>> textDataToKeyboard = new ArrayList<>();
-        textDataToKeyboard.add(Pair.of(
-                CommandData.MAKE_ORDER_TITLE.getDescription(),
-                CommandData.MAKE_ORDER_TITLE.getValue() + " " + cartSessionId
-        ));
-        textDataToKeyboard.add(Pair.of(
-                CommandData.EDIT_CART_SESSION.getDescription(),
-                CommandData.EDIT_CART_SESSION.getValue() + " " + cartSessionId
-        ));
-        textDataToKeyboard.add(Pair.of(
-                CommandData.BACK.getDescription(),
-                CommandData.BACK.getValue()
-        ));
-        textDataToKeyboard.add(Pair.of(
-                CommandData.START.getDescription(),
-                CommandData.START.getValue()
-        ));
-        return inlineKeyboardGenerator.generate(textDataToKeyboard, 1);
-    }
 }

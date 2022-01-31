@@ -14,11 +14,6 @@ public interface ShoppingCartMessageGenerator {
             FullCartSessionModel cartSession
     );
 
-    /*List<SendPhotoFileIdRequest> viewCartItems(
-            long chatId,
-            FullCartSessionModel cartSession
-    );*/
-
     List<SendPhotoFileIdRequest> editCartSessionTitle(
             long chatId,
             FullCartSessionModel cartSession
@@ -36,8 +31,4 @@ public interface ShoppingCartMessageGenerator {
             long chatId
     );
 
-    SendPhoto successAddToCart(
-            long chatId,
-            long cartSessionId
-    );
 }

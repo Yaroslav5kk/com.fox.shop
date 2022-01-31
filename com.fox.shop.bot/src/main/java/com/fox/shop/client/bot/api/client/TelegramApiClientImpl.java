@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fox.shop.client.bot.api.client.i.FatherApiClient;
 import com.fox.shop.client.bot.api.client.i.TelegramApiClient;
 import com.fox.shop.client.bot.api.factory.i.TelegramRequestFactory;
+import com.fox.shop.client.bot.entity.TgChatMessageHistoryEntity;
 import com.fox.shop.client.bot.model.request.SendMediaGroupRequest;
 import com.fox.shop.client.bot.model.request.SendPhotoFileIdRequest;
 import com.fox.shop.client.bot.model.request.TgDeleteMessageRequest;
@@ -28,17 +29,14 @@ public class TelegramApiClientImpl implements TelegramApiClient, FatherApiClient
 
   private final TelegramRequestFactory telegramRequestFactory;
   private final ObjectMapper objectMapper;
-  private final UserHistoryContext userHistoryContext;
   private final OkHttpClient client;
 
   public TelegramApiClientImpl(
           final TelegramRequestFactory telegramRequestFactory,
-          final ObjectMapper objectMapper,
-          final UserHistoryContext userHistoryContext
+          final ObjectMapper objectMapper
   ) {
     this.telegramRequestFactory = telegramRequestFactory;
     this.objectMapper = objectMapper;
-    this.userHistoryContext = userHistoryContext;
     this.client = new OkHttpClient();
   }
 
@@ -50,7 +48,6 @@ public class TelegramApiClientImpl implements TelegramApiClient, FatherApiClient
       Message result = objectMapper.readValue(
               client.newCall(telegramRequestFactory.sendPhoto(sendPhoto)).execute().body().byteStream(), GeneralTelegramResponse.class
       ).getResult();
-      userHistoryContext.chatIdMessage(result.getChatId(), Long.valueOf(result.getMessageId()));
       return result;
     } catch (IOException e) {
       e.printStackTrace();
@@ -71,7 +68,6 @@ public class TelegramApiClientImpl implements TelegramApiClient, FatherApiClient
       Message result = objectMapper.readValue(
               client.newCall(telegramRequestFactory.sendMessage(sendMessage)).execute().body().byteStream(), GeneralTelegramResponse.class
       ).getResult();
-      userHistoryContext.chatIdMessage(result.getChatId(), Long.valueOf(result.getMessageId()));
       return result;
     } catch (IOException e) {
       e.printStackTrace();
@@ -86,7 +82,6 @@ public class TelegramApiClientImpl implements TelegramApiClient, FatherApiClient
       List<Message> result = objectMapper.readValue(
               client.newCall(telegramRequestFactory.sendMediaGroup(sendMediaGroup)).execute().body().byteStream(), SendMediaGroupResponse.class
       ).getResult();
-      result.forEach(message -> userHistoryContext.chatIdMessage(message.getChatId(), Long.valueOf(message.getMessageId())));
       return result;
     } catch (IOException e) {
       e.printStackTrace();
@@ -115,7 +110,6 @@ public class TelegramApiClientImpl implements TelegramApiClient, FatherApiClient
       Message result = objectMapper.readValue(
               client.newCall(telegramRequestFactory.editMessageCaption(editMessageCaption)).execute().body().byteStream(), GeneralTelegramResponse.class
       ).getResult();
-      userHistoryContext.chatIdMessage(result.getChatId(), Long.valueOf(result.getMessageId()));
       return result;
     } catch (IOException e) {
       e.printStackTrace();
@@ -129,7 +123,6 @@ public class TelegramApiClientImpl implements TelegramApiClient, FatherApiClient
       Message result = objectMapper.readValue(
               client.newCall(telegramRequestFactory.editMessageText(editMessageText)).execute().body().byteStream(), GeneralTelegramResponse.class
       ).getResult();
-      userHistoryContext.chatIdMessage(result.getChatId(), Long.valueOf(result.getMessageId()));
       return result;
     } catch (IOException e) {
       e.printStackTrace();

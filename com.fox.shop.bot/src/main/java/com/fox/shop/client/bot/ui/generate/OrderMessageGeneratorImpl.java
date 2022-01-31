@@ -31,7 +31,6 @@ public class OrderMessageGeneratorImpl implements OrderMessageGenerator {
     result.setChatId(chatId);
     result.setParseMode("HTML");
     result.setPhoto(makeOrderFileIdOnTelegram);
-    result.setReplyMarkup(orderIKeyboardGenerator.beginBack());
     result.setCaption(OrderViewer.successfulMadeOrder());
     return result;
   }

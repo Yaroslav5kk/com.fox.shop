@@ -1,24 +1,42 @@
 package com.fox.shop.client.bot.service;
 
-import com.fox.shop.client.bot.api.mediator.TelegramApiMediator;
+import com.fox.shop.client.bot.entity.TgChatMessageHistoryEntity;
 import com.fox.shop.client.bot.repository.TgChatMessageHistoryRepository;
+import com.fox.shop.client.bot.service.i.TgChatMessageHistoryService;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
-public class TgChatMessageHistoryServiceImpl {
+public class TgChatMessageHistoryServiceImpl implements TgChatMessageHistoryService {
 
   private final TgChatMessageHistoryRepository tgChatMessageHistoryRepository;
-  private final TelegramApiMediator telegramApiMediator;
 
   public TgChatMessageHistoryServiceImpl(
-      final TgChatMessageHistoryRepository tgChatMessageHistoryRepository,
-      final TelegramApiMediator telegramApiMediator
+          final TgChatMessageHistoryRepository tgChatMessageHistoryRepository
   ) {
     this.tgChatMessageHistoryRepository = tgChatMessageHistoryRepository;
-    this.telegramApiMediator = telegramApiMediator;
+  }
+
+  @Override
+  public List<TgChatMessageHistoryEntity> getByUserId(final long userId) {
+    return tgChatMessageHistoryRepository.findAllByUserId(userId);
+  }
+
+  @Override
+  public void deleteAll(final List<TgChatMessageHistoryEntity> chatMessageHistory) {
+    tgChatMessageHistoryRepository.deleteAll(chatMessageHistory);
   }
 
 
+  @Override
+  public void save(final TgChatMessageHistoryEntity toSave) {
+    tgChatMessageHistoryRepository.save(toSave);
+  }
 
+  @Override
+  public void saveAll(final List<TgChatMessageHistoryEntity> toSave) {
+    tgChatMessageHistoryRepository.saveAll(toSave);
+  }
 
 }
