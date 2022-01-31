@@ -1,4 +1,4 @@
-package com.fox.shop.client.bot.ui.scenarios;
+package com.fox.shop.client.bot.command.processor;
 
 import com.fox.shop.client.bot.api.client.i.OrderingApiClient;
 import com.fox.shop.client.bot.api.client.i.ShoppingCartApiClient;
@@ -7,14 +7,14 @@ import com.fox.shop.client.bot.context.i.TgUserSessionContext;
 import com.fox.shop.client.bot.events.TgRemoveMessagesApplicationEvent;
 import com.fox.shop.client.bot.model.TgIncomingCommandModel;
 import com.fox.shop.client.bot.ui.generate.i.OrderMessageGenerator;
-import com.fox.shop.client.bot.ui.scenarios.i.OrderScenarios;
+import com.fox.shop.client.bot.command.processor.i.OrderCommandProcessor;
 import com.fox.shop.ordering.protocol.request.OrderOnCreateRequest;
 import com.fox.shop.ordering.protocol.types.OrderOriginType;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Component;
 
 @Component
-public class OrderScenariosImpl implements OrderScenarios {
+public class OrderCommandProcessorImpl implements OrderCommandProcessor {
 
   private final TgUserSessionContext tgUserSessionContext;
   private final OrderMessageGenerator orderMessageGenerator;
@@ -23,7 +23,7 @@ public class OrderScenariosImpl implements OrderScenarios {
   private final TelegramApiMediator telegramApiMediator;
   private final ApplicationEventPublisher applicationEventPublisher;
 
-  public OrderScenariosImpl(
+  public OrderCommandProcessorImpl(
           final TgUserSessionContext tgUserSessionContext,
           final OrderMessageGenerator orderMessageGenerator,
           final ShoppingCartApiClient shoppingCartApiClient,

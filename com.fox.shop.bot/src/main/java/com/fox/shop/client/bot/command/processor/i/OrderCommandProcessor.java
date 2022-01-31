@@ -1,9 +1,8 @@
-package com.fox.shop.client.bot.ui.scenarios.i;
+package com.fox.shop.client.bot.command.processor.i;
 
 import com.fox.shop.client.bot.model.TgIncomingCommandModel;
-import org.telegram.telegrambots.meta.api.objects.User;
 
-public interface OrderScenarios extends Scenarios {
+public interface OrderCommandProcessor extends CommandProcessor {
 
     void makeOrderTitle(
         TgIncomingCommandModel incomingCommand

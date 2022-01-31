@@ -1,4 +1,4 @@
-package com.fox.shop.client.bot.ui.scenarios;
+package com.fox.shop.client.bot.command.processor;
 
 import com.fox.shop.client.bot.api.client.i.BaseApiClient;
 import com.fox.shop.client.bot.api.client.i.StorageApiClient;
@@ -9,14 +9,14 @@ import com.fox.shop.client.bot.model.TgIncomingCommandModel;
 import com.fox.shop.client.bot.model.types.CommandData;
 import com.fox.shop.client.bot.ui.generate.i.PaginationMessageGenerator;
 import com.fox.shop.client.bot.ui.generate.i.ProductMessageGenerator;
-import com.fox.shop.client.bot.ui.scenarios.i.ProductScenarios;
+import com.fox.shop.client.bot.command.processor.i.ProductCommandProcessor;
 import com.fox.shop.protocol.ProductModel;
 import com.fox.shop.protocol.response.PageResponse;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Component;
 
 @Component
-public class ProductScenariosImpl implements ProductScenarios {
+public class ProductCommandProcessorImpl implements ProductCommandProcessor {
 
   private final ProductMessageGenerator productMessageGenerator;
   private final TgUserSessionContext tgUserSessionContext;
@@ -26,7 +26,7 @@ public class ProductScenariosImpl implements ProductScenarios {
   private final TelegramApiMediator telegramApiMediator;
   private final ApplicationEventPublisher applicationEventPublisher;
 
-  public ProductScenariosImpl(
+  public ProductCommandProcessorImpl(
           final ProductMessageGenerator productMessageGenerator,
           final TgUserSessionContext tgUserSessionContext,
           final PaginationMessageGenerator paginationMessageGenerator,

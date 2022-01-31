@@ -1,4 +1,4 @@
-package com.fox.shop.client.bot.ui.scenarios;
+package com.fox.shop.client.bot.command.processor;
 
 import com.fox.shop.client.bot.api.client.i.BaseApiClient;
 import com.fox.shop.client.bot.api.client.i.StorageApiClient;
@@ -10,12 +10,12 @@ import com.fox.shop.client.bot.model.types.CommandData;
 import com.fox.shop.client.bot.ui.generate.i.GroupsMessageGenerator;
 import com.fox.shop.client.bot.ui.generate.i.ProductMessageGenerator;
 import com.fox.shop.client.bot.ui.generate.i.SearchMessageGenerator;
-import com.fox.shop.client.bot.ui.scenarios.i.SearchScenarios;
+import com.fox.shop.client.bot.command.processor.i.SearchCommandProcessor;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Component;
 
 @Component
-public class SearchScenariosImpl implements SearchScenarios {
+public class SearchCommandProcessorImpl implements SearchCommandProcessor {
 
   private final SearchMessageGenerator searchMessageGenerator;
   private final GroupsMessageGenerator groupsMessageGenerator;
@@ -26,7 +26,7 @@ public class SearchScenariosImpl implements SearchScenarios {
   private final TgUserSessionContext tgUserSessionContext;
   private final ApplicationEventPublisher applicationEventPublisher;
 
-  public SearchScenariosImpl(
+  public SearchCommandProcessorImpl(
           final SearchMessageGenerator searchMessageGenerator,
           final GroupsMessageGenerator groupsMessageGenerator,
           final BaseApiClient baseApiClient,

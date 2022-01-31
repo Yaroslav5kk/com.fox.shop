@@ -1,4 +1,4 @@
-package com.fox.shop.client.bot.ui.scenarios;
+package com.fox.shop.client.bot.command.processor;
 
 import com.fox.shop.client.bot.api.client.i.BaseApiClient;
 import com.fox.shop.client.bot.api.client.i.ShoppingCartApiClient;
@@ -12,17 +12,15 @@ import com.fox.shop.client.bot.model.types.CommandData;
 import com.fox.shop.client.bot.ui.generate.i.ProductMessageGenerator;
 import com.fox.shop.client.bot.ui.generate.i.ShoppingCartMessageGenerator;
 import com.fox.shop.client.bot.ui.generate.i.StartMessageGenerator;
-import com.fox.shop.client.bot.ui.scenarios.i.ShoppingCartScenarios;
+import com.fox.shop.client.bot.command.processor.i.ShoppingCartCommandProcessor;
 import com.fox.shop.shoppingcart.protocol.model.full.FullCartSessionModel;
 import com.fox.shop.shoppingcart.protocol.model.request.AddToCartRequest;
 import com.fox.shop.shoppingcart.protocol.types.SessionOriginType;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Component;
 
-import java.util.Optional;
-
 @Component
-public class ShoppingCartScenariosImpl implements ShoppingCartScenarios {
+public class ShoppingCartCommandProcessorImpl implements ShoppingCartCommandProcessor {
 
   private final ShoppingCartMessageGenerator shoppingCartMessageGenerator;
   private final ShoppingCartApiClient shoppingCartApiClient;
@@ -35,7 +33,7 @@ public class ShoppingCartScenariosImpl implements ShoppingCartScenarios {
   private final TelegramApiMediator telegramApiMediator;
   private final ApplicationEventPublisher applicationEventPublisher;
 
-  public ShoppingCartScenariosImpl(
+  public ShoppingCartCommandProcessorImpl(
           final ShoppingCartMessageGenerator shoppingCartMessageGenerator,
           final ShoppingCartApiClient shoppingCartApiClient,
           final TgUserSessionContext tgUserSessionContext,

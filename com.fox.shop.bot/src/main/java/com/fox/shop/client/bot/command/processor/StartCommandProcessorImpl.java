@@ -1,4 +1,4 @@
-package com.fox.shop.client.bot.ui.scenarios;
+package com.fox.shop.client.bot.command.processor;
 
 import com.fox.shop.client.bot.api.mediator.TelegramApiMediator;
 import com.fox.shop.client.bot.context.i.TgUserSessionContext;
@@ -8,14 +8,12 @@ import com.fox.shop.client.bot.model.types.CommandData;
 import com.fox.shop.client.bot.service.i.UserService;
 import com.fox.shop.client.bot.ui.generate.i.GroupsMessageGenerator;
 import com.fox.shop.client.bot.ui.generate.i.StartMessageGenerator;
-import com.fox.shop.client.bot.ui.scenarios.i.StartScenarios;
+import com.fox.shop.client.bot.command.processor.i.StartCommandProcessor;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
-
 @Service
-public class StartScenariosImpl implements StartScenarios {
+public class StartCommandProcessorImpl implements StartCommandProcessor {
 
   private final StartMessageGenerator startMessageGenerator;
   private final UserService userService;
@@ -24,7 +22,7 @@ public class StartScenariosImpl implements StartScenarios {
   private final TelegramApiMediator telegramApiMediator;
   private final ApplicationEventPublisher applicationEventPublisher;
 
-  public StartScenariosImpl(
+  public StartCommandProcessorImpl(
           final StartMessageGenerator startMessageGenerator,
           final UserService userService,
           final TgUserSessionContext tgUserSessionContext,

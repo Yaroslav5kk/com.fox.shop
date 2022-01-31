@@ -3,27 +3,27 @@ package com.fox.shop.client.bot.interceptor;
 import com.fox.shop.client.bot.context.i.TgUserSessionContext;
 import com.fox.shop.client.bot.interceptor.i.FatherIncomingInterceptor;
 import com.fox.shop.client.bot.model.TgIncomingCommandModel;
-import com.fox.shop.client.bot.ui.scenarios.i.*;
+import com.fox.shop.client.bot.command.processor.i.*;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Service;
 
 @Service
-@Order(3)
-public class TgSelectScenariosInterceptorImpl implements FatherIncomingInterceptor {
+@Order(4)
+public class TgProcessCommandInterceptorImpl implements FatherIncomingInterceptor {
 
-  private final StartScenarios startScenarios;
-  private final ProductScenarios productScenarios;
-  private final ShoppingCartScenarios shoppingCartScenarios;
-  private final OrderScenarios orderScenarios;
-  private final SearchScenarios searchScenarios;
+  private final StartCommandProcessor startScenarios;
+  private final ProductCommandProcessor productScenarios;
+  private final ShoppingCartCommandProcessor shoppingCartScenarios;
+  private final OrderCommandProcessor orderScenarios;
+  private final SearchCommandProcessor searchScenarios;
   private final TgUserSessionContext tgUserSessionContext;
 
-  public TgSelectScenariosInterceptorImpl(
-      final StartScenarios startScenarios,
-      final ProductScenarios productScenarios,
-      final ShoppingCartScenarios shoppingCartScenarios,
-      final OrderScenarios orderScenarios,
-      final SearchScenarios searchScenarios,
+  public TgProcessCommandInterceptorImpl(
+      final StartCommandProcessor startScenarios,
+      final ProductCommandProcessor productScenarios,
+      final ShoppingCartCommandProcessor shoppingCartScenarios,
+      final OrderCommandProcessor orderScenarios,
+      final SearchCommandProcessor searchScenarios,
       final TgUserSessionContext tgUserSessionContext
   ) {
     this.startScenarios = startScenarios;
